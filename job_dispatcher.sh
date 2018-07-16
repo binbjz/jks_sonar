@@ -1,7 +1,7 @@
 #!/bin/bash
 #filename: job_dispatcher.sh
 #
-#desc: access project into sonar | config pull request to triger
+#desc: access sonar by jenkins with manual, crontab, push or pull request to trigger. 
 #
 
 NOARGS=65
