@@ -88,8 +88,8 @@ This project was written in **bash** and config template.
 
 ## How To Run It For Job Dispatcher
 
-* Job Dispatcher allow you to access sonar with jenkins.
-* Job Dispatcher allow you to access sonar with pull request to trigger.
+* Allow you to access sonar by jenkins with manual, crontab or push to trigger.
+* Allow you to access sonar by jenkins with pull request to trigger.
 * Note: Please modify job parameter and job list with your configuration.
 
 1. **view usage**
@@ -97,12 +97,12 @@ This project was written in **bash** and config template.
     $ bash job_dispatcher.sh
     ```
    
-2. **access sonar with jenkins**
+2. **access sonar by jenkins with manual, crontab or push to trigger**
     ```sh
-    $ bash job_dispatcher.sh accs
+    $ bash job_dispatcher.sh pu 
     ```
 
-3. **access sonar with pull request to trigger**
+3. **access sonar by jenkins with pull request to trigger**
     ```sh
     $ bash job_dispatcher.sh pr
     ```

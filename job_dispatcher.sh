@@ -10,7 +10,7 @@ E_CERROR=129
 
 # check parm num
 if [ $# -ne 1 ]; then
-   echo "Usage: ${BASH_SOURCE[0]} accs|pr"
+   echo "Usage: ${BASH_SOURCE[0]} pu|pr"
    exit $NOARGS
 fi
 
@@ -20,7 +20,7 @@ accessConfigTemplate=accessInitConfigTemplate.xml
 prConfigTemplate=prInitConfigTemplate.xml
 
 case "$configSwitch" in
-"accs")
+"pu")
     # using access config template
     configTemplate=$accessConfigTemplate
     ;;
@@ -89,7 +89,7 @@ do
     echo
     
     # just build with access job
-    if [[ "$configSwitch" == "accs" ]]; then
+    if [[ "$configSwitch" == "pu" ]]; then
         sleep 2
     
         # build
