@@ -83,7 +83,7 @@ do
     replace_kw $1 $2 $3 $4
     
     # create job with sonar
-    jobName=${1}_temp${jobSuf}
+    jobName=${1}${jobSuf}
     $bashExec ${curDir}/job_handler.sh -c $jobName -f ${curDir}/${configTemplate}.$$ \
     || exit $E_CERROR
     echo
