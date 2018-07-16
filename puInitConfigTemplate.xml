@@ -136,7 +136,7 @@ sonar.branch=${GIT_BRANCH}</properties>
           <boolean>true</boolean>
         </entry>
       </notifyMap>
-      <notifySuccess>false</notifySuccess>
+      <notifySuccess>true</notifySuccess>
       <notifyFailure>true</notifyFailure>
       <notifyFixed>true</notifyFixed>
       <notifyUnstable>true</notifyUnstable>
