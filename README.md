@@ -30,8 +30,8 @@ This project was written in **bash** and config template.
 ## How It Works
 
 * **dispatcher** modify **temp config template** according to the specified parameters and then calls **handler** to access.
-* accessInitConfigTemplate.xml is basic cofig template for access sonar with crontab.
-* prInitConfigTemplate.xml is pr config template for access sonar with pull request to trigger.
+* puInitConfigTemplate.xml is pu config tmpl - access sonar with manual, crontab or push.
+* prInitConfigTemplate.xml is pr config tmpl - access sonar with pull request.
 
 
 ----
