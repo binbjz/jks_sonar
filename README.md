@@ -47,27 +47,27 @@ This project was written in **bash** and config template.
     $ bash job_handler.sh -h
     ```
 
-2. **creating job with config template**
+2. **create job with config template**
     ```sh
     $ bash job_handler.sh -c <job name> -f <config.xml>
     ```
 
-3. **updating job with config template**
+3. **update job with config template**
     ```sh
     $ bash job_handler.sh -u <job name> -f <config.xml>
     ```
 
-4. **running job**
+4. **run job**
     ```sh
     $ bash job_handler.sh -s <job name>
     ```
 
-5. **running job with parameter**
+5. **run job with parameter**
     ```sh
     $ bash job_handler.sh -s <job name> -p <parameter value>
     ```
 
-6. **deleting job**
+6. **delete job**
     ```sh
     $ bash job_handler.sh -d <job name>
     ```
