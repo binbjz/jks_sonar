@@ -10,8 +10,8 @@ This project was written in **bash** and config template.
 ### It _does..._
 
 * Allow you to control **jenkins job**.
-* Allow you to access **sonar with jenkins**.
-* Allow you to access **sonar with pull request to trigger**.
+* Allow you to access **sonar by jenkins with manual, crontab or push to trigger**.
+* Allow you to access **sonar by jenkins with pull request to trigger**.
 
 
 ----
