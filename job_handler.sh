@@ -10,8 +10,10 @@ E_ARGERROR=56
 E_NONFLAG=75
 E_NOJOB=126
 E_NOCONF=128
-userName="<midid>"
-apiToken="<api token>"
+#userName="<midid>"
+#apiToken="<api token>"
+userName="zhaobin11"
+apiToken="f477aaf68c61e916d903665eb9743cac"
 viewName="结算组"
 jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 

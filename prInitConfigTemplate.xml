@@ -106,13 +106,8 @@ sonar.branch=${GIT_BRANCH}</properties>
     </hudson.plugins.sonar.SonarRunnerBuilder>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>zhaobin11 liying60 gaoyang09 gaofandong02 lixiaoliang02 songtao02 linxiangnan guoguanhua liufeng27 yintengfei</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
-    </hudson.tasks.Mailer>
     <com.sankuai.meituan.ep.jenkins.notify.DxNotifier plugin="dx-notify-plugin@1.0.3">
-      <recipients>zhaobin11,liying60,gaoyang09,gaofandong02,lixiaoliang02 ,songtao02,linxiangnan,guoguanhua,liufeng27,yintengfei</recipients>
+      <recipients>zhaobin11,liying60</recipients>
       <contentFile>sonar_info</contentFile>
       <removeDefaultTitleIfContentIsNotEmpty>false</removeDefaultTitleIfContentIsNotEmpty>
       <notifyUsersStarted>true</notifyUsersStarted>
