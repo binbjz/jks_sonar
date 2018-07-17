@@ -10,10 +10,10 @@ E_ARGERROR=56
 E_NONFLAG=75
 E_NOJOB=126
 E_NOCONF=128
-userName="<misid>"
-apiToken="<api token>"
-viewName="<view name>"
-jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
+userName=<misid>
+apiToken=<api token>
+viewName=<view name>
+jenkinsUrl=http://ci.sankuai.com/job/qcs/job/Sonar/view
 
 #======
 #jobName=qcs.settle.c.account_static-analyze

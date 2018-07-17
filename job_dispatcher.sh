@@ -37,8 +37,8 @@ esac
 
 # job suffix and cur dir
 bashExec=`which bash`
-jobSuf="_static-analyze"
-curDir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+jobSuf=_static-analyze
+curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # replace kw with specified parm
 replace_kw(){
