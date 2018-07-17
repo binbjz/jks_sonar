@@ -3,7 +3,8 @@
 #
 
 # define owner
-misId=zhaobin11
+# example: misId=zhaobin11
+misId=<misid>
 
 # define job parm and job list to access sonar
 declare -A array1 array2 array3
@@ -28,5 +29,5 @@ parm_list2="${array2[repo_name]} ${array2[git_repo]} ${array2[project_key]} ${ar
 parm_list3="${array3[repo_name]} ${array3[git_repo]} ${array3[project_key]} ${array3[project_name]}"
 
 # confirm which service will be accessed.
-#exmaple: jobList="parm_list1 parm_list2 parm_list3" or jobList="parm_list3"
+# exmaple: jobList="parm_list1 parm_list2 parm_list3" or jobList="parm_list3"
 jobList=<job list>
