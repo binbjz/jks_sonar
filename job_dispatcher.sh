@@ -55,7 +55,7 @@ replace_kw(){
 source parmTemplate.sh
 
 # check job list
-[[ -z $abc ]] && echo "Job list is empty, please check job list.." && exit $E_EMP
+[[ -z "${jobList}" ]] && echo "Job list is empty, please check job list.." && exit $E_EMP
 
 # perform access action
 for job in $jobList;
