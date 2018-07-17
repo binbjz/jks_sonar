@@ -7,6 +7,7 @@
 NOARGS=65
 NOMATCH=122
 E_CERROR=129
+E_EMP=127
 
 # check parm num
 if [ $# -ne 1 ]; then
@@ -52,6 +53,9 @@ replace_kw(){
 
 # load parm template
 source parmTemplate.sh
+
+# check job list
+[[ -z $abc ]] && echo "Job list is empty, please check job list.." && exit $E_EMP
 
 # perform access action
 for job in $jobList;
