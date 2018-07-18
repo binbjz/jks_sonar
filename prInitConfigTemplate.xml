@@ -62,7 +62,7 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <jdk>jdk1.8.0_25</jdk>
+  <jdk>(Default)</jdk>
   <triggers>
     <stashpullrequestbuilder.stashpullrequestbuilder.StashBuildTrigger plugin="stash-pullrequest-builder@1.6.0">
       <spec>H/12 * * * *</spec>

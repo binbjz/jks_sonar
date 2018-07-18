@@ -27,15 +27,6 @@
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.16">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
-    <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
-          <name>branch</name>
-          <description>&lt;font style=&quot;font-size:14px;font-weight:bold;color:green;&quot;&gt;Trigger sonar by specify branch&lt;/font&gt;</description>
-          <defaultValue>master</defaultValue>
-        </hudson.model.StringParameterDefinition>
-      </parameterDefinitions>
-    </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@1.8.4">
       <maxConcurrentPerNode>0</maxConcurrentPerNode>
       <maxConcurrentTotal>0</maxConcurrentTotal>
@@ -47,12 +38,12 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>ssh://git@git.sankuai.com/qcs/qcs.r.settle.server.git</url>
+        <url>ssh://git@git.sankuai.com/qcs/qcs.r.settle.invoice.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/${branch}</name>
+        <name>*/sonar*</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -70,10 +61,10 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <jdk>jdk1.8.0_25</jdk>
+  <jdk>(Default)</jdk>
   <triggers>
     <hudson.triggers.TimerTrigger>
-      <spec>H 5 * * *</spec>
+      <spec>H 5 * * 7</spec>
     </hudson.triggers.TimerTrigger>
     <hudson.triggers.SCMTrigger>
       <spec>@yearly</spec>
@@ -88,8 +79,8 @@
     <hudson.plugins.sonar.SonarRunnerBuilder plugin="sonar@2.3">
       <installationName>ep-sonar</installationName>
       <project></project>
-      <properties>sonar.projectKey=com.sankuai:qcs_r_settle-server
-sonar.projectName=qcs_r_settle-server
+      <properties>sonar.projectKey=com.sankuai:qcs_r_settle-invoice
+sonar.projectName=qcs_r_settle-invoice
 sonar.projectVersion=1.0.${BUILD_NUMBER}
 
 sonar.sources=.
@@ -113,7 +104,7 @@ sonar.branch=${GIT_BRANCH}</properties>
       <notifyMap class="enum-map" enum-type="com.sankuai.meituan.ep.jenkins.notify.BuildResult">
         <entry>
           <com.sankuai.meituan.ep.jenkins.notify.BuildResult>SUCCESS</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
-          <boolean>false</boolean>
+          <boolean>true</boolean>
         </entry>
         <entry>
           <com.sankuai.meituan.ep.jenkins.notify.BuildResult>FAILURE</com.sankuai.meituan.ep.jenkins.notify.BuildResult>

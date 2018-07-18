@@ -74,10 +74,10 @@ do
         sleep 2
 
         # build
-        #$bashExec ${curDir}/job_handler.sh -s $jobName
+        $bashExec ${curDir}/job_handler.sh -s $jobName
 
         # build with parameters
-        $bashExec ${curDir}/job_handler.sh -s $jobName -p test
+        # $bashExec ${curDir}/job_handler.sh -s $jobName -p test
     fi
 
     # cleanup env
