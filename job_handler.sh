@@ -153,7 +153,6 @@ check_config(){
 # start job with parm
 jobParm=${pOPTARG}
 
-
 if [[ "$oFlag" -eq 1 && "$fFlag" -eq 6 ]]; then
     check_config
     create_job $jobN $configTemplate

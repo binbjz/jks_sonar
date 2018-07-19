@@ -23,7 +23,7 @@ prConfigTemplate=prInitConfigTemplate.xml
 
 case "$configSwitch" in
 "pu")
-    # using pu config template
+    # using push config template
     configTemplate=$puConfigTemplate
     ;;
 "pr")
@@ -65,7 +65,7 @@ do
 
     # specify suffix
     if [[ "$configSwitch" == "pu" ]]; then
-        jobSuf=_static-analyze-pu
+        jobSuf=_static-analyze-push
     else
         jobSuf=_static-analyze-pr
     fi
@@ -76,7 +76,6 @@ do
     || exit $E_CERROR
 
     sleep $STIME 
-    echo
 
     # just build with pu job
     if [[ "$configSwitch" == "pu" ]]; then
