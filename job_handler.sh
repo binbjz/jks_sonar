@@ -11,8 +11,8 @@ E_NONFLAG=75
 E_NOJOB=126
 E_NOCONF=128
 userName=<misid>
-apiToken=<api token>
-viewName=<view name>
+apiToken=<jenkins api token>
+viewName=<jenkins view name>
 jenkinsUrl=http://ci.sankuai.com/job/qcs/job/Sonar/view
 
 #======
@@ -51,12 +51,12 @@ help_info(){
 }
 
 create_job(){
-    echo_ g "creating job -- ${1} with ${2}"
+    echo_ g "creating job -- ${1} with ${2##/*/}"
     curl -s -u ${userName}:${apiToken} -X POST "${jenkinsUrl}/${viewName}/createItem?name=${1}" --data-binary "@${2}" -H "Content-Type: text/xml"
 }
 
 update_job(){
-    echo_ g "updating job -- $1 with ${2}"
+    echo_ g "updating job -- $1 with ${2##/*/}"
     curl -s -u ${userName}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/config.xml --data-binary "@${2}" -H "Content-Type: text/xml"
 }
 
@@ -71,6 +71,7 @@ start_job(){
 }
 
 start_job_with_parm(){
+    # Note: if your job with string parm "branch", so you can use it.
     echo_ g "starting job -- $1"
     curl -s -u ${userName}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/buildWithParameters?branch=$2
 }

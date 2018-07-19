@@ -8,6 +8,7 @@ NOARGS=65
 NOMATCH=122
 E_CERROR=129
 E_EMP=127
+STIME=1
 
 # check parm num
 if [ $# -ne 1 ]; then
@@ -37,7 +38,6 @@ esac
 
 # job suffix and cur dir
 bashExec=`which bash`
-jobSuf=_static-analyze
 curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # replace kw with specified parm
@@ -63,18 +63,29 @@ do
     set -- ${!job}
     replace_kw $1 $2 $3 $4
 
+    # specify suffix
+    if [[ "$configSwitch" == "pu" ]]; then
+        jobSuf=_static-analyze-pu
+    else
+        jobSuf=_static-analyze-pr
+    fi
+
     # create job with sonar
     jobName=${1}${jobSuf}
     $bashExec ${curDir}/job_handler.sh -c $jobName -f ${curDir}/${configTemplate}.$$ \
     || exit $E_CERROR
+
+    sleep $STIME 
     echo
 
     # just build with pu job
     if [[ "$configSwitch" == "pu" ]]; then
-        sleep 2
+        # we will not trigger it by manual or crontab for the moment
+        :
+        # sleep $STIME
 
         # build
-        $bashExec ${curDir}/job_handler.sh -s $jobName
+        # $bashExec ${curDir}/job_handler.sh -s $jobName
 
         # build with parameters
         # $bashExec ${curDir}/job_handler.sh -s $jobName -p test

@@ -43,7 +43,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/sonar*</name>
+        <name>**</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -62,15 +62,7 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <jdk>(Default)</jdk>
-  <triggers>
-    <hudson.triggers.TimerTrigger>
-      <spec>H 5 * * 7</spec>
-    </hudson.triggers.TimerTrigger>
-    <hudson.triggers.SCMTrigger>
-      <spec>@yearly</spec>
-      <ignorePostCommitHooks>false</ignorePostCommitHooks>
-    </hudson.triggers.SCMTrigger>
-  </triggers>
+  <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
@@ -79,8 +71,8 @@
     <hudson.plugins.sonar.SonarRunnerBuilder plugin="sonar@2.3">
       <installationName>ep-sonar</installationName>
       <project></project>
-      <properties>sonar.projectKey=com.sankuai:qcs_r_settle-invoice
-sonar.projectName=qcs_r_settle-invoice
+      <properties>sonar.projectKey=com.sankuai:qcs_settle_r-settle-invoice
+sonar.projectName=qcs_settle_r-settle-invoice
 sonar.projectVersion=1.0.${BUILD_NUMBER}
 
 sonar.sources=.
