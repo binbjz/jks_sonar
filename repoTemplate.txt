@@ -1,0 +1,5 @@
+[qcs_repo_name]
+qcs.settle.c.account12
+qcs.r.settle.invoice12
+qcs.budget.server12
+qcs.r.settle.server12

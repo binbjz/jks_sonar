@@ -10,10 +10,16 @@ E_ARGERROR=56
 E_NONFLAG=75
 E_NOJOB=126
 E_NOCONF=128
-userName=<misid>
-apiToken=<jenkins api token>
-viewName=<jenkins view name>
+
+# Please uncomment the code block and update these parms
+# if you need to use this script alone.
+: <<COMMENTBLOCK
+# define local var
+misId=<misid>
+apiToken=<api token>
+viewName=<view name>
 jenkinsUrl=http://ci.sankuai.com/job/qcs/job/Sonar/view
+COMMENTBLOCK
 
 #======
 #jobName=qcs.settle.c.account_static-analyze
@@ -52,43 +58,43 @@ help_info(){
 
 create_job(){
     echo_ g "creating job -- ${1} with ${2##/*/}"
-    curl -s -u ${userName}:${apiToken} -X POST "${jenkinsUrl}/${viewName}/createItem?name=${1}" --data-binary "@${2}" -H "Content-Type: text/xml"
+    curl -s -u ${misId}:${apiToken} -X POST "${jenkinsUrl}/${viewName}/createItem?name=${1}" --data-binary "@${2}" -H "Content-Type: text/xml"
 }
 
 update_job(){
     echo_ g "updating job -- $1 with ${2##/*/}"
-    curl -s -u ${userName}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/config.xml --data-binary "@${2}" -H "Content-Type: text/xml"
+    curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/config.xml --data-binary "@${2}" -H "Content-Type: text/xml"
 }
 
 delete_job(){
     echo_ g "deleting job -- $1"
-    curl -s -u ${userName}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/doDelete
+    curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/doDelete
 }
 
 start_job(){
     echo_ g "starting job -- $1"
-    curl -s -u ${userName}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/build
+    curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/build
 }
 
 start_job_with_parm(){
     # Note: if your job with string parm "branch", so you can use it.
     echo_ g "starting job -- $1"
-    curl -s -u ${userName}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/buildWithParameters?branch=$2
+    curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/buildWithParameters?branch=$2
 }
 
 receive_job(){
     echo_ g "receiving job -- ${1}"
-    curl -s -u ${userName}:${apiToken} -X GET ${jenkinsUrl}/${viewName}/job/${1}/config.xml -o ${1}_config.xml
+    curl -s -u ${misId}:${apiToken} -X GET ${jenkinsUrl}/${viewName}/job/${1}/config.xml -o ${1}_config.xml
 }
 
 enable_job(){
     echo_ g "enabling job -- ${1}"
-    curl -s -u ${userName}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/enable
+    curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/enable
 }
 
 disable_job(){
     echo_ g "disabling job -- ${1}"
-    curl -s -u ${userName}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/disable
+    curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/disable
 }
 
 while getopts :c:u:s:p:f:d:r:e:k:h options

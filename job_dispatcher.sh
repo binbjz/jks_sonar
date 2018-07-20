@@ -10,6 +10,12 @@ E_CERROR=129
 E_EMP=127
 STIME=1
 
+# define global var
+export misId=<misid>
+export apiToken=<api token>
+export viewName=<view name>
+export jenkinsUrl=http://ci.sankuai.com/job/qcs/job/Sonar/view
+
 # check parm num
 if [ $# -ne 1 ]; then
    echo "Usage: ${BASH_SOURCE[0]} pu|pr"
@@ -23,7 +29,7 @@ prConfigTemplate=prInitConfigTemplate.xml
 
 case "$configSwitch" in
 "pu")
-    # using push config template
+    # using pu config template
     configTemplate=$puConfigTemplate
     ;;
 "pr")
@@ -51,17 +57,33 @@ replace_kw(){
     $configTemplate > $curDir/$configTemplate.$$
 }
 
-# load parm template
-source parmTemplate.sh
+# define repo template and project prefix
+rt=repoTemplate.txt
+cs=com.sankuai
+qcs_repo=ssh://git.sankuai.com/qcs
 
-# check job list
-[[ -z "${jobList}" ]] && echo "Job list is empty, please check job list.." && exit $E_EMP
-
-# perform access action
-for job in $jobList;
+while read git_repo_name;
 do
-    set -- ${!job}
-    replace_kw $1 $2 $3 $4
+    if [[ "$configSwitch" == "pu" ]]; then
+        projectNamePrefix=qcs_push_
+    else
+        projectNamePrefix=qcs_pull_request_
+    fi
+
+    if [[ ${git_repo_name/qcs_repo_name/} != $git_repo_name ]]; then
+        continue
+    fi
+
+    # define job parm and job list to access sonar
+    declare -A array_var
+
+    array_var[repo_name]="$git_repo_name"
+    array_var[git_repo]="${qcs_repo}/${array_var[repo_name]}.git"
+    array_var[project_key]="${cs}:${projectNamePrefix}${array_var[repo_name]}"
+    array_var[project_name]="${projectNamePrefix}${array_var[repo_name]}"
+
+    # perform access action
+    replace_kw ${array_var[repo_name]} ${array_var[git_repo]} ${array_var[project_key]} ${array_var[project_name]}
 
     # specify suffix
     if [[ "$configSwitch" == "pu" ]]; then
@@ -71,11 +93,13 @@ do
     fi
 
     # create job with sonar
-    jobName=${1}${jobSuf}
+    jobName=${array_var[repo_name]}${jobSuf}
+
+    echo "accessing $git_repo_name to sonar."
     $bashExec ${curDir}/job_handler.sh -c $jobName -f ${curDir}/${configTemplate}.$$ \
     || exit $E_CERROR
 
-    sleep $STIME 
+    sleep $STIME
 
     # just build with pu job
     if [[ "$configSwitch" == "pu" ]]; then
@@ -94,4 +118,5 @@ do
     rm -rf ${curDir}/${configTemplate}.$$ &> /dev/null
     echo "op $jobName done.."
     echo
-done
+
+done < $rt
