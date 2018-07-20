@@ -90,7 +90,7 @@ This project was written in **bash** and config template.
 
 * Allow you to access sonar by jenkins with manual, crontab or push to trigger.
 * Allow you to access sonar by jenkins with pull request to trigger.
-* Note: Please update parameter template and update user name and api token in handler.
+* Note: Please update git repository template and update user name and api token in handler.
 
 1. **view usage**
     ```sh
