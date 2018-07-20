@@ -1,0 +1,3 @@
+*.sh linguist-language=Shell
+*.xml linguist-language=Shell
+*.txt linguist-language=Shell
