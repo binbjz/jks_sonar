@@ -1,5 +1,4 @@
 mt.weekly
-mt.weekly
 order-base
 qcs-driver
 qcs-driver-admission

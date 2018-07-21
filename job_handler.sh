@@ -138,12 +138,12 @@ do
     esac
 done
 
-# job name and config file will be specified. 
+# job name and config file will be specified.
 jobN=${cOPTARG}
 configTemplate=${fOPTARG}
 
 check_jobname(){
-    if [[ -z ${jobN} ]]; then 
+    if [[ -z ${jobN} ]]; then
         echo_ r "** Please specify job name."
         exit $E_NOJOB
     fi
@@ -166,7 +166,7 @@ elif [[ "$oFlag" -eq 10 && "$fFlag" -eq 6 ]]; then
     check_config
     update_job $jobN $configTemplate
 elif [[ "$oFlag" -eq 2 ]]; then
-    delete_job $jobN 
+    delete_job $jobN
 elif [[ "$oFlag" -eq 3 ]]; then
     receive_job $jobN
 elif [[ "$oFlag" -eq 4 ]]; then
@@ -179,7 +179,7 @@ elif [[ "$oFlag" -eq 7 ]]; then
 elif [[ "$oFlag" -eq 8 ]]; then
     disable_job $jobN
 elif [[ "$oFlag" -eq 9 ]]; then
-    help_info 
+    help_info
 else
     echo_ g "Use -h for help"
     exit "$E_NONFLAG"

@@ -55,7 +55,7 @@ This project was written in **bash**, **python** and config template.
 
 * job handler allow you to control jenkins job.
 
-1. **view usage**    
+1. **view usage**
     ```sh
     $ bash job_handler.sh
     $ bash job_handler.sh -h
@@ -111,10 +111,10 @@ This project was written in **bash**, **python** and config template.
     ```sh
     $ bash job_dispatcher.sh
     ```
-   
+
 2. **access sonar by jenkins with manual, crontab or push to trigger**
     ```sh
-    $ bash job_dispatcher.sh pu 
+    $ bash job_dispatcher.sh pu
     ```
 
 3. **access sonar by jenkins with pull request to trigger**
