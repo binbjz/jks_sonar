@@ -3,7 +3,7 @@
 
 It will control jenkins job and sonar access.
 
-This project was written in **bash** and config template.
+This project was written in **bash**, **python** and config template.
 
 
 
@@ -20,6 +20,7 @@ This project was written in **bash** and config template.
 ## Table of Contents
 
 * **[How It Works](#how-it-works)**
+* **[How It Generates Repo Template](#how-it-generates-repo-template)**
 * **[How To Run It For Job Handler](#how-to-run-it-for-job-handler)**
 * **[How To Run It For Job Dispatcher](#how-to-run-it-for-job-dispatcher)**
 
@@ -29,9 +30,22 @@ This project was written in **bash** and config template.
 
 ## How It Works
 
-* **dispatcher** modify **temp config template** according to the specified parameters and then calls **handler** with **repo template** to access.
+* **repo handler** to generate repo template, **dispatcher** modify **temp config template** according to the specified parameters and then calls **handler** with **repo template** to access.
 * puInitConfigTemplate.xml is pu config tmpl - access sonar with manual, crontab or push.
 * prInitConfigTemplate.xml is pr config tmpl - access sonar with pull request.
+
+
+----
+
+
+## How It Generates Repo Template
+
+* repo handler allow you to generate repo list which contains qcs all repos.
+
+1. **generate repo list**
+    ```sh
+    $ python repo_handler.py
+    ```
 
 
 ----
@@ -90,6 +104,7 @@ This project was written in **bash** and config template.
 
 * Allow you to access sonar by jenkins with manual, crontab or push to trigger.
 * Allow you to access sonar by jenkins with pull request to trigger.
+* Allow you to generate repo template by using repo handler.
 * Note: Please update git repository template and update user name and api token in handler.
 
 1. **view usage**
