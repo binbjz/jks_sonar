@@ -22,7 +22,7 @@ jenkinsUrl=http://ci.sankuai.com/job/qcs/job/Sonar/view
 COMMENTBLOCK
 
 #======
-#jobName=qcs.settle.c.account_static-analyze
+#jobName=qcs.settle.c.account_static-analyze-pr
 #configFile=configTemplate.xml
 #viewName=结算组
 #======

@@ -29,7 +29,7 @@ This project was written in **bash** and config template.
 
 ## How It Works
 
-* **dispatcher** modify **temp config template** according to the specified parameters and then calls **handler** to access.
+* **dispatcher** modify **temp config template** according to the specified parameters and then calls **handler** with **repo template** to access.
 * puInitConfigTemplate.xml is pu config tmpl - access sonar with manual, crontab or push.
 * prInitConfigTemplate.xml is pr config tmpl - access sonar with pull request.
 

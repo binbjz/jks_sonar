@@ -70,9 +70,9 @@ do
         projectNamePrefix=qcs_pull_request_
     fi
 
-    if [[ ${git_repo_name/qcs_repo_name/} != $git_repo_name ]]; then
-        continue
-    fi
+    #if [[ ${git_repo_name/qcs_repo_name/} != $git_repo_name ]]; then
+    #    continue
+    #fi
 
     # define job parm and job list to access sonar
     declare -A array_var
