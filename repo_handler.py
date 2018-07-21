@@ -43,7 +43,7 @@ def write_data_to_file(filename, data_lst):
             fp.write(data + '\n')
 
 def handle_requests_status(res):
-    """handle http request status"""
+    """handle http response status"""
     if res.status_code == requests.codes.ok:
         logging.info("response status code: {:d}".format(res.status_code))
         return True
