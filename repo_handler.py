@@ -18,7 +18,7 @@ logging.basicConfig(
         )
 
 # define auth
-username=<misid>
+username=<midis>
 passwd=<password>
 url="http://git.sankuai.com/rest/api/2.0/projects/qcs/repos?start=0&limit=1000"
 
@@ -35,12 +35,11 @@ def write_json_to_file(filename, data):
     with open(des_file, "w+", encoding="utf-8") as fp:
         json.dump(data, fp, indent=2)
 
-def write_data_to_file(filename, data_lst):
+def write_data_to_file(filename, data):
     """write normal data into file"""
     des_file = os.path.expanduser(filename)
     with open(des_file, "a+", encoding="utf-8") as fp:
-        for data in data_lst:
-            fp.write(data + '\n')
+        fp.write(data + '\n')
 
 def handle_requests_status(res):
     """handle http response status"""
@@ -78,9 +77,10 @@ def get_qcs_repo_list(repo_res_data, repo_list = None):
 
 def mul_proc_exec(filename, repo_list, argfunc):
     jobs = []
-    p = multiprocessing.Process(target=argfunc, args=(filename, repo_list))
-    jobs.append(p)
-    p.start()
+    for rl in repo_list:
+        p = multiprocessing.Process(target=argfunc, args=(filename, rl))
+        jobs.append(p)
+        p.start()
 
 
 if __name__ == "__main__":
