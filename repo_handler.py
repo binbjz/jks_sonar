@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-#filename: repo_handler.py
+# filename: repo_handler.py
+#
+# desc: First run, it will generate repo template as initinal template,
+# after this it will generate latest repo template. 
 #
 
 import os
@@ -18,13 +21,14 @@ logging.basicConfig(
         )
 
 # define auth
-username=<midis>
+username=<misid>
 passwd=<password>
 url="http://git.sankuai.com/rest/api/2.0/projects/qcs/repos?start=0&limit=1000"
 
 # define json and template file
 json_file="repoJson.txt"
 repo_template="repoTemplate.txt"
+repo_template_newer="repoTemplate_newer.txt"
 time_format="{0}_{1}".format(datetime.now().strftime("%m-%d_%H-%S"), datetime.now().microsecond)
 repos_file="data_{0}.txt".format(time_format)
 
@@ -82,8 +86,7 @@ def mul_proc_exec(filename, repo_list, argfunc):
         jobs.append(p)
         p.start()
 
-
-if __name__ == "__main__":
+def main_proc():
     repo_data = get_qcs_repo_data(url)
 
     # write json data into json file
@@ -91,4 +94,13 @@ if __name__ == "__main__":
 
     # fetch all repo name in qcs and write them into repo template
     repo_lst = get_qcs_repo_list(repo_data)
-    mul_proc_exec(repo_template, repo_lst, write_data_to_file)
+    if not os.path.exists(repo_template):
+        repo_template_temp = repo_template
+    else:
+        repo_template_temp = repo_template_newer
+
+    mul_proc_exec(repo_template_temp, repo_lst, write_data_to_file)
+
+
+if __name__ == "__main__":
+    main_proc()
