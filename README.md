@@ -21,6 +21,7 @@ This project was written in **bash**, **python** and config template.
 
 * **[How It Works](#how-it-works)**
 * **[How It Generates Repo Template](#how-it-generates-repo-template)**
+* **[How It Compares Different Time Repo](#how-it-compares-different-time-repo)**
 * **[How To Run It For Job Handler](#how-to-run-it-for-job-handler)**
 * **[How To Run It For Job Dispatcher](#how-to-run-it-for-job-dispatcher)**
 
@@ -45,6 +46,20 @@ This project was written in **bash**, **python** and config template.
 1. **generate repo list**
     ```sh
     $ python repo_handler.py
+    ```
+
+
+----
+
+
+## How It Compares Different Time Repo
+
+* repo diff allow you to compare different time periods repos which contains qcs all repos,
+* and generate diff html to show you.
+
+1. **compare different time periods repos**
+    ```sh
+    $ python repo_diff.py
     ```
 
 
