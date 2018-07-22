@@ -12,6 +12,8 @@ This project was written in **bash**, **python** and config template.
 * Allow you to control **jenkins job**.
 * Allow you to access **sonar by jenkins with manual, crontab or push to trigger**.
 * Allow you to access **sonar by jenkins with pull request to trigger**.
+* Get repos which contains all qcs.
+* Show different time periods repos with HTML style.
 
 
 ----
@@ -31,7 +33,8 @@ This project was written in **bash**, **python** and config template.
 
 ## How It Works
 
-* **repo handler** to generate repo template, **dispatcher** modify **temp config template** according to the specified parameters and then calls **handler** with **repo template** to access.
+* **repo handler** to generate repo template, **dispatcher** modify **temp config template**
+* according to the specified parameters and then calls **handler** with **repo template** to access.
 * puInitConfigTemplate.xml is pu config tmpl - access sonar with manual, crontab or push.
 * prInitConfigTemplate.xml is pr config tmpl - access sonar with pull request.
 
