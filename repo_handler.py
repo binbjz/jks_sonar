@@ -39,11 +39,13 @@ def write_json_to_file(filename, data):
     with open(des_file, "w+", encoding="utf-8") as fp:
         json.dump(data, fp, indent=2)
 
+
 def write_data_to_file(filename, data):
     """write normal data into file"""
     des_file = os.path.expanduser(filename)
-    with open(des_file, "a+", encoding="utf-8") as fp:
-        fp.write(data + '\n')
+    with open(des_file, "w+", encoding="utf-8") as fp:
+        fp.write(data + "\n")
+
 
 def handle_requests_status(res):
     """handle http response status"""
@@ -54,8 +56,9 @@ def handle_requests_status(res):
         logging.info("request {0:s}: [{1:d}] {2:s}".format(res.url, res.status_code, res.content))
         return False
     elif res.status_code >= 400:
-        logging.info("request {0:s}: [{1:d}] {2:s}" % (res.url, res.status_code, res.content))
+        logging.info("request {0:s}: [{1:d}] {2:s}".format(res.url, res.status_code, res.content))
         return False
+
 
 def get_qcs_repo_data(url):
     """sends a GET request and get json data"""
@@ -71,6 +74,7 @@ def get_qcs_repo_data(url):
     res_data = res.json()
     return res_data
 
+
 def get_qcs_repo_list(repo_res_data, repo_list = None):
     """get repo list which contains qcs all repos"""
     if repo_list is None:
@@ -79,12 +83,14 @@ def get_qcs_repo_list(repo_res_data, repo_list = None):
     repo_list = [l["slug"] for l in repo_res_data["values"]]
     return repo_list
 
+
 def mul_proc_exec(filename, repo_list, argfunc):
     jobs = []
     for rl in repo_list:
         p = multiprocessing.Process(target=argfunc, args=(filename, rl))
         jobs.append(p)
         p.start()
+
 
 def main_proc():
     repo_data = get_qcs_repo_data(url)
