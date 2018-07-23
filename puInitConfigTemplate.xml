@@ -88,7 +88,7 @@ sonar.branch=${GIT_BRANCH}</properties>
   </builders>
   <publishers>
     <com.sankuai.meituan.ep.jenkins.notify.DxNotifier plugin="dx-notify-plugin@1.0.3">
-      <recipients>zhaobin11,liying60</recipients>
+      <recipients>zhaobin11</recipients>
       <contentFile>sonar_info</contentFile>
       <removeDefaultTitleIfContentIsNotEmpty>false</removeDefaultTitleIfContentIsNotEmpty>
       <notifyUsersStarted>true</notifyUsersStarted>
