@@ -1,5 +1,5 @@
 #!/bin/bash
-#filename: ccr_remove_jobs.sh
+#filename: ccr_jobs.sh
 #
 #desc: This is a very dangerous script, it will remove all jobs with qcs concurrently.
 #
