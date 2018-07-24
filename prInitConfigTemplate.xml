@@ -1,17 +1,16 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<project>
+<?xml version="1.0" encoding="UTF-8"?><project>
   <actions/>
-  <description>&lt;table border=1&gt;&#xd;
-&lt;tr&gt;&#xd;
-  &lt;td&gt;&lt;b&gt;Project&lt;/b&gt;&lt;/td&gt;&#xd;
-  &lt;td&gt;&lt;b&gt;Description&lt;/b&gt;&lt;/td&gt;&#xd;
-  &lt;td&gt;&lt;b&gt;Owner&lt;/b&gt;&lt;/td&gt;&#xd;
-&lt;/tr&gt;&#xd;
-  &lt;tr&gt;&#xd;
-  &lt;td&gt;&lt;font style=&quot;font-size:15px;font-weight:bold;color:green;&quot;&gt;<repo_name>&lt;/font&gt;&lt;/td&gt;&#xd;
-  &lt;td&gt;&lt;font style=&quot;font-size:15px;font-weight:bold;color:green;&quot;&gt;sonar static code scanning&lt;/font&gt;&lt;/td&gt;&#xd;
-  &lt;td&gt;&lt;font style=&quot;font-size:15px;font-weight:bold;color:green;&quot;&gt;<misid>&lt;/font&gt;&lt;/td&gt;&#xd;
-&lt;/tr&gt;&#xd;
+  <description>&lt;table border=1&gt;&#13;
+&lt;tr&gt;&#13;
+  &lt;td&gt;&lt;b&gt;Project&lt;/b&gt;&lt;/td&gt;&#13;
+  &lt;td&gt;&lt;b&gt;Description&lt;/b&gt;&lt;/td&gt;&#13;
+  &lt;td&gt;&lt;b&gt;Owner&lt;/b&gt;&lt;/td&gt;&#13;
+&lt;/tr&gt;&#13;
+  &lt;tr&gt;&#13;
+  &lt;td&gt;&lt;font style="font-size:15px;font-weight:bold;color:green;"&gt;<repo_name>&lt;/font&gt;&lt;/td&gt;&#13;
+  &lt;td&gt;&lt;font style="font-size:15px;font-weight:bold;color:green;"&gt;sonar static code scanning&lt;/font&gt;&lt;/td&gt;&#13;
+  &lt;td&gt;&lt;font style="font-size:15px;font-weight:bold;color:green;"&gt;<misid>&lt;/font&gt;&lt;/td&gt;&#13;
+&lt;/tr&gt;&#13;
 &lt;/table&gt;</description>
   <logRotator class="hudson.tasks.LogRotator">
     <daysToKeep>30</daysToKeep>
@@ -73,7 +72,7 @@
       <repositoryName>qcs.r.settle.invoice</repositoryName>
       <ciSkipPhrases>NO INSPECT</ciSkipPhrases>
       <ciBuildPhrases>inspect this please</ciBuildPhrases>
-      <targetBranchesToBuild>master, test</targetBranchesToBuild>
+      <targetBranchesToBuild>master</targetBranchesToBuild>
       <ignoreSsl>false</ignoreSsl>
       <checkDestinationCommit>false</checkDestinationCommit>
       <checkMergeable>false</checkMergeable>
@@ -85,11 +84,11 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-        <command>echo &quot;http://sonar.ep.sankuai.com/dashboard/index/com.sankuai:qcs_all:<repo_name>&quot; &gt; sonar_info</command>
+        <command>echo "http://sonar.ep.sankuai.com/dashboard/index/com.sankuai:qcs_all:<repo_name>" &gt; sonar_info</command>
     </hudson.tasks.Shell>
     <hudson.plugins.sonar.SonarRunnerBuilder plugin="sonar@2.3">
       <installationName>ep-sonar</installationName>
-      <project></project>
+      <project/>
       <properties>sonar.projectKey=com.sankuai:qcs_pull_request_qcs.r.settle.invoice
 sonar.projectName=qcs_pull_request_qcs.r.settle.invoice
 sonar.projectVersion=1.0.${BUILD_NUMBER}
@@ -97,17 +96,17 @@ sonar.projectVersion=1.0.${BUILD_NUMBER}
 sonar.sources=.
 sonar.inclusions=**/*.java,**/pom.xml
 sonar.sourceEncoding=UTF-8
-sonar.branch=${GIT_BRANCH}</properties>
-      <javaOpts></javaOpts>
-      <additionalArguments></additionalArguments>
+      </properties>
+      <javaOpts/>
+      <additionalArguments/>
       <jdk>(Inherit From Job)</jdk>
       <sonarRunnerName>sonar-runner</sonarRunnerName>
-      <task></task>
+      <task/>
     </hudson.plugins.sonar.SonarRunnerBuilder>
   </builders>
   <publishers>
     <com.sankuai.meituan.ep.jenkins.notify.DxNotifier plugin="dx-notify-plugin@1.0.3">
-      <recipients></recipients>
+      <recipients/>
       <contentFile>sonar_info</contentFile>
       <removeDefaultTitleIfContentIsNotEmpty>false</removeDefaultTitleIfContentIsNotEmpty>
       <notifyUsersStarted>true</notifyUsersStarted>
