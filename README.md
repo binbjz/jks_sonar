@@ -26,7 +26,6 @@ This project was written in **bash**, **python** and config template.
 * **[How It Compares Different Time Repo](#how-it-compares-different-time-repo)**
 * **[How To Run It For Job Handler](#how-to-run-it-for-job-handler)**
 * **[How To Run It For Job Dispatcher](#how-to-run-it-for-job-dispatcher)**
-* **[Show Repo Diff](#show-repo-diff)**
 
 
 ----
@@ -132,12 +131,3 @@ This project was written in **bash**, **python** and config template.
     ```sh
     $ bash job_dispatcher.sh pr
     ```
-
-
-
-----
-
-
-## Show Repo Diff
-
-* [repo diff](http://git.sankuai.com/v1/bj/projects/~ZHAOBIN11/repos/jenkins-sonar/browse/repoDiff.html?at=master&auto=false "repo diff")
