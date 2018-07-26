@@ -19,10 +19,9 @@ def diff_u(text1_lines, text2_lines):
     diff = difflib.unified_diff(
         text1_lines,
         text2_lines,
-        lineterm="",
+        lineterm='',
     )
-    print("\n".join(diff))
-
+    print('\n'.join(diff))
 
 def diff_h(text1_lines, text2_lines):
     """Produces HTML output with the different information into Diff file"""
@@ -33,29 +32,27 @@ def diff_h(text1_lines, text2_lines):
             result_file.write(result)
             print("Write diff into {0} successfully".format(diff_html))
     except IOError as error:
-        print("Error writing HTML file: {0}".format(error))
-
+        print('Error writing HTML file: {0}'.format(error))
 
 def read_file(filename):
     """Return a list of the lines in the string, breaking at line boundaries"""
     try:
-        with open(filename,"r+") as fileHandle:
+        with open(filename,'r+') as fileHandle:
             text = fileHandle.read().splitlines()
         return text
     except IOError as error:
-        print("Read file Error: {}".format(str(error)))
+        print('Read file Error:' + str(error))
         sys.exit(1)
-
 
 def main_proc():
     # write diff into html
-    diff1 = read_file(diff1)
-    diff2 = read_file(diff2)
-    diff_h(diff1, diff2)
+    diff_1 = read_file(diff1)
+    diff_2 = read_file(diff2)
+    diff_h(diff_1, diff_2)
 
     # output diff to stdout
     #diff_u(read_file(diff1), read_file(diff2))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main_proc()
