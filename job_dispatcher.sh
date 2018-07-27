@@ -60,7 +60,7 @@ replace_kw(){
 # define repo template and project prefix
 rt=repoTemplate.txt
 cs=com.sankuai
-qcs_repo=ssh://git.sankuai.com/qcs
+qcs_repo=ssh://git@git.sankuai.com/qcs/
 
 while read git_repo_name;
 do

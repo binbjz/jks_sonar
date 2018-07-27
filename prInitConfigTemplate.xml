@@ -38,7 +38,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>+refs/pull-requests/*:refs/remotes/origin/pr/*</refspec>
-        <url>ssh://git.sankuai.com/qcs/qcs.r.settle.invoice.git</url>
+        <url>ssh://git@git.sankuai.com/qcs/qcs.r.settle.invoice.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -72,7 +72,7 @@
       <repositoryName>qcs.r.settle.invoice</repositoryName>
       <ciSkipPhrases>NO INSPECT</ciSkipPhrases>
       <ciBuildPhrases>inspect this please</ciBuildPhrases>
-      <targetBranchesToBuild>master</targetBranchesToBuild>
+      <targetBranchesToBuild>master,test</targetBranchesToBuild>
       <ignoreSsl>false</ignoreSsl>
       <checkDestinationCommit>false</checkDestinationCommit>
       <checkMergeable>false</checkMergeable>
