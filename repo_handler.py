@@ -43,7 +43,7 @@ def write_json_to_file(filename, data):
 def write_data_to_file(filename, data):
     """write normal data into file"""
     des_file = os.path.expanduser(filename)
-    with open(des_file, "w+", encoding="utf-8") as fp:
+    with open(des_file, "a+", encoding="utf-8") as fp:
         fp.write(data + "\n")
 
 
@@ -104,6 +104,8 @@ def main_proc():
         repo_template_temp = repo_template
     else:
         repo_template_temp = repo_template_newer
+        if os.path.exists(repo_template_newer):
+            os.remove(repo_template_newer)
 
     mul_proc_exec(repo_template_temp, repo_lst, write_data_to_file)
 
