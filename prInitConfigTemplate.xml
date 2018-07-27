@@ -95,8 +95,7 @@ sonar.projectVersion=1.0.${BUILD_NUMBER}
 
 sonar.sources=.
 sonar.inclusions=**/*.java,**/pom.xml
-sonar.sourceEncoding=UTF-8
-      </properties>
+sonar.sourceEncoding=UTF-8</properties>
       <javaOpts/>
       <additionalArguments/>
       <jdk>(Inherit From Job)</jdk>
