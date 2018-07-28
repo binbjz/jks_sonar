@@ -15,10 +15,10 @@ if [ $# -ne 1 ]; then
 fi
 
 # global var
-export misId=<misid>
-export apiToken=<api token>
-export viewName=<view name>
-export jenkinsUrl=http://ci.sankuai.com/job/qcs/job/Sonar/view
+export misId="<misid>"
+export apiToken="<api token>"
+export viewName="<view name>"
+export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
 # job exec and ops path
 configSwitch=$1
@@ -26,8 +26,8 @@ bashExec=`which bash`
 curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # repo template
-#rt=repoTemplate.txt
-rt=repoTemplate_newer.txt
+#rt="repoTemplate.txt"
+rt="repoTemplate_newer.txt"
 
 # job suffix
 case "$configSwitch" in

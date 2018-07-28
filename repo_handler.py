@@ -20,8 +20,8 @@ logging.basicConfig(
 )
 
 # define auth
-username = <misid>
-passwd = <password>
+username = "<misid>"
+passwd = "<password>"
 url = "http://git.sankuai.com/rest/api/2.0/projects/qcs/repos?start=0&limit=1000"
 
 # define json and template file

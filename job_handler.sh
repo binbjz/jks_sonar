@@ -15,16 +15,16 @@ E_NOCONF=128
 # if you need to use this script alone.
 : <<COMMENTBLOCK
 # define local var
-misId=<misid>
-apiToken=<api token>
-viewName=<view name>
-jenkinsUrl=http://ci.sankuai.com/job/qcs/job/Sonar/view
+misId="<misid>"
+apiToken="<api token>"
+viewName="<view name>"
+jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 COMMENTBLOCK
 
 #======
-#jobName=qcs.settle.c.account_static-analyze-pr
-#configFile=configTemplate.xml
-#viewName=结算组
+#jobName="qcs.settle.c.account_static-analyze-pr"
+#configFile="configTemplate.xml"
+#viewName="结算组"
 #======
 
 echo_(){

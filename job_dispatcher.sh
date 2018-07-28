@@ -11,10 +11,10 @@ E_EMP=127
 STIME=1
 
 # define global var
-export misId=<misid>
-export apiToken=<api token>
-export viewName=<view name>
-export jenkinsUrl=http://ci.sankuai.com/job/qcs/job/Sonar/view
+export misId="<misid>"
+export apiToken="<api token>"
+export viewName="<view name>"
+export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
 # check parm num
 if [ $# -ne 1 ]; then
@@ -58,9 +58,9 @@ replace_kw(){
 }
 
 # define repo template and project prefix
-rt=repoTemplate.txt
-cs=com.sankuai
-qcs_repo=ssh://git@git.sankuai.com/qcs/
+rt="repoTemplate.txt"
+cs="com.sankuai"
+qcs_repo="ssh://git@git.sankuai.com/qcs/"
 
 while read git_repo_name;
 do
