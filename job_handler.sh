@@ -30,7 +30,7 @@ COMMENTBLOCK
 echo_(){
     if [ $# -ne "$ARGS" ]; then
         echo "Usage: $FUNCNAME (g|r) OutputString"
-        exit $E_ARGERROR
+        exit ${E_ARGERROR}
     fi
 
     case "$1" in
@@ -99,7 +99,7 @@ disable_job(){
 
 while getopts :c:u:s:p:f:d:r:e:k:h options
 do
-    case $options in
+    case ${options} in
       c)
           oFlag=1
           cOPTARG="$OPTARG";;
@@ -145,14 +145,14 @@ configTemplate=${fOPTARG}
 check_jobname(){
     if [[ -z ${jobN} ]]; then
         echo_ r "** Please specify job name."
-        exit $E_NOJOB
+        exit ${E_NOJOB}
     fi
 }
 
 check_config(){
     if [[ ! -e "${configTemplate}" ]]; then
         echo_ r "** Please specify valid config Template."
-        exit $E_NOCONF
+        exit ${E_NOCONF}
     fi
 }
 
@@ -161,23 +161,23 @@ jobParm=${pOPTARG}
 
 if [[ "$oFlag" -eq 1 && "$fFlag" -eq 6 ]]; then
     check_config
-    create_job $jobN $configTemplate
+    create_job ${jobN} ${configTemplate}
 elif [[ "$oFlag" -eq 10 && "$fFlag" -eq 6 ]]; then
     check_config
-    update_job $jobN $configTemplate
+    update_job ${jobN} ${configTemplate}
 elif [[ "$oFlag" -eq 2 ]]; then
-    delete_job $jobN
+    delete_job ${jobN}
 elif [[ "$oFlag" -eq 3 ]]; then
-    receive_job $jobN
+    receive_job ${jobN}
 elif [[ "$oFlag" -eq 4 ]]; then
     check_jobname
-    start_job_with_parm $jobN $jobParm
+    start_job_with_parm ${jobN} ${jobParm}
 elif [[ "$oFlag" -eq 5 ]]; then
-    start_job $jobN
+    start_job ${jobN}
 elif [[ "$oFlag" -eq 7 ]]; then
-    enable_job $jobN
+    enable_job ${jobN}
 elif [[ "$oFlag" -eq 8 ]]; then
-    disable_job $jobN
+    disable_job ${jobN}
 elif [[ "$oFlag" -eq 9 ]]; then
     help_info
 else

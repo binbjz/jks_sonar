@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # filename: repo_handler.py
 #
-# desc: First run, it will generate repo template as initinal template,
+# desc: First run, it will generate repo template as initial template,
 # after this it will generate latest repo template. 
 #
 
@@ -13,24 +13,23 @@ import requests
 import multiprocessing
 from datetime import datetime
 
-
 # define logger
 logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s",
-        )
+    level=logging.INFO,
+    format="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s",
+)
 
 # define auth
-username=<misid>
-passwd=<password>
-url="http://git.sankuai.com/rest/api/2.0/projects/qcs/repos?start=0&limit=1000"
+username = <misid>
+passwd = <password>
+url = "http://git.sankuai.com/rest/api/2.0/projects/qcs/repos?start=0&limit=1000"
 
 # define json and template file
-json_file="repoJson.txt"
-repo_template="repoTemplate.txt"
-repo_template_newer="repoTemplate_newer.txt"
-time_format="{0}_{1}".format(datetime.now().strftime("%m-%d_%H-%S"), datetime.now().microsecond)
-repos_file="data_{0}.txt".format(time_format)
+json_file = "repoJson.txt"
+repo_template = "repoTemplate.txt"
+repo_template_newer = "repoTemplate_newer.txt"
+time_format = "{0}_{1}".format(datetime.now().strftime("%m-%d_%H-%S"), datetime.now().microsecond)
+repos_file = "data_{0}.txt".format(time_format)
 
 
 def write_json_to_file(filename, data):
@@ -63,19 +62,19 @@ def handle_requests_status(res):
 def get_qcs_repo_data(url):
     """sends a GET request and get json data"""
     try:
-        res = requests.get(url, auth=(username, passwd), timeout = 12)
-    except BaseException as e:
+        res = requests.get(url, auth=(username, passwd), timeout=6)
+    except requests.exceptions as re:
         logging.info("Exception occurred while connecting {}\n".format(url))
         sys.exit(1)
 
     if not handle_requests_status(res):
-    	return None
+        return None
 
     res_data = res.json()
     return res_data
 
 
-def get_qcs_repo_list(repo_res_data, repo_list = None):
+def get_qcs_repo_list(repo_res_data, repo_list=None):
     """get repo list which contains qcs all repos"""
     if repo_list is None:
         repo_list = []
@@ -97,7 +96,7 @@ def main_proc():
     repo_data = get_qcs_repo_data(url)
 
     # write json data into json file
-    #write_json_to_file(json_file, repo_data)
+    # write_json_to_file(json_file, repo_data)
 
     # fetch all repo name in qcs and write them into repo template
     repo_lst = get_qcs_repo_list(repo_data)

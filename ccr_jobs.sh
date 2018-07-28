@@ -11,7 +11,7 @@ E_CERROR=129
 # check parm num
 if [ $# -ne 1 ]; then
    echo "Usage: ${BASH_SOURCE[0]} pu|pr"
-   exit $NOARGS
+   exit ${NOARGS}
 fi
 
 # global var
@@ -39,7 +39,7 @@ case "$configSwitch" in
     ;;
 * )
     echo "Please specify valid action."
-    exit $NOMATCH
+    exit ${NOMATCH}
     ;;
 esac
 
@@ -51,6 +51,6 @@ do
         echo "op $git_repo_name done.."
         echo
     ) &
-done < $rt
+done < ${rt}
 
 wait

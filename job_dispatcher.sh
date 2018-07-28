@@ -19,7 +19,7 @@ export jenkinsUrl=http://ci.sankuai.com/job/qcs/job/Sonar/view
 # check parm num
 if [ $# -ne 1 ]; then
    echo "Usage: ${BASH_SOURCE[0]} pu|pr"
-   exit $NOARGS
+   exit ${NOARGS}
 fi
 
 # specify config template
@@ -30,15 +30,15 @@ prConfigTemplate=prInitConfigTemplate.xml
 case "$configSwitch" in
 "pu")
     # using pu config template
-    configTemplate=$puConfigTemplate
+    configTemplate=${puConfigTemplate}
     ;;
 "pr")
     # using pull request config template
-    configTemplate=$prConfigTemplate
+    configTemplate=${prConfigTemplate}
     ;;
 * )
     echo "Please specify valid config template type."
-    exit $NOMATCH
+    exit ${NOMATCH}
     ;;
 esac
 
@@ -54,7 +54,7 @@ replace_kw(){
              s#(<url>).*(</url>)#\1${2}\2#g; \
              s#(sonar.projectKey=).*#\1${3}#g; \
              s#(sonar.projectName=).*#\1${4}#g" \
-    $configTemplate > $curDir/$configTemplate.$$
+    ${configTemplate} > ${curDir}/${configTemplate}.$$
 }
 
 # define repo template and project prefix
@@ -96,22 +96,22 @@ do
     jobName=${array_var[repo_name]}${jobSuf}
 
     echo "accessing $git_repo_name to sonar."
-    $bashExec ${curDir}/job_handler.sh -c $jobName -f ${curDir}/${configTemplate}.$$ \
-    || exit $E_CERROR
+    ${bashExec} ${curDir}/job_handler.sh -c ${jobName} -f ${curDir}/${configTemplate}.$$ \
+    || exit ${E_CERROR}
 
-    sleep $STIME
+    sleep ${STIME}
 
     # just build with pu job
     if [[ "$configSwitch" == "pu" ]]; then
         # we will not trigger it by manual or crontab for the moment
         :
-        # sleep $STIME
+        # sleep ${STIME}
 
         # build
-        # $bashExec ${curDir}/job_handler.sh -s $jobName
+        # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
 
         # build with parameters
-        # $bashExec ${curDir}/job_handler.sh -s $jobName -p test
+        # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p test
     fi
 
     # cleanup env
@@ -119,4 +119,4 @@ do
     echo "op $jobName done.."
     echo
 
-done < $rt
+done < ${rt}
