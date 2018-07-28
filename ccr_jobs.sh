@@ -32,10 +32,10 @@ rt="repoTemplate_newer.txt"
 # job suffix
 case "$configSwitch" in
 "pu")
-    jobSuf=_static-analyze-push
+    jobSuf="_static-analyze-push"
     ;;
 "pr")
-    jobSuf=_static-analyze-pr
+    jobSuf="_static-analyze-pr"
     ;;
 * )
     echo "Please specify valid action."

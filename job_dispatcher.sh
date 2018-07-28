@@ -24,8 +24,8 @@ fi
 
 # specify config template
 configSwitch=$1
-puConfigTemplate=puInitConfigTemplate.xml
-prConfigTemplate=prInitConfigTemplate.xml
+puConfigTemplate="puInitConfigTemplate.xml"
+prConfigTemplate="prInitConfigTemplate.xml"
 
 case "$configSwitch" in
 "pu")
@@ -65,9 +65,9 @@ qcs_repo="ssh://git@git.sankuai.com/qcs/"
 while read git_repo_name;
 do
     if [[ "$configSwitch" == "pu" ]]; then
-        projectNamePrefix=qcs_push_
+        projectNamePrefix="qcs_push_"
     else
-        projectNamePrefix=qcs_pull_request_
+        projectNamePrefix="qcs_pull_request_"
     fi
 
     #if [[ ${git_repo_name/qcs_repo_name/} != $git_repo_name ]]; then
@@ -87,9 +87,9 @@ do
 
     # specify suffix
     if [[ "$configSwitch" == "pu" ]]; then
-        jobSuf=_static-analyze-push
+        jobSuf="_static-analyze-push"
     else
-        jobSuf=_static-analyze-pr
+        jobSuf="_static-analyze-pr"
     fi
 
     # create job to access sonar
