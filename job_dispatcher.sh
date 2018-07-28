@@ -37,7 +37,7 @@ case "$configSwitch" in
     configTemplate=$prConfigTemplate
     ;;
 * )
-    echo "Please specify valid config template type"
+    echo "Please specify valid config template type."
     exit $NOMATCH
     ;;
 esac
@@ -92,7 +92,7 @@ do
         jobSuf=_static-analyze-pr
     fi
 
-    # create job with sonar
+    # create job to access sonar
     jobName=${array_var[repo_name]}${jobSuf}
 
     echo "accessing $git_repo_name to sonar."

@@ -85,6 +85,7 @@ def get_qcs_repo_list(repo_res_data, repo_list = None):
 
 
 def mul_proc_exec(filename, repo_list, argfunc):
+    """perform task concurrently"""
     jobs = []
     for rl in repo_list:
         p = multiprocessing.Process(target=argfunc, args=(filename, rl))
