@@ -59,12 +59,12 @@ def handle_requests_status(res):
         return False
 
 
-def get_qcs_repo_data(url):
+def get_qcs_repo_data(r_url):
     """sends a GET request and get json data"""
     try:
-        res = requests.get(url, auth=(username, passwd), timeout=6)
+        res = requests.get(r_url, auth=(username, passwd), timeout=6)
     except requests.exceptions as re:
-        logging.info("Exception occurred while connecting {}\n".format(url))
+        logging.info("Exception occurred while connecting {}\n".format(r_url))
         sys.exit(1)
 
     if not handle_requests_status(res):
