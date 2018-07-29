@@ -79,7 +79,8 @@ def get_qcs_repo_list(repo_res_data, repo_list=None):
     if repo_list is None:
         repo_list = []
 
-    repo_list = [l["slug"] for l in repo_res_data["values"]]
+    rl = [l["slug"] for l in repo_res_data["values"]]
+    repo_list.extend(rl)
     return repo_list
 
 
