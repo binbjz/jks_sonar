@@ -73,7 +73,7 @@ echo_(){
 }
 
 # execution flow
-rt="repoTemplate_temp.txt"
+rt="repoTemplate.txt"
 while read repo_name;
 do
     hook_config_proc
