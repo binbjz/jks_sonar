@@ -17,7 +17,6 @@ user_permission=( REPO_READ REPO_WRITE REPO_ADMIN )
 # hook rest url
 qcs_repo="http://git.sankuai.com/beijing/rest/api/2.0/projects/qcs/repos"
 hook_key_ap="settings/hooks/com.nerdwin15.stash-stash-webhook-jenkins%3AjenkinsPostReceiveHook"
-hook_code_events="${qcs_repo}/${repo_name}/webhook/create/1?url=http%3A%2F%2Fci.sankuai.com%2Fgitlab%2Fbuild_now"
 
 
 user_access(){
