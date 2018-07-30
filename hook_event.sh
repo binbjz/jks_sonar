@@ -40,7 +40,7 @@ config_hooks_StashWebhookToJenkins(){
     echo -e "\nop $repo_name done..\n"
 }
 
-cr_hooks_code_events(){
+config_hooks_code_events(){
     echo_ "configuring $repo_name Webhook with event to Jenkins"
     curl -s -X POST "${qcs_repo}/${repo_name}/webhook/create/1?url=http%3A%2F%2Fci.sankuai.com%2Fgitlab%2Fbuild_now" -H "Content-Type: application/json" -H "${cookie_var}"
     echo -e "\nop $repo_name done..\n"
@@ -65,7 +65,7 @@ hook_config_proc(){
     #config_hooks_StashWebhookToJenkins
 
     # Webhook with event
-    cr_hooks_code_events
+    config_hooks_code_events
 }
 
 echo_(){
