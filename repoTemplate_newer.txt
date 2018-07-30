@@ -185,6 +185,7 @@ qcs.inf.xchannel.client
 qcs.inf.xchannelc
 qcs.inf.xconfig.client
 qcs.inf.xconfig.server
+qcs.inf.xlog
 qcs.inf.xpolling
 qcs.ios.bdtts
 qcs.ios.c.common
@@ -294,13 +295,13 @@ qcs.regulation.shanghai
 qcs.regulation.shenzhen
 qcs.regulation.shwa
 qcs.regulation.traffic.fuzhou
-qcs.regulation.wenzhou
-qcs.regulation.xiamen
-qcs.rental.server
-qcs.rental.web
-qcs.risk.cache
 qcs.risk.client
+qcs.risk.cache
+qcs.rental.web
+qcs.regulation.xiamen
+qcs.regulation.wenzhou
 qcs.risk.common
+qcs.rental.server
 qcs.risk.compute
 qcs.risk.data
 qcs.risk.rt.datacleaning
