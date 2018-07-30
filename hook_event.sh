@@ -7,7 +7,7 @@
 
 # define cookie, Just for convenience
 cookie_var=`cat <<-SETVAR
-Cookie: u=1116923364; uu=4be07e30-3713-11e8-934d-d9b8c00eab8a; cid=1; ai=1; _lxsdk_cuid=1628a79e52cc8-00ecf3d42e751-336c7b05-13c680-1628a79e52cc8; _lxsdk=1628a79e52cc8-00ecf3d42e751-336c7b05-13c680-1628a79e52cc8; userInfoInCode={%22name%22:%22%E8%B5%B5%E6%96%8C%22%2C%22account%22:%22zhaobin11%22%2C%22id%22:156877%2C%22emailAddress%22:%22zhaobin11@meituan.com%22}; _ga=GA1.2.1045501110.1524496289; sso.saveRequest=http%3A%2F%2Fgit.sankuai.com%2Fapi-wm%2Fimage%2Fvisible%3Fr%3D150%26g%3D150%26b%3D150%26deg%3D-20%26type%3D3; misId=zhaobin11; misId.sig=9zuVzbSovVyF8XvV2SwrCvZjv3Y; userId=2111863; userId.sig=MBrpLbAGY6kyVmDmKI84iKcVeMs; userName=%E8%B5%B5%E6%96%8C; userName.sig=kTU_ZzfsuxK9cUd1pqzb56E0H-Q; role=staff; UM_distinctid=1646996082a798-05316b61a5e8e6-16386952-13c680-1646996082b9db; skmtutc=c4B3PNJIcnAYORwEtKLNrXwfnlOEqyuiKlmbglLR/d+AFtUhM0B3/xPr7RuAEgor-a+LDOC1pxtR940eKoMgtzaozewA=; al=clrkmplcmqzcazqfrwhbzdmqbwjizpgw; beijing_sessionid=85B1AD2E3BC0E21C0B4DF37F69EAEA3A
+<input your cookie here>
 SETVAR`
 
 # user with repo permission
