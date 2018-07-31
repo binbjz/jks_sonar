@@ -2,7 +2,7 @@
 #filename: hook_event.sh
 #
 #desc: This script will configure user with repo permission, configure Stash Webhook and
-#Events to Jenkins. It can only be used with cookie.
+#Events to Jenkins. It can only be used with valid cookie.
 #
 
 # define cookie, Just for convenience
