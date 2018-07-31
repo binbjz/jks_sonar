@@ -46,7 +46,23 @@ config_hooks_code_events(){
     echo -e "\nop $repo_name done..\n"
 }
 
+echo_(){
+    echo -e "\033[2;36m$1\033[0m"
+}
+
 hook_config_proc(){
+    # Stash Webhook for Build from
+    #branchOptions:"whitelist"
+    #branchOptionsBranches:"master test"
+
+    # Stash Webhook for Build all
+    #branchOption:""
+    #branchOptionsBranches:""
+
+    # Stash Webhook for Ignore from
+    #branchOptions="blacklist"
+    #branchOptionsBranches="master test"
+
     # http payload
     jenkinsBase="http://ci.sankuai.com/"
     gitRepoUrl="ssh://git@git.sankuai.com/qcs/${repo_name}.git"
@@ -66,10 +82,6 @@ hook_config_proc(){
 
     # Webhook with event
     config_hooks_code_events
-}
-
-echo_(){
-    echo -e "\033[2;36m$1\033[0m"
 }
 
 # execution flow
