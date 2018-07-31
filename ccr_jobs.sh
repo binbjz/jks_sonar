@@ -8,7 +8,7 @@ NOARGS=65
 NOMATCH=122
 E_CERROR=129
 
-# Check parm num
+# Check parm
 if [ $# -ne 1 ]; then
    echo "Usage: ${BASH_SOURCE[0]} pu|pr"
    exit ${NOARGS}
