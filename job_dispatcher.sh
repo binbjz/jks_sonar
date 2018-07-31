@@ -10,19 +10,19 @@ E_CERROR=129
 E_EMP=127
 STIME=1
 
-# define global var
+# Define global var
 export misId="<misid>"
 export apiToken="<api token>"
 export viewName="<view name>"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
-# check parm num
+# Check parm num
 if [ $# -ne 1 ]; then
    echo "Usage: ${BASH_SOURCE[0]} pu|pr"
    exit ${NOARGS}
 fi
 
-# specify config template
+# Specify config template
 configSwitch=$1
 puConfigTemplate="puInitConfigTemplate.xml"
 prConfigTemplate="prInitConfigTemplate.xml"
@@ -42,11 +42,11 @@ case "$configSwitch" in
     ;;
 esac
 
-# job suffix and cur dir
+# Job suffix and cur dir
 bashExec=`which bash`
 curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-# replace kw with specified parm
+# Replace kw with specified parm
 replace_kw(){
     sed -re "s#<repo_name>#${1}#g; \
              s#<misid>#${misId}#g; \
@@ -57,7 +57,7 @@ replace_kw(){
     ${configTemplate} > ${curDir}/${configTemplate}.$$
 }
 
-# define repo template and project prefix
+# Define repo template, project prefix and trigger job with specified action
 rt="repoTemplate.txt"
 cs="com.sankuai"
 qcs_repo="ssh://git@git.sankuai.com/qcs/"

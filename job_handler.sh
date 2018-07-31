@@ -138,7 +138,7 @@ do
     esac
 done
 
-# job name and config file will be specified.
+# Job name and config file will be specified.
 jobN=${cOPTARG}
 configTemplate=${fOPTARG}
 
@@ -156,7 +156,7 @@ check_config(){
     fi
 }
 
-# start job with parm
+# Start job with parm
 jobParm=${pOPTARG}
 
 if [[ "$oFlag" -eq 1 && "$fFlag" -eq 6 ]]; then

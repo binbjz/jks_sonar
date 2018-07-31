@@ -8,28 +8,28 @@ NOARGS=65
 NOMATCH=122
 E_CERROR=129
 
-# check parm num
+# Check parm num
 if [ $# -ne 1 ]; then
    echo "Usage: ${BASH_SOURCE[0]} pu|pr"
    exit ${NOARGS}
 fi
 
-# global var
+# Global var
 export misId="<misid>"
 export apiToken="<api token>"
 export viewName="<view name>"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
-# job exec and ops path
+# Job exec and ops path
 configSwitch=$1
 bashExec=`which bash`
 curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-# repo template
+# Repo template
 #rt="repoTemplate.txt"
 rt="repoTemplate_newer.txt"
 
-# job suffix
+# Job suffix
 case "$configSwitch" in
 "pu")
     jobSuf="_static-analyze-push"

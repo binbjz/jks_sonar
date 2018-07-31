@@ -8,6 +8,7 @@
 import sys
 import difflib
 
+# Repo template and diff html
 diff1 = "repoTemplate.txt"
 diff2 = "repoTemplate_newer.txt"
 diff_html = "repoDiff.html"

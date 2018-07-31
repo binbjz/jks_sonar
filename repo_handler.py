@@ -13,19 +13,19 @@ import requests
 import multiprocessing
 from datetime import datetime
 
-# define logger
+# Set up the default log handler
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s",
 )
 
-# define auth
+# Git auth
 username = "<misid>"
 passwd = "<password>"
 url = "http://git.sankuai.com/rest/api/2.0/projects/qcs/repos?start=0&limit=1000"
 
-# define json and template file
-json_file = "repoJson.txt"
+# Json and template file
+json_file = "repoInfo.json"
 repo_template = "repoTemplate.txt"
 repo_template_newer = "repoTemplate_newer.txt"
 time_format = "{0}_{1}".format(datetime.now().strftime("%m-%d_%H-%S"), datetime.now().microsecond)
@@ -33,21 +33,21 @@ repos_file = "data_{0}.txt".format(time_format)
 
 
 def write_json_to_file(filename, data):
-    """write json data into file"""
+    """Write json data into file"""
     des_file = os.path.expanduser(filename)
     with open(des_file, "w+", encoding="utf-8") as fp:
         json.dump(data, fp, indent=2)
 
 
 def write_data_to_file(filename, data):
-    """write normal data into file"""
+    """Write normal data into file"""
     des_file = os.path.expanduser(filename)
     with open(des_file, "a+", encoding="utf-8") as fp:
         fp.write(data + "\n")
 
 
 def handle_requests_status(res):
-    """handle http response status"""
+    """Handle http response status"""
     if res.status_code == requests.codes.ok:
         logging.info("response status code: {:d}".format(res.status_code))
         return True
@@ -60,7 +60,7 @@ def handle_requests_status(res):
 
 
 def get_qcs_repo_data(r_url):
-    """sends a GET request and get json data"""
+    """Sends a GET request and get json data"""
     try:
         res = requests.get(r_url, auth=(username, passwd), timeout=6)
     except requests.exceptions as re:
@@ -75,7 +75,7 @@ def get_qcs_repo_data(r_url):
 
 
 def get_qcs_repo_list(repo_res_data, repo_list=None):
-    """get repo list which contains qcs all repos"""
+    """Get repo list which contains qcs all repos"""
     if repo_list is None:
         repo_list = []
 
@@ -85,7 +85,7 @@ def get_qcs_repo_list(repo_res_data, repo_list=None):
 
 
 def mul_proc_exec(filename, repo_list, arg_func):
-    """perform task concurrently"""
+    """Execute task concurrently"""
     jobs = []
     for rl in repo_list:
         p = multiprocessing.Process(target=arg_func, args=(filename, rl))
