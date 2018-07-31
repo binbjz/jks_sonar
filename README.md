@@ -99,7 +99,15 @@ This project was written in **bash**, **python** and config template.
     $ bash job_handler.sh -s <job name> -p <parameter value>
     ```
 
-6. **delete job** ```sh $ bash job_handler.sh -d <job name> ``` 7. **enable job** ```sh $ bash job_handler.sh -e <job name> ```
+6. **delete job** 
+    ```sh
+    $ bash job_handler.sh -d <job name>
+    ``` 
+
+7. **enable job**
+    ```sh
+    $ bash job_handler.sh -e <job name>
+    ```
 
 8. **disable job**
     ```sh
