@@ -13,7 +13,7 @@ import requests
 import multiprocessing
 from datetime import datetime
 
-# Set up the default log handler
+# Default log handler
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s",
