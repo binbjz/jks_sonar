@@ -16,7 +16,7 @@ export apiToken="<api token>"
 export viewName="<view name>"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
-# Check parm num
+# Check parm
 if [ $# -ne 1 ]; then
    echo "Usage: ${BASH_SOURCE[0]} pu|pr"
    exit ${NOARGS}
