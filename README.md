@@ -26,6 +26,7 @@ This project was written in **bash**, **python** and config template.
 * **[How It Compares Different Time Repo](#how-it-compares-different-time-repo)**
 * **[How To Run It For Job Handler](#how-to-run-it-for-job-handler)**
 * **[How To Run It For Job Dispatcher](#how-to-run-it-for-job-dispatcher)**
+* **[How To Update Dx Recipients](#how-to-update-dx-recipients)**
 
 
 ----
@@ -71,7 +72,7 @@ This project was written in **bash**, **python** and config template.
 
 ## How To Run It For Job Handler
 
-* job handler allow you to control jenkins job.
+* job handler allow you to control jenkins job action.
 
 1. **view usage**
     ```sh
@@ -138,4 +139,18 @@ This project was written in **bash**, **python** and config template.
 3. **access sonar by jenkins with pull request to trigger**
     ```sh
     $ bash job_dispatcher.sh pr
+    ```
+
+
+----
+
+
+## How To Update Dx Recipients
+
+* Allow you to update dx recipients in batches.
+* Note: Please update dx recipients list and run it.
+
+1. **view usage**
+    ```sh
+    $ bash job_update_dx.sh
     ```

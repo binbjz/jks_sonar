@@ -1,7 +1,7 @@
 #!/bin/bash
 #filename: job_update_dx.sh
 #
-#desc: add dx recipient in batches.
+#desc: update dx recipient in batches.
 #
 
 E_RERROR=61
