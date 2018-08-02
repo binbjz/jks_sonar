@@ -106,7 +106,7 @@ sonar.sourceEncoding=UTF-8</properties>
   </builders>
   <publishers>
     <com.sankuai.meituan.ep.jenkins.notify.DxNotifier plugin="dx-notify-plugin@1.0.3">
-      <recipients/>
+      <recipients></recipients>
       <contentFile>sonar_info</contentFile>
       <removeDefaultTitleIfContentIsNotEmpty>false</removeDefaultTitleIfContentIsNotEmpty>
       <notifyUsersStarted>true</notifyUsersStarted>
