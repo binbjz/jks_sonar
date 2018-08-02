@@ -26,6 +26,7 @@ This project was written in **bash**, **python** and config template.
 * **[How It Compares Different Time Repo](#how-it-compares-different-time-repo)**
 * **[How To Run It For Job Handler](#how-to-run-it-for-job-handler)**
 * **[How To Run It For Job Dispatcher](#how-to-run-it-for-job-dispatcher)**
+* **[How To Configure user access and hook](#how-to-configure-user-access-and-hook)**
 * **[How To Update Dx Recipients](#how-to-update-dx-recipients)**
 
 
@@ -145,12 +146,26 @@ This project was written in **bash**, **python** and config template.
 ----
 
 
+##How To Configure user access and hook
+
+* configure user with repo permission, configure Stash Webhook and Events to Jenkins.
+* It can only be used with valid cookie.
+
+1. **config user and hook**
+    ```sh
+    $ bash hook_event.sh
+    ```
+
+
+----
+
+
 ## How To Update Dx Recipients
 
 * Allow you to update dx recipients in batches.
 * Note: Please update dx recipients list and run it.
 
-1. **view usage**
+1. **update dx recipients**
     ```sh
     $ bash job_update_dx.sh
     ```
