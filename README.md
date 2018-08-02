@@ -9,7 +9,7 @@ This project was written in **bash**, **python** and config template.
 
 ### It _does..._
 
-* Allow you to control **jenkins job**.
+* Allow you to control **jenkins job** action.
 * Allow you to access **sonar by jenkins with manual, crontab or push to trigger**.
 * Allow you to access **sonar by jenkins with pull request to trigger**.
 * Get **repos which contains all qcs**.
