@@ -3,7 +3,7 @@
 
 It will control jenkins job and sonar access.
 
-This project was written in **bash**, **python** and config template.
+This project was written in **bash**, **python** and **xml**.
 
 
 
