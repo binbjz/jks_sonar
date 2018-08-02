@@ -21,7 +21,7 @@ rl="zhaobin11,liying60"
 # Job list with specified view
 job_list(){
     curl -s -u ${misId}:${apiToken} -X POST ${jobsUrl} -o ${viewName}.json
-    export view_list=`jq -r .jobs ${viewName}.json | jq -r .[].name`
+    view_list=`jq -r .jobs ${viewName}.json | jq -r .[].name`
 }
 
 # Job suffix and cur dir
