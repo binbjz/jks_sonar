@@ -146,7 +146,7 @@ This project was written in **bash**, **python** and config template.
 ----
 
 
-##How To Configure user access and hook
+## How To Configure user access and hook
 
 * configure user with repo permission, configure Stash Webhook and Events to Jenkins.
 * It can only be used with valid cookie.
