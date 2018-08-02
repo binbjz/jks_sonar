@@ -34,17 +34,17 @@ job_list
 for job in ${view_list}
 do
     # acquire job config
-    ${bashExec} ${curDir}/job_handler.sh -r ${job} || exit $E_RERROR
+    ${bashExec} ${curDir}/job_handler.sh -r ${job} || exit ${E_RERROR}
     sleep ${STIME}
 
     # update config template
     sed -ri "1,/<\/?recipients.*/{s/<\/?recipients.*/<recipients>${rl}<\/recipients>/}" \
-    $curDir/${job}_config.xml
+    ${curDir}/${job}_config.xml
 
     # update job config
-    ${bashExec} ${curDir}/job_handler.sh -u ${job} -f $curDir/${job}_config.xml \
-    || exit $E_UERROR
+    ${bashExec} ${curDir}/job_handler.sh -u ${job} -f ${curDir}/${job}_config.xml \
+    || exit ${E_UERROR}
 
     # Cleanup Env
-    rm -rf ${viewName}.json $curDir/${job}_config.xml &> /dev/null
+    rm -rf ${viewName}.json ${curDir}/${job}_config.xml &> /dev/null
 done
