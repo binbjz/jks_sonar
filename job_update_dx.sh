@@ -24,7 +24,7 @@ job_list(){
     view_list=`jq -r .jobs ${viewName}.json | jq -r .[].name`
 }
 
-# Job suffix and cur dir
+# parser and cur dir
 bashExec=`which bash`
 curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
@@ -50,4 +50,4 @@ do
 done
 
 # Cleanup Lst Env
-rm -rf ${curDir}/${viewName}.json
+rm -rf ${curDir}/${viewName}.json &> /dev/null
