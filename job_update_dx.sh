@@ -20,7 +20,7 @@ rl="zhaobin11,liying60"
 
 # Job list with specified view
 job_list(){
-    curl -s -u ${misId}:${apiToken} -X POST ${jobsUrl} -o ${viewName}.json
+    curl -s -u ${misId}:${apiToken} -X POST ${jobsUrl} -o ${curDir}/${viewName}.json
     view_list=`jq -r .jobs ${viewName}.json | jq -r .[].name`
 }
 
@@ -45,6 +45,9 @@ do
     ${bashExec} ${curDir}/job_handler.sh -u ${job} -f ${curDir}/${job}_config.xml \
     || exit ${E_UERROR}
 
-    # Cleanup Env
-    rm -rf ${viewName}.json ${curDir}/${job}_config.xml &> /dev/null
+    # cleanup tmpl env
+    rm -rf ${curDir}/${job}_config.xml &> /dev/null
 done
+
+# Cleanup Lst Env
+rm -rf ${curDir}/${viewName}.json
