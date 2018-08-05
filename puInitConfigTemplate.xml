@@ -70,7 +70,7 @@
     </hudson.tasks.Shell>
     <hudson.plugins.sonar.SonarRunnerBuilder plugin="sonar@2.3">
       <installationName>ep-sonar</installationName>
-      <project></project>
+      <project/>
       <properties>sonar.projectKey=com.sankuai:qcs_settle_r-settle-invoice
 sonar.projectName=qcs_settle_r-settle-invoice
 sonar.projectVersion=1.0.${BUILD_NUMBER}
@@ -79,16 +79,16 @@ sonar.sources=.
 sonar.inclusions=**/*.java,**/pom.xml
 sonar.sourceEncoding=UTF-8
 sonar.branch=${GIT_BRANCH}</properties>
-      <javaOpts></javaOpts>
-      <additionalArguments></additionalArguments>
+      <javaOpts/>
+      <additionalArguments/>
       <jdk>(Inherit From Job)</jdk>
       <sonarRunnerName>sonar-runner</sonarRunnerName>
-      <task></task>
+      <task/>
     </hudson.plugins.sonar.SonarRunnerBuilder>
   </builders>
   <publishers>
     <com.sankuai.meituan.ep.jenkins.notify.DxNotifier plugin="dx-notify-plugin@1.0.3">
-      <recipients></recipients>
+      <recipients/>
       <contentFile>sonar_info</contentFile>
       <removeDefaultTitleIfContentIsNotEmpty>false</removeDefaultTitleIfContentIsNotEmpty>
       <notifyUsersStarted>true</notifyUsersStarted>
