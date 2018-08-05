@@ -28,9 +28,9 @@ user_access(){
 }
 
 cu_hooks_StashWebhookToJenkins(){
+    # Disabled -X DELETE, Enabled -X PUT
     act=`(( ${#1} < 6 )) && echo "enabling" || echo "disabling"`
     echo_ "$act $repo_name Stash Webhook to Jenkins"
-    # Disabled -X DELETE, Enabled -X PUT
     curl -s -X ${1} "${qcs_repo}/${repo_name}/${hook_key_ap}/enabled" -H "${cookie_var}"
     echo -e "\nop $repo_name done..\n"
 }
