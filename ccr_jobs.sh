@@ -10,7 +10,7 @@ E_CERROR=129
 
 # Check parm
 if [ $# -ne 1 ]; then
-   echo "Usage: ${BASH_SOURCE[0]} pu|pr"
+   echo "Usage: ${BASH_SOURCE[0]} pu|pr|prt"
    exit ${NOARGS}
 fi
 
@@ -36,6 +36,9 @@ case "$configSwitch" in
     ;;
 "pr")
     jobSuf="_static-analyze-pr"
+    ;;
+"prt")
+    jobSuf="_test_static-analyze-pr"
     ;;
 * )
     echo "Please specify valid action."

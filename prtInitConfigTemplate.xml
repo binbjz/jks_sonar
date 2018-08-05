@@ -73,7 +73,7 @@
       <repositoryName>qcs.r.settle.invoice</repositoryName>
       <ciSkipPhrases>NO INSPECT</ciSkipPhrases>
       <ciBuildPhrases>inspect this please</ciBuildPhrases>
-      <targetBranchesToBuild>master</targetBranchesToBuild>
+      <targetBranchesToBuild>test</targetBranchesToBuild>
       <ignoreSsl>false</ignoreSsl>
       <checkDestinationCommit>false</checkDestinationCommit>
       <checkMergeable>false</checkMergeable>
@@ -85,7 +85,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-        <command>echo "http://sonar.ep.sankuai.com/dashboard/index/com.sankuai:qcs_all:<repo_name>" &gt; sonar_info</command>
+        <command>echo "http://sonar.ep.sankuai.com/dashboard/index/com.sankuai:qcs_all:<repo_name>:${GIT_BRANCH}" &gt; sonar_info</command>
     </hudson.tasks.Shell>
     <hudson.plugins.sonar.SonarRunnerBuilder plugin="sonar@2.3">
       <installationName>ep-sonar</installationName>

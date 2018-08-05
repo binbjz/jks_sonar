@@ -18,7 +18,7 @@ export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
 # Check parm
 if [ $# -ne 1 ]; then
-   echo "Usage: ${BASH_SOURCE[0]} pu|pr"
+   echo "Usage: ${BASH_SOURCE[0]} pu|pr|prt"
    exit ${NOARGS}
 fi
 
@@ -26,6 +26,7 @@ fi
 configSwitch=$1
 puConfigTemplate="puInitConfigTemplate.xml"
 prConfigTemplate="prInitConfigTemplate.xml"
+prtConfigTemplate="prtInitConfigTemplate.xml"
 
 case "$configSwitch" in
 "pu")
@@ -33,8 +34,12 @@ case "$configSwitch" in
     configTemplate=${puConfigTemplate}
     ;;
 "pr")
-    # using pull request config template
+    # using pr master config template
     configTemplate=${prConfigTemplate}
+    ;;
+"prt")
+    # using pr test config template
+    configTemplate=${prtConfigTemplate}
     ;;
 * )
     echo "Please specify valid config template type."
@@ -88,8 +93,10 @@ do
     # specify suffix
     if [[ "$configSwitch" == "pu" ]]; then
         jobSuf="_static-analyze-push"
-    else
+    elif [[ "$configSwitch" == "pr" ]]; then
         jobSuf="_static-analyze-pr"
+    else
+        jobSuf="_test_static-analyze-pr"
     fi
 
     # create job to access sonar
