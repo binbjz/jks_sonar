@@ -10,9 +10,10 @@ cookie_var=`cat <<-SETVAR
 <input your cookie here>
 SETVAR`
 
-# User with repo permission
+# User with repo permission, Stash webhook switch.
 user_account="sonar"
 user_permission=( REPO_READ REPO_WRITE REPO_ADMIN )
+swh_switch=( PUT DELETE )
 
 # Hook rest url
 qcs_repo="http://git.sankuai.com/beijing/rest/api/2.0/projects/qcs/repos"
@@ -21,15 +22,16 @@ hook_key_ap="settings/hooks/com.nerdwin15.stash-stash-webhook-jenkins%3AjenkinsP
 
 user_access(){
     # Required -> -H "Accept: application/json, text/javascript, */*; q=0.01"
-    echo_ "adding $user_account into $repo_name with permission:${user_permission[0]}"
-    curl -s -X PUT "${qcs_repo}/${repo_name}/permissions/users?permission=${user_permission[0]}&name=${user_account}" -H "${cookie_var}" -H "Accept: application/json, text/javascript, */*; q=0.01"
+    echo_ "adding ${1} into $repo_name with permission:${2}"
+    curl -s -X PUT "${qcs_repo}/${repo_name}/permissions/users?permission=${2}&name=${1}" -H "${cookie_var}" -H "Accept: application/json, text/javascript, */*; q=0.01"
     echo -e "op $repo_name done..\n"
 }
 
 cu_hooks_StashWebhookToJenkins(){
-    echo_ "disabling $repo_name Stash Webhook to Jenkins"
+    act=`(( ${#1} < 6 )) && echo "enabling" || echo "disabling"`
+    echo_ "$act $repo_name Stash Webhook to Jenkins"
     # Disabled -X DELETE, Enabled -X PUT
-    curl -s -X DELETE "${qcs_repo}/${repo_name}/${hook_key_ap}/enabled" -H "${cookie_var}"
+    curl -s -X ${1} "${qcs_repo}/${repo_name}/${hook_key_ap}/enabled" -H "${cookie_var}"
     echo -e "\nop $repo_name done..\n"
 }
 
@@ -51,6 +53,11 @@ echo_(){
 }
 
 hook_config_proc(){
+    # Http payload
+    jenkinsBase="http://ci.sankuai.com/"
+    gitRepoUrl="ssh://git@git.sankuai.com/qcs/${repo_name}.git"
+    ignoreCommitters=""
+
     # Stash Webhook for Build from
     #branchOptions:"whitelist"
     #branchOptionsBranches:"master test"
@@ -60,13 +67,6 @@ hook_config_proc(){
     #branchOptionsBranches:""
 
     # Stash Webhook for Ignore from
-    #branchOptions="blacklist"
-    #branchOptionsBranches="master test"
-
-    # Http payload
-    jenkinsBase="http://ci.sankuai.com/"
-    gitRepoUrl="ssh://git@git.sankuai.com/qcs/${repo_name}.git"
-    ignoreCommitters=""
     branchOptions="blacklist"
     branchOptionsBranches="master test"
 
@@ -74,10 +74,10 @@ hook_config_proc(){
     payload_json=$(printf "$payload" "$jenkinsBase" "$gitRepoUrl" "$ignoreCommitters" "$branchOptions" "$branchOptionsBranches")
 
     # Repo permission
-    user_access
+    user_access ${user_account} ${user_permission[0]}
 
     # Stash Webhook to Jenkins
-    cu_hooks_StashWebhookToJenkins
+    cu_hooks_StashWebhookToJenkins ${swh_switch[1]}
     #config_hooks_StashWebhookToJenkins
 
     # Webhook with event
