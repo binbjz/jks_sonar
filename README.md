@@ -39,8 +39,9 @@ This project was written in **bash**, **python** and **xml**.
 
 * **repo handler** to generate repo template, **dispatcher** modify **temp config template**
 * according to the specified parameters and then calls **handler** with **repo template** to access.
-* puInitConfigTemplate.xml is pu config tmpl - access sonar with manual, crontab or push.
-* prInitConfigTemplate.xml is pr config tmpl - access sonar with pull request.
+* puInitConfigTemplate.xml is push config tmpl - access sonar with manual, crontab or push.
+* prInitConfigTemplate.xml is pr config tmpl - access sonar with pr to master.
+* prtInitConfigTemplate.xml is pr config tmpl - access sonar with pr to test.
 
 
 ----
@@ -139,9 +140,14 @@ This project was written in **bash**, **python** and **xml**.
     $ bash job_dispatcher.sh pu
     ```
 
-3. **access sonar by jenkins with pull request to trigger**
+3. **access sonar by jenkins with pull request to master to trigger**
     ```sh
     $ bash job_dispatcher.sh pr
+    ```
+
+4. **access sonar by jenkins with pull request to test to trigger**
+    ```sh
+    $ bash job_dispatcher.sh prt
     ```
 
 
