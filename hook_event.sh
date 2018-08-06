@@ -84,7 +84,7 @@ hook_config_proc(){
     config_hooks_code_events
 }
 
-# Execution flow
+# Executing Process
 rt="repoTemplate.txt"
 while read repo_name;
 do
