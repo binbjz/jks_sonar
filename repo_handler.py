@@ -93,7 +93,7 @@ def mul_proc_exec(filename, repo_list, arg_func):
         p.start()
 
 
-def main_proc():
+def main_gen_proc():
     repo_data = get_qcs_repo_data(url)
 
     # write json data into json file
@@ -112,4 +112,4 @@ def main_proc():
 
 
 if __name__ == "__main__":
-    main_proc()
+    main_gen_proc()
