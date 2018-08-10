@@ -47,7 +47,7 @@ def read_file(filename):
         sys.exit(1)
 
 
-def main_proc():
+def main_diff_proc():
     # write diff into html
     diff_1 = read_file(diff1)
     diff_2 = read_file(diff2)
@@ -58,4 +58,4 @@ def main_proc():
 
 
 if __name__ == "__main__":
-    main_proc()
+    main_diff_proc()
