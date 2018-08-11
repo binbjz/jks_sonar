@@ -18,7 +18,7 @@ export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
 # Check parm
 if [ $# -ne 1 ]; then
-   echo "Usage: ${BASH_SOURCE[0]} pu|pr|prt"
+   echo "Usage: ${BASH_SOURCE[0]} pu|prm|prt"
    exit ${NOARGS}
 fi
 
@@ -33,7 +33,7 @@ case "$configSwitch" in
     # using pu config template
     configTemplate=${puConfigTemplate}
     ;;
-"pr")
+"prm")
     # using pr master config template
     configTemplate=${prConfigTemplate}
     ;;
@@ -93,7 +93,7 @@ do
     # specify suffix
     if [[ "$configSwitch" == "pu" ]]; then
         jobSuf="_static-analyze-push"
-    elif [[ "$configSwitch" == "pr" ]]; then
+    elif [[ "$configSwitch" == "prm" ]]; then
         jobSuf="_static-analyze-pr"
     else
         jobSuf="_test_static-analyze-pr"

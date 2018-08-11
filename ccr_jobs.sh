@@ -2,6 +2,7 @@
 #filename: ccr_jobs.sh
 #
 #desc: This is a very dangerous script, it will remove all jobs with qcs concurrently.
+#prm - pull request to master, prt - pull request to test
 #
 
 NOARGS=65
@@ -10,7 +11,7 @@ E_CERROR=129
 
 # Check parm
 if [ $# -ne 1 ]; then
-   echo "Usage: ${BASH_SOURCE[0]} pu|pr|prt"
+   echo "Usage: ${BASH_SOURCE[0]} pu|prm|prt"
    exit ${NOARGS}
 fi
 
@@ -34,7 +35,7 @@ case "$configSwitch" in
 "pu")
     jobSuf="_static-analyze-push"
     ;;
-"pr")
+"prm")
     jobSuf="_static-analyze-pr"
     ;;
 "prt")
