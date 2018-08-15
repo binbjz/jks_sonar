@@ -43,7 +43,8 @@ do
 
     # update job config
     ${bashExec} ${curDir}/job_handler.sh -u ${job} -f ${curDir}/${job}_config.xml \
-    || exit ${E_UERROR}
+    && echo "op ${job} done.." || exit ${E_UERROR}
+    echo
 
     # cleanup tmpl env
     rm -rf ${curDir}/${job}_config.xml &> /dev/null
