@@ -6,7 +6,7 @@
 
 E_RERROR=61
 E_UERROR=62
-STIME=1
+S_TIME=1
 
 # Git auth
 export misId="<misid>"
@@ -35,7 +35,7 @@ for job in ${view_list}
 do
     # acquire job config
     ${bashExec} ${curDir}/job_handler.sh -r ${job} || exit ${E_RERROR}
-    sleep ${STIME}
+    sleep ${S_TIME}
 
     # update config template
     sed -ri "1,/<\/?recipients.*/{s/<\/?recipients.*/<recipients>${rl}<\/recipients>/}" \
