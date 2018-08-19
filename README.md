@@ -49,8 +49,7 @@ This project was written in **bash**, **python** and **xml**.
 ## How It Generates Repo Template and Compares Different Time Repo
 
 * repo handler allow you to generate repo list which contains qcs all repos.
-* repo handler allow you to compare different time periods repos which contains qcs all repos,
-* and generate diff html to show you.
+* repo handler allow you to compare different time periods repos which contains qcs all repos, and generate diff html to show you.
 
 1. **generate repo list and compare different time periods repos**
     ```sh
