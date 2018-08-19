@@ -5,8 +5,14 @@ qcs-driver-admission
 qcs-driver-ban
 qcs-driver-carmodel
 qcs-driver-control
+qcs-driver-gateway
+qcs-driver-growthapi
+qcs-driver-ovc
 qcs-driver-rcquery
+qcs-driver-regulation
 qcs-driver-sampling
+qcs-driver-security
+qcs-driver-transport
 qcs-rapi-enter
 qcs-rapi-lbs
 qcs-service-complicance
@@ -48,6 +54,7 @@ qcs.android.xpolling
 qcs.api.cfile
 qcs.api.cshare
 qcs.api.scene.degrade
+qcs.appeal.service
 qcs.auth.server
 qcs.avc.server
 qcs.biz.server
@@ -92,6 +99,7 @@ qcs.data.common
 qcs.data.dashboard
 qcs.data.dbrpc
 qcs.data.dremio
+qcs.data.dremioplus
 qcs.data.dw.common
 qcs.data.fe.dashboard
 qcs.data.fe.gulfstream
@@ -120,6 +128,7 @@ qcs.data.survey
 qcs.data.thor
 qcs.data.tool
 qcs.data.ups
+qcs.data.x-helper
 qcs.dispatch.algo
 qcs.dispatch.dpool
 qcs.dispatch.engine
@@ -141,6 +150,7 @@ qcs.dispatch.score
 qcs.dispatch.server
 qcs.dispatch.status
 qcs.dispatch.view
+qcs.emulation.dispatcher
 qcs.emulation.schedular
 qcs.fe.allsee
 qcs.fe.bear
@@ -295,17 +305,19 @@ qcs.regulation.shanghai
 qcs.regulation.shenzhen
 qcs.regulation.shwa
 qcs.regulation.traffic.fuzhou
-qcs.risk.client
-qcs.risk.cache
-qcs.rental.web
-qcs.regulation.xiamen
+qcs.regulation.wanganbu
 qcs.regulation.wenzhou
-qcs.risk.common
+qcs.regulation.xiamen
 qcs.rental.server
+qcs.rental.web
+qcs.risk.cache
+qcs.risk.client
+qcs.risk.common
 qcs.risk.compute
 qcs.risk.data
 qcs.risk.rt.datacleaning
 qcs.risk.server
+qcs.risk.spark
 qcs.risk.spark.streaming
 qcs.risk.storm
 qcs.risk.view
@@ -324,6 +336,7 @@ qcs.service.driver.score
 qcs.service.drivercenter
 qcs.service.ds
 qcs.service.functionoff
+qcs.service.graytool
 qcs.service.hubble
 qcs.service.im
 qcs.service.invoice
@@ -342,6 +355,7 @@ qcs.service.recruit
 qcs.service.ros
 qcs.service.toordercenter
 qcs.service.user
+qcs.service.usersafe
 qcs.service.uservisitlog
 qcs.service.virtual.phone
 qcs.settle.c.account
