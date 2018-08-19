@@ -12,8 +12,7 @@ This project was written in **bash**, **python** and **xml**.
 * Allow you to control **jenkins job** action.
 * Allow you to access **sonar by jenkins with manual, crontab or push to trigger**.
 * Allow you to access **sonar by jenkins with pull request to trigger**.
-* Get **repos which contains all qcs**.
-* Show different time periods repos with **HTML diff style**.
+* Get **repos which contains all qcs** and show different time periods repos with **HTML diff style**.
 * Configure **user access and hook** for git repository.
 * Update **Dx Recipients** for ci job in batches.
 
