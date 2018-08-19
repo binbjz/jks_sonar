@@ -15,7 +15,7 @@ export viewName="<view name>"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 export jobsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/json?tree=jobs[name]"
 
-# dx recipients list
+# dx recipients list, the separator must be a comma
 rl="zhaobin11,liying60"
 
 # Job list with specified view
