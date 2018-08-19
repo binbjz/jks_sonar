@@ -158,7 +158,7 @@ class DiffGenerator(object):
         diff_2 = self.read_file(repo_template_newer)
         self.diff_h(diff_1, diff_2)
 
-        # print diff to stdout
+        # redirect diff to stdout
         # self.diff_u(self.read_file(repo_template), self.read_file(repo_template_newer))
 
 
