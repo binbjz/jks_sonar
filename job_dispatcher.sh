@@ -25,7 +25,7 @@ fi
 # Specify config template
 configSwitch=$1
 puConfigTemplate="puInitConfigTemplate.xml"
-prConfigTemplate="prInitConfigTemplate.xml"
+prmConfigTemplate="prmInitConfigTemplate.xml"
 prtConfigTemplate="prtInitConfigTemplate.xml"
 
 case "$configSwitch" in
@@ -35,7 +35,7 @@ case "$configSwitch" in
     ;;
 "prm")
     # using pr master config template
-    configTemplate=${prConfigTemplate}
+    configTemplate=${prmConfigTemplate}
     ;;
 "prt")
     # using pr test config template
