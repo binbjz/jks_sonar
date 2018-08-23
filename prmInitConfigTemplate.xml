@@ -85,7 +85,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-        <command>echo "http://sonar.ep.sankuai.com/dashboard/index/com.sankuai:qcs_all:<repo_name>" &gt; sonar_info</command>
+        <command>echo "sonar" &gt; sonar_info</command>
     </hudson.tasks.Shell>
     <hudson.plugins.sonar.SonarRunnerBuilder plugin="sonar@2.3">
       <installationName>ep-sonar</installationName>

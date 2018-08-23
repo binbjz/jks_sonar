@@ -1,12 +1,12 @@
 #!/bin/bash
-#filename: job_update_dx.sh
+#filename: job_update_msg.sh
 #
-#desc: update dx recipient in batches.
+#desc: Configure dx recipient and sonar info dynamically.
 #
 
 E_RERROR=61
 E_UERROR=62
-S_TIME=1
+S_TIME=0.5
 
 # Git auth
 export misId="<misid>"
@@ -18,15 +18,19 @@ export jobsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/jso
 # dx recipients list, the separator must be a comma
 rl="zhaobin11,liying60"
 
+# Project and sonar msg prefix
+projectNamePrefix=( qcs_push_ qcs_pull_request_ )
+pbPrefix="http:\/\/sonar.ep.sankuai.com\/dashboard\/index\/com.sankuai"
+
+# parser and cur dir
+bashExec=`which bash`
+curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
 # Job list with specified view
 job_list(){
     curl -s -u ${misId}:${apiToken} -X POST ${jobsUrl} -o ${curDir}/${viewName}.json
     view_list=`jq -r .jobs ${viewName}.json | jq -r .[].name`
 }
-
-# parser and cur dir
-bashExec=`which bash`
-curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # Acquire job list
 job_list
@@ -37,11 +41,26 @@ do
     ${bashExec} ${curDir}/job_handler.sh -r ${job} || exit ${E_RERROR}
     sleep ${S_TIME}
 
-    # update config template
+    srv_name=`awk 'BEGIN {FS="_"} {print $1}' <<< ${job}`
+
+    if [[ ${job/-push/} != ${job} ]]; then
+        pbName="${projectNamePrefix[0]}${srv_name}:\${GIT_BRANCH}"
+    elif [[ ${job/_test_/} != ${job} ]]; then
+        pbName="${projectNamePrefix[1]}${srv_name}:\${GIT_BRANCH}"
+    else
+        pbName="${projectNamePrefix[1]}${srv_name}"
+    fi
+
+    # update sonar info
+    msg_cmd="echo \"${pbPrefix}:${pbName}\" > sonar_info"
+    sed -ri "1,/<\/?command.*/{s/<\/?command.*/<command>${msg_cmd}<\/command>/}" \
+    ${curDir}/${job}_config.xml
+
+    # update dx recipients
     sed -ri "1,/<\/?recipients.*/{s/<\/?recipients.*/<recipients>${rl}<\/recipients>/}" \
     ${curDir}/${job}_config.xml
 
-    # update job config
+    # update job
     ${bashExec} ${curDir}/job_handler.sh -u ${job} -f ${curDir}/${job}_config.xml \
     && echo "op ${job} done.." || exit ${E_UERROR}
     echo

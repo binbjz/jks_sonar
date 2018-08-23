@@ -8,7 +8,7 @@ NOARGS=65
 NOMATCH=122
 E_CERROR=129
 E_EMP=127
-STIME=1
+STIME=0.5
 
 # Define global var
 export misId="<misid>"

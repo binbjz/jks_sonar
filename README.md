@@ -26,8 +26,8 @@ This project was written in **bash**, **python** and **xml**.
 * **[How It Generates Repo Template and Compares Different Time Repo](#how-it-generates-repo-template-and-compares-different-time-repo)**
 * **[How To Run It For Job Handler](#how-to-run-it-for-job-handler)**
 * **[How To Run It For Job Dispatcher](#how-to-run-it-for-job-dispatcher)**
-* **[How To Configure user access and hook](#how-to-configure-user-access-and-hook)**
-* **[How To Update Dx Recipients](#how-to-update-dx-recipients)**
+* **[How To Configure user access And Hook](#how-to-configure-user-access-and-hook)**
+* **[How To Update Dx Recipients And Sonar Info](#how-to-update-dx-recipients-and-sonar-info)**
 
 
 ----
@@ -153,12 +153,12 @@ This project was written in **bash**, **python** and **xml**.
 ----
 
 
-## How To Update Dx Recipients
+## How To Update Dx Recipients And Sonar Info
 
-* Allow you to update dx recipients in batches.
-* Note: Please update dx recipients list and run it.
+* Allow you to configure dx recipient and sonar info dynamically.
+* Note: Please update dx recipients list first and run it.
 
-1. **update dx recipients**
+1. **update dx recipients and sonar info**
     ```sh
-    $ bash job_update_dx.sh
+    $ bash job_update_msg.sh
     ```
