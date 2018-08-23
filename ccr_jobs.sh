@@ -51,7 +51,7 @@ while read git_repo_name;
 do
     (
         echo "deleting $git_repo_name to sonar."
-        ${bashExec} ${curDir}/job_handler.sh -d ${git_repo_name}${jobSuf} || exit $E_CERROR
+        ${bashExec} ${curDir}/job_handler.sh -d ${git_repo_name}${jobSuf} || exit ${E_CERROR}
         echo "op $git_repo_name done.."
         echo
     ) &
