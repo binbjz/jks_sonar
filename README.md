@@ -127,7 +127,7 @@ This project was written in **bash**, **python** and **xml**.
 
 3. **access sonar by jenkins with pull request to master to trigger**
     ```sh
-    $ bash job_dispatcher.sh pr
+    $ bash job_dispatcher.sh prm
     ```
 
 4. **access sonar by jenkins with pull request to test to trigger**
