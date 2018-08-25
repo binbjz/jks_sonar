@@ -66,9 +66,11 @@ replace_kw(){
 rt="repoTemplate.txt"
 cs="com.sankuai"
 qcs_repo="ssh://git@git.sankuai.com/qcs/"
+pjk_suffix=":test"
 
 while read git_repo_name;
 do
+    # specify sonar project prefix
     if [[ "$configSwitch" == "pu" ]]; then
         projectNamePrefix="qcs_push_"
     else
@@ -83,14 +85,20 @@ do
     declare -A array_var
 
     array_var[repo_name]="$git_repo_name"
-    array_var[git_repo]="${qcs_repo}/${array_var[repo_name]}.git"
+    array_var[git_repo]="${qcs_repo}${array_var[repo_name]}.git"
     array_var[project_key]="${cs}:${projectNamePrefix}${array_var[repo_name]}"
     array_var[project_name]="${projectNamePrefix}${array_var[repo_name]}"
+
+    # sonar with pr test branch
+    if [[ "$configSwitch" == "prt" ]]; then
+        array_var[project_key]="${cs}:${projectNamePrefix}${array_var[repo_name]}${pjk_suffix}"
+        array_var[project_name]="${projectNamePrefix}${array_var[repo_name]}${pjk_suffix}"
+    fi
 
     # perform access action
     replace_kw ${array_var[repo_name]} ${array_var[git_repo]} ${array_var[project_key]} ${array_var[project_name]}
 
-    # specify suffix
+    # specify job suffix
     if [[ "$configSwitch" == "pu" ]]; then
         jobSuf="_static-analyze-push"
     elif [[ "$configSwitch" == "prm" ]]; then

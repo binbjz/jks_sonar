@@ -7,12 +7,14 @@ qcs-driver-carmodel
 qcs-driver-control
 qcs-driver-gateway
 qcs-driver-growthapi
+qcs-driver-manageanalysis
 qcs-driver-ovc
 qcs-driver-rcquery
 qcs-driver-regulation
 qcs-driver-sampling
 qcs-driver-security
 qcs-driver-transport
+qcs-rapi-enter
 qcs-rapi-enter
 qcs-rapi-lbs
 qcs-service-complicance
@@ -261,6 +263,7 @@ qcs.promotion.thirdpartcoupon
 qcs.prophet.demand
 qcs.punish.server
 qcs.r.android
+qcs.r.android.face
 qcs.r.api
 qcs.r.api.client
 qcs.r.api.enter
@@ -280,7 +283,6 @@ qcs.r.settle.common
 qcs.r.settle.invoice
 qcs.r.settle.monitor
 qcs.r.settle.pay
-qcs.r.settle.server
 qcs.r.settle.server
 qcs.r.settle.streaming
 qcs.r.settle.task
