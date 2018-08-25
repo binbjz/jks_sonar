@@ -41,6 +41,7 @@ do
     ${bashExec} ${curDir}/job_handler.sh -r ${job} || exit ${E_RERROR}
     sleep ${S_TIME}
 
+    # sonar info with specified branch
     srv_name=`awk 'BEGIN {FS="_"} {print $1}' <<< ${job}`
 
     if [[ ${job/-push/} != ${job} ]]; then
