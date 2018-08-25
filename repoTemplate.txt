@@ -370,8 +370,8 @@ qcs.thor.service
 qcs.thrift
 qcs.uc.client
 qcs.uc.web
-qcs.ugc.server
 qcs.ugc
+qcs.ugc.server
 qcs.ui
 qcs.vt.auto
 qcs.vt.web
