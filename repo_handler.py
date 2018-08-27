@@ -69,8 +69,8 @@ class RepoTplGenerator(object):
         """Sends a GET request and get json data"""
         try:
             res = requests.get(r_url, auth=(username, passwd), timeout=6)
-        except requests.exceptions as e:
-            logging.info("Exception occurred while connecting {}\n".format(r_url))
+        except requests.exceptions.RequestException as e:
+            logging.info(e)
             sys.exit(1)
 
         if not self.handle_requests_status(res):
@@ -84,6 +84,9 @@ class RepoTplGenerator(object):
         if repo_list is None:
             repo_list = []
 
+        if repo_res_data is None:
+            return
+
         rl = [l["slug"] for l in repo_res_data["values"]]
         repo_list.extend(rl)
         return repo_list
@@ -91,6 +94,9 @@ class RepoTplGenerator(object):
     def mul_proc_exec(self, filename, repo_list, arg_func):
         """More than one process be executed concurrently"""
         jobs = []
+        if repo_list is None:
+            return
+
         for rl in repo_list:
             p = multiprocessing.Process(target=arg_func, args=(filename, rl))
             jobs.append(p)
