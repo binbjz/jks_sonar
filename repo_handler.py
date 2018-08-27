@@ -56,13 +56,13 @@ class RepoTplGenerator(object):
     def handle_requests_status(self, res):
         """Handle http response status"""
         if res.status_code == requests.codes.ok:
-            logging.info("response status code: {0}".format(res.status_code))
+            logging.info("response status code: {:d}".format(res.status_code))
             return True
         elif res.status_code >= 500:
-            logging.info("request {0}: [{1}] {2}".format(res.url, res.status_code, res.content))
+            logging.info("request {:s}: [{:d}] {:s}".format(res.url, res.status_code, res.text))
             return False
         elif res.status_code >= 400:
-            logging.info("request {0}: [{1}] {2}".format(res.url, res.status_code, res.content))
+            logging.info("request {:s}: [{:d}] {:s}".format(res.url, res.status_code, res.text))
             return False
 
     def get_qcs_repo_data(self, r_url):
