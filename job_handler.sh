@@ -80,7 +80,7 @@ start_job(){
 start_job_with_parm(){
     # Note: if your job with string parm "branch", so you can use it.
     echo_ g "starting job -- $1"
-    curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/buildWithParameters?branch=$2
+    curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/buildWithParameters --data branch=$2
 }
 
 receive_job(){
