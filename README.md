@@ -103,7 +103,11 @@ This project was written in **bash**, **python** and **xml**.
     ```sh
     $ bash job_handler.sh -k <job name>
     ```
-
+    
+9. **check job build result**
+    ```sh
+    $ bash job_handler.sh -q <job name>
+    ```
 
 ----
 
