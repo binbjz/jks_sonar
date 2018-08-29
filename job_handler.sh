@@ -52,8 +52,9 @@ help_info(){
     echo_ g "       `basename $0` options (-p ) start jenkins job with specify jobName and parm."
     echo_ g "       `basename $0` options (-e ) enable jenkins job with specify jobName."
     echo_ g "       `basename $0` options (-k ) disable jenkins job with specify jobName."
+    echo_ g "       `basename $0` options (-q ) check jenkins job last build result with specify jobName."
     echo_ n ""
-    echo_ g "Example: `basename $0` (-c|-u) jobName -f config.xml | -s jobName | -s jobName -p jobParm | -d jobName | -r jobName | -e jobName | -k jobName"
+    echo_ g "Example: `basename $0` (-c|-u) jobName -f config.xml | -s jobName | -s jobName -p jobParm | -d jobName | -r jobName | -e jobName | -k jobName | -q jobName"
 }
 
 create_job(){
@@ -97,7 +98,12 @@ disable_job(){
     curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/disable
 }
 
-while getopts :c:u:s:p:f:d:r:e:k:h options
+check_job_build_result(){
+    echo_ g "checking job last build result -- ${1}"
+    curl -s -u ${misId}:${apiToken} ${jenkinsUrl}/${viewName}/job/${1}/lastBuild/api/json | jq -r .result
+}
+
+while getopts :c:u:s:p:f:d:r:e:k:q:h options
 do
     case ${options} in
       c)
@@ -126,6 +132,9 @@ do
           cOPTARG="$OPTARG";;
       k)
           oFlag=8
+          cOPTARG="$OPTARG";;
+      q)
+          oFlag=12
           cOPTARG="$OPTARG";;
       h)
           oFlag=9;;
@@ -156,7 +165,7 @@ check_config(){
     fi
 }
 
-# Start job with parm
+# Start job with specified action
 jobParm=${pOPTARG}
 
 if [[ "$oFlag" -eq 1 && "$fFlag" -eq 6 ]]; then
@@ -178,6 +187,8 @@ elif [[ "$oFlag" -eq 7 ]]; then
     enable_job ${jobN}
 elif [[ "$oFlag" -eq 8 ]]; then
     disable_job ${jobN}
+elif [[ "$oFlag" -eq 12 ]]; then
+    check_job_build_result ${jobN}
 elif [[ "$oFlag" -eq 9 ]]; then
     help_info
 else
