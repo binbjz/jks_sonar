@@ -114,9 +114,8 @@ This project was written in **bash**, **python** and **xml**.
 
 ## How To Run It For Job Dispatcher
 
-* Allow you to access sonar by jenkins with manual, crontab or push to trigger.
-* Allow you to access sonar by jenkins with pull request to trigger.
-* Allow you to generate repo template by using repo handler.
+* Allow you to access sonar by jenkins with manual, crontab or push to trigger for any branch.
+* Allow you to access sonar by jenkins with pull request to trigger for master or test branch .
 * Note: Please update git repository template and update user name and api token in handler.
 
 1. **view usage**
