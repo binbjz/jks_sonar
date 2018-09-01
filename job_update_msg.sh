@@ -1,12 +1,15 @@
 #!/bin/bash
 #filename: job_update_msg.sh
 #
-#desc: Configure dx recipient and sonar info dynamically.
+#desc: Configure dx recipient, sonar info and post notification dynamically.
 #
+
+set -e
+set +H
 
 E_RERROR=61
 E_UERROR=62
-S_TIME=0.5
+S_TIME=0.2
 
 # Git auth
 export misId="<misid>"
@@ -15,14 +18,27 @@ export viewName="<view name>"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 export jobsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/json?tree=jobs[name]"
 
-# dx recipients list, the separator must be a comma
+# Dx recipients list, the separator must be a comma
 rl="zhaobin11,liying60"
 
 # Project and sonar msg prefix
 projectNamePrefix=( qcs_push_ qcs_pull_request_ )
 pbPrefix="http:\/\/sonar.ep.sankuai.com\/dashboard\/index\/com.sankuai"
 
-# parser and cur dir
+# Build success and failure info
+bscVar=`cat <<-SETVAR
+Static code check success!\n\
+Access the url: [qcs_sonar_plat](<sonar_url>)\n\
+Check the latest inspection report!
+SETVAR`
+
+bfcVar=`cat <<-SETVAR
+Static code check failure!\n\
+Access the url: [\\${BUILD_TAG}](\\${BUILD_URL})\n\
+Check the error reason!
+SETVAR`
+
+# Parser and cur dir
 bashExec=`which bash`
 curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
@@ -53,12 +69,24 @@ do
     fi
 
     # update sonar info
-    msg_cmd="echo \"${pbPrefix}:${pbName}\" > sonar_info"
-    sed -ri "1,/<\/?command.*/{s/<\/?command.*/<command>${msg_cmd}<\/command>/}" \
+    msgCmd="echo \"${pbPrefix}:${pbName}\" > sonar_info"
+    sed -ri "1,/<\/?command.*/{s/<\/?command.*/<command>${msgCmd}<\/command>/}" \
     ${curDir}/${job}_config.xml
 
     # update dx recipients
     sed -ri "1,/<\/?recipients.*/{s/<\/?recipients.*/<recipients>${rl}<\/recipients>/}" \
+    ${curDir}/${job}_config.xml
+
+    # update build successful comment - just for pull request
+    sed -ri "s/<\/?buildSuccessfulComment.*/<buildSuccessfulComment>${bscVar}<\/buildSuccessfulComment>/" \
+    ${curDir}/${job}_config.xml
+
+    # update build failed comment - just for pull request
+    sed -ri "s/<\/?buildFailedComment.*/<buildFailedComment>${bfcVar}<\/buildFailedComment>/" \
+    ${curDir}/${job}_config.xml
+
+    # update sonar_url in build successful comment - just for pull request
+    sed -ri "1,/<sonar_url>/{s/<sonar_url>/${pbPrefix}:${pbName}/}" \
     ${curDir}/${job}_config.xml
 
     # update job

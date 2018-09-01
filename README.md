@@ -27,7 +27,7 @@ This project was written in **bash**, **python** and **xml**.
 * **[How To Run It For Job Handler](#how-to-run-it-for-job-handler)**
 * **[How To Run It For Job Dispatcher](#how-to-run-it-for-job-dispatcher)**
 * **[How To Configure user access And Hook](#how-to-configure-user-access-and-hook)**
-* **[How To Update Dx Recipients And Sonar Info](#how-to-update-dx-recipients-and-sonar-info)**
+* **[How To Update Dx Recipients And Sonar Info And Post Notification](#how-to-update-dx-recipients-and-sonar-info-and-post-notification)**
 
 
 ----
@@ -142,7 +142,7 @@ This project was written in **bash**, **python** and **xml**.
 ----
 
 
-## How To Configure user access and hook
+## How To Configure User Access And Hook
 
 * configure user with repo permission, configure Stash Webhook and Events to Jenkins.
 * It can only be used with valid cookie.
@@ -156,7 +156,7 @@ This project was written in **bash**, **python** and **xml**.
 ----
 
 
-## How To Update Dx Recipients And Sonar Info
+## How To Update Dx Recipients And Sonar Info And Post Notification
 
 * Allow you to configure dx recipient and sonar info dynamically.
 * Note: Please update dx recipients list first and run it.
