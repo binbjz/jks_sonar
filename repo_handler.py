@@ -26,8 +26,9 @@ username = "<misid>"
 passwd = "<password>"
 
 # Template file
-repo_template = "repoTemplate.txt"
-repo_template_newer = "repoTemplate_newer.txt"
+cur_dir = os.path.join(os.getcwd(), "source")
+repo_template_path = os.path.join(cur_dir, "repoTemplate.txt")
+repo_template_newer_path = os.path.join(cur_dir, "repoTemplate_newer.txt")
 time_format = "{0}_{1}".format(datetime.now().strftime("%m-%d_%H-%S"), datetime.now().microsecond)
 repos_file = "data_{0}.txt".format(time_format)
 
@@ -38,7 +39,7 @@ class RepoTplGenerator(object):
     """
 
     def __init__(self):
-        self.json_file = "repoInfo.json"
+        self.json_file = os.path.join(os.getcwd(), "source", "repoInfo.json")
         self.repo_url = "http://git.sankuai.com/rest/api/2.0/projects/qcs/repos?start=0&limit=1000"
 
     def write_json_to_file(self, filename, data):
@@ -68,7 +69,7 @@ class RepoTplGenerator(object):
     def get_qcs_repo_data(self, r_url):
         """Sends a GET request and get json data"""
         try:
-            res = requests.get(r_url, auth=(username, passwd), timeout=6)
+            res = requests.get(r_url, auth=(username, passwd), timeout=12)
         except requests.exceptions.RequestException as e:
             logging.info(e)
             sys.exit(1)
@@ -110,12 +111,12 @@ class RepoTplGenerator(object):
 
         # fetch all repo name in qcs and write them into repo template
         repo_lst = self.get_qcs_repo_list(repo_data)
-        if not os.path.exists(repo_template):
-            repo_template_temp = repo_template
+        if not os.path.exists(repo_template_path):
+            repo_template_temp = repo_template_path
         else:
-            repo_template_temp = repo_template_newer
-            if os.path.exists(repo_template_newer):
-                os.remove(repo_template_newer)
+            repo_template_temp = repo_template_newer_path
+            if os.path.exists(repo_template_newer_path):
+                os.remove(repo_template_newer_path)
 
         self.mul_proc_exec(repo_template_temp, repo_lst, self.write_data_to_file)
 
@@ -126,7 +127,7 @@ class DiffGenerator(object):
     """
 
     def __init__(self):
-        self.diff_html = "repoDiff.html"
+        self.diff_html = os.path.join(os.getcwd(), "source", "repoDiff.html")
 
     def diff_u(self, text1_lines, text2_lines):
         """Show only includes modified lines and a bit of context"""
@@ -160,12 +161,12 @@ class DiffGenerator(object):
 
     def main_diff_proc(self):
         # write diff into html
-        diff_1 = self.read_file(repo_template)
-        diff_2 = self.read_file(repo_template_newer)
+        diff_1 = self.read_file(repo_template_path)
+        diff_2 = self.read_file(repo_template_newer_path)
         self.diff_h(diff_1, diff_2)
 
         # redirect diff to stdout
-        # self.diff_u(self.read_file(repo_template), self.read_file(repo_template_newer))
+        # self.diff_u(self.read_file(repo_template_path), self.read_file(repo_template_newer_path))
 
 
 if __name__ == '__main__':

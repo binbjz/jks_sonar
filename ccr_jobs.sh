@@ -55,6 +55,6 @@ do
         echo "op $git_repo_name done.."
         echo
     ) &
-done < ${rt}
+done < ${curDir}/source/${rt}
 
 wait

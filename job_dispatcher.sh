@@ -59,7 +59,7 @@ replace_kw(){
              s#(<url>).*(</url>)#\1${2}\2#g; \
              s#(sonar.projectKey=).*#\1${3}#g; \
              s#(sonar.projectName=).*#\1${4}#g" \
-    ${configTemplate} > ${curDir}/${configTemplate}.$$
+    ${curDir}/conf/${configTemplate} > ${curDir}/${configTemplate}.$$
 }
 
 # Define repo template, project prefix and trigger job with specified action
@@ -134,4 +134,4 @@ do
     echo "op $jobName done.."
     echo
 
-done < ${rt}
+done < ${curDir}/source/${rt}
