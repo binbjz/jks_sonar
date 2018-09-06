@@ -11,12 +11,16 @@ E_RERROR=61
 E_UERROR=62
 S_TIME=0.2
 
+# Please uncomment the code block and update these parms
+# if you need to use this script alone.
+: <<COMMENTBLOCK
 # Git auth
 export misId="<misid>"
 export apiToken="<api token>"
 export viewName="<view name>"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 export jobsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/json?tree=jobs[name]"
+COMMENTBLOCK
 
 # Stash post build comment plugin
 stash_pr_plugin_var=`cat <<-SETVAR

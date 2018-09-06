@@ -25,6 +25,9 @@ rl="zhaobin11,liying60"
 projectNamePrefix=( qcs_push_ qcs_pull_request_ )
 pbPrefix="http:\/\/sonar.ep.sankuai.com\/dashboard\/index\/com.sankuai"
 
+# Sonar lang js for qcs.fe.* srv
+sonar_lang="js"
+
 # Build success and failure info
 bscVar=`cat <<-SETVAR
 Static code check success!\n\
@@ -42,6 +45,7 @@ SETVAR`
 bashExec=`which bash`
 curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
+
 # Job list with specified view
 job_list(){
     curl -s -u ${misId}:${apiToken} -X POST ${jobsUrl} -o ${curDir}/${viewName}.json
@@ -51,6 +55,10 @@ job_list(){
 # Acquire job list
 job_list
 
+# Update stash post build comment plugin
+${bashExec} job_update_plugin.sh
+
+# Update job with specified action
 for job in ${view_list}
 do
     # acquire job config
@@ -77,17 +85,20 @@ do
     sed -ri "1,/<\/?recipients.*/{s/<\/?recipients.*/<recipients>${rl}<\/recipients>/}" \
     ${curDir}/${job}_config.xml
 
-    # update build successful comment - just for pull request
+    # update stash post build successful comment - just for pull request
     sed -ri "s/<\/?buildSuccessfulComment.*/<buildSuccessfulComment>${bscVar}<\/buildSuccessfulComment>/" \
     ${curDir}/${job}_config.xml
 
-    # update build failed comment - just for pull request
+    # update stash post build failed comment - just for pull request
     sed -ri "s/<\/?buildFailedComment.*/<buildFailedComment>${bfcVar}<\/buildFailedComment>/" \
     ${curDir}/${job}_config.xml
 
     # update sonar_url in build successful comment - just for pull request
     sed -ri "1,/<sonar_url>/{s/<sonar_url>/${pbPrefix}:${pbName}/}" \
     ${curDir}/${job}_config.xml
+
+    # Note: update sonar language, it only works for qcs.fe.* srv
+    : sed -ri "/sonar\.inclusions/c\sonar\.language=${sonar_lang}" ${curDir}/${job}_config.xml
 
     # update job
     ${bashExec} ${curDir}/job_handler.sh -u ${job} -f ${curDir}/${job}_config.xml \
