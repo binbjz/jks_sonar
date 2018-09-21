@@ -47,7 +47,7 @@ curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 
 # Job list with specified view
-job_list(){
+function job_list(){
     curl -s -u ${misId}:${apiToken} -X POST ${jobsUrl} -o ${curDir}/${viewName}.json
     view_list=`jq -r .jobs ${viewName}.json | jq -r .[].name`
 }

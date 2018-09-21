@@ -52,7 +52,7 @@ bashExec=`which bash`
 curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # Replace kw with specified parm
-replace_kw(){
+function replace_kw(){
     sed -re "s#<repo_name>#${1}#g; \
              s#<misid>#${misId}#g; \
              s#(<repositoryName>).*(</repositoryName>)#\1${1}\2#g; \
