@@ -29,13 +29,13 @@ pbPrefix="http:\/\/sonar.ep.sankuai.com\/dashboard\/index\/com.sankuai"
 sonar_lang="js"
 
 # Build success and failure info
-bscVar=`cat <<-SETVAR
+bscVar=`cat <<- SETVAR
 Static code check success!\n\
 Access the url: [qcs_sonar_plat](<sonar_url>)\n\
 Check the latest inspection report!
 SETVAR`
 
-bfcVar=`cat <<-SETVAR
+bfcVar=`cat <<- SETVAR
 Static code check failure!\n\
 Access the url: [\\${BUILD_TAG}](\\${BUILD_URL})\n\
 Check the error reason!
@@ -43,11 +43,11 @@ SETVAR`
 
 # Parser and cur dir
 bashExec=`which bash`
-curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+curDir=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 
 # Job list with specified view
-function job_list(){
+function job_list() {
     curl -s -u ${misId}:${apiToken} -X POST ${jobsUrl} -o ${curDir}/${viewName}.json
     view_list=`jq -r .jobs ${viewName}.json | jq -r .[].name`
 }

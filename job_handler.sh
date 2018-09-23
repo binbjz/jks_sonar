@@ -13,7 +13,7 @@ E_NOCONF=128
 
 # Please uncomment the code block and update these parms
 # if you need to use this script alone.
-: <<COMMENTBLOCK
+: << COMMENTBLOCK
 # define local var
 misId="<misid>"
 apiToken="<api token>"
@@ -27,21 +27,21 @@ COMMENTBLOCK
 #viewName="结算组"
 #======
 
-function echo_(){
+function echo_() {
     if [ $# -ne "$ARGS" ]; then
         echo "Usage: $FUNCNAME (g|r) OutputString"
         exit ${E_ARGERROR}
     fi
 
     case "$1" in
-      g) echo -e "\033[2;36m$2\033[0m" ;;
-      r) echo -e "\033[2;31m$2\033[0m" ;;
-      n) echo ;;
-      *) echo "Please specify option \"g\" or \"r\"" ;;
+        g) echo -e "\033[2;36m$2\033[0m" ;;
+        r) echo -e "\033[2;31m$2\033[0m" ;;
+        n) echo ;;
+        *) echo "Please specify option \"g\" or \"r\"" ;;
     esac
 }
 
-function help_info(){
+function help_info() {
     echo_ g "Usage: `basename $0` options (-h) print help information"
     echo_ g "       `basename $0` options (-c) create jenkins job with specify jobName."
     echo_ g "       `basename $0` options (-u) update jenkins job with specify jobName."
@@ -57,48 +57,48 @@ function help_info(){
     echo_ g "Example: `basename $0` (-c|-u) jobName -f config.xml | -s jobName | -s jobName -p jobParm | -d jobName | -r jobName | -e jobName | -k jobName | -q jobName"
 }
 
-function create_job(){
+function create_job() {
     echo_ g "creating job -- ${1} with ${2##/*/}"
     curl -s -u ${misId}:${apiToken} -X POST "${jenkinsUrl}/${viewName}/createItem?name=${1}" --data-binary "@${2}" -H "Content-Type: text/xml"
 }
 
-function update_job(){
+function update_job() {
     echo_ g "updating job -- $1 with ${2##/*/}"
     curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/config.xml --data-binary "@${2}" -H "Content-Type: text/xml"
 }
 
-function delete_job(){
+function delete_job() {
     echo_ g "deleting job -- $1"
     curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/doDelete
 }
 
-function start_job(){
+function start_job() {
     echo_ g "starting job -- $1"
     curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/build
 }
 
-function start_job_with_parm(){
+function start_job_with_parm() {
     # Note: if your job with string parm "branch", so you can use it.
     echo_ g "starting job -- $1"
     curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/buildWithParameters --data branch=$2
 }
 
-function receive_job(){
+function receive_job() {
     echo_ g "receiving job -- ${1}"
     curl -s -u ${misId}:${apiToken} -X GET ${jenkinsUrl}/${viewName}/job/${1}/config.xml -o ${1}_config.xml
 }
 
-function enable_job(){
+function enable_job() {
     echo_ g "enabling job -- ${1}"
     curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/enable
 }
 
-function disable_job(){
+function disable_job() {
     echo_ g "disabling job -- ${1}"
     curl -s -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/disable
 }
 
-function check_job_build_result(){
+function check_job_build_result() {
     echo_ g "checking job last build result -- ${1}"
     curl -s -u ${misId}:${apiToken} ${jenkinsUrl}/${viewName}/job/${1}/lastBuild/api/json | jq -r .result
 }
@@ -106,44 +106,44 @@ function check_job_build_result(){
 while getopts :c:u:s:p:f:d:r:e:k:q:h options
 do
     case ${options} in
-      c)
-          oFlag=1
-          cOPTARG="$OPTARG";;
-      u)
-          oFlag=10
-          cOPTARG="$OPTARG";;
-      f)
-          fFlag=6
-          fOPTARG="$OPTARG";;
-      d)
-          oFlag=2
-          cOPTARG="$OPTARG";;
-      r)
-          oFlag=3
-          cOPTARG="$OPTARG";;
-      s)
-          oFlag=5
-          cOPTARG="$OPTARG";;
-      p)
-          oFlag=4
-          pOPTARG="$OPTARG";;
-      e)
-          oFlag=7
-          cOPTARG="$OPTARG";;
-      k)
-          oFlag=8
-          cOPTARG="$OPTARG";;
-      q)
-          oFlag=12
-          cOPTARG="$OPTARG";;
-      h)
-          oFlag=9;;
-     \?)
-          echo_ r "Unknow option $OPTARG";;
-      :)
-          echo_ r "No parameter value for option $OPTARG";;
-      *)
-          echo_ r "Unknow error while processing options";;
+        c)
+            oFlag=1
+            cOPTARG="$OPTARG" ;;
+        u)
+            oFlag=10
+            cOPTARG="$OPTARG" ;;
+        f)
+            fFlag=6
+            fOPTARG="$OPTARG" ;;
+        d)
+            oFlag=2
+            cOPTARG="$OPTARG" ;;
+        r)
+            oFlag=3
+            cOPTARG="$OPTARG" ;;
+        s)
+            oFlag=5
+            cOPTARG="$OPTARG" ;;
+        p)
+            oFlag=4
+            pOPTARG="$OPTARG" ;;
+        e)
+            oFlag=7
+            cOPTARG="$OPTARG" ;;
+        k)
+            oFlag=8
+            cOPTARG="$OPTARG" ;;
+        q)
+            oFlag=12
+            cOPTARG="$OPTARG" ;;
+        h)
+            oFlag=9 ;;
+        \?)
+            echo_ r "Unknow option $OPTARG" ;;
+        :)
+            echo_ r "No parameter value for option $OPTARG" ;;
+        *)
+            echo_ r "Unknow error while processing options" ;;
     esac
 done
 
@@ -151,14 +151,14 @@ done
 jobN=${cOPTARG}
 configTemplate=${fOPTARG}
 
-function check_jobname(){
+function check_jobname() {
     if [[ -z ${jobN} ]]; then
         echo_ r "** Please specify job name."
         exit ${E_NOJOB}
     fi
 }
 
-function check_config(){
+function check_config() {
     if [[ ! -e "${configTemplate}" ]]; then
         echo_ r "** Please specify valid config Template."
         exit ${E_NOCONF}

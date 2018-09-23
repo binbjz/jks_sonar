@@ -18,8 +18,8 @@ export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
 # Check parm
 if [ $# -ne 1 ]; then
-   echo "Usage: ${BASH_SOURCE[0]} pu|prm|prt"
-   exit ${NOARGS}
+    echo "Usage: ${BASH_SOURCE[0]} pu|prm|prt"
+    exit ${NOARGS}
 fi
 
 # Specify config template
@@ -29,30 +29,30 @@ prmConfigTemplate="prmInitConfigTemplate.xml"
 prtConfigTemplate="prtInitConfigTemplate.xml"
 
 case "$configSwitch" in
-"pu")
-    # using pu config template
-    configTemplate=${puConfigTemplate}
+    "pu")
+        # using pu config template
+        configTemplate=${puConfigTemplate}
     ;;
-"prm")
-    # using pr master config template
-    configTemplate=${prmConfigTemplate}
+    "prm")
+        # using pr master config template
+        configTemplate=${prmConfigTemplate}
     ;;
-"prt")
-    # using pr test config template
-    configTemplate=${prtConfigTemplate}
+    "prt")
+        # using pr test config template
+        configTemplate=${prtConfigTemplate}
     ;;
-* )
-    echo "Please specify valid config template type."
-    exit ${NOMATCH}
+    *)
+        echo "Please specify valid config template type."
+        exit ${NOMATCH}
     ;;
 esac
 
 # Job suffix and cur dir
 bashExec=`which bash`
-curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+curDir=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 # Replace kw with specified parm
-function replace_kw(){
+function replace_kw() {
     sed -re "s#<repo_name>#${1}#g; \
              s#<misid>#${misId}#g; \
              s#(<repositoryName>).*(</repositoryName>)#\1${1}\2#g; \
@@ -84,15 +84,15 @@ do
     # define job parm and job list to access sonar
     declare -A array_var
 
-    array_var[repo_name]="$git_repo_name"
-    array_var[git_repo]="${qcs_repo}${array_var[repo_name]}.git"
-    array_var[project_key]="${cs}:${projectNamePrefix}${array_var[repo_name]}"
-    array_var[project_name]="${projectNamePrefix}${array_var[repo_name]}"
+    array_var [ repo_name ] = "$git_repo_name"
+    array_var [ git_repo ] = "${qcs_repo}${array_var[repo_name]}.git"
+    array_var [ project_key ] = "${cs}:${projectNamePrefix}${array_var[repo_name]}"
+    array_var [ project_name ] = "${projectNamePrefix}${array_var[repo_name]}"
 
     # sonar with pr test branch
     if [[ "$configSwitch" == "prt" ]]; then
-        array_var[project_key]="${cs}:${projectNamePrefix}${array_var[repo_name]}${pjk_suffix}"
-        array_var[project_name]="${projectNamePrefix}${array_var[repo_name]}${pjk_suffix}"
+        array_var [ project_key ] = "${cs}:${projectNamePrefix}${array_var[repo_name]}${pjk_suffix}"
+        array_var [ project_name ] = "${projectNamePrefix}${array_var[repo_name]}${pjk_suffix}"
     fi
 
     # perform access action
@@ -120,18 +120,17 @@ do
     if [[ "$configSwitch" == "pu" ]]; then
         # we will not trigger it by manual or crontab for the moment
         :
-        # sleep ${STIME}
+    # sleep ${STIME}
 
-        # build
-        # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
+    # build
+    # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
 
-        # build with parameters
-        # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p test
+    # build with parameters
+    # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p test
     fi
 
     # cleanup env
     rm -rf ${curDir}/${configTemplate}.$$ &> /dev/null
     echo "op $jobName done.."
     echo
-
 done < ${curDir}/source/${rt}

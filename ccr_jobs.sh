@@ -11,8 +11,8 @@ E_CERROR=129
 
 # Check parm
 if [ $# -ne 1 ]; then
-   echo "Usage: ${BASH_SOURCE[0]} pu|prm|prt"
-   exit ${NOARGS}
+    echo "Usage: ${BASH_SOURCE[0]} pu|prm|prt"
+    exit ${NOARGS}
 fi
 
 # Global var
@@ -24,7 +24,7 @@ export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 # Job exec and ops path
 configSwitch=$1
 bashExec=`which bash`
-curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+curDir=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 # Repo template
 #rt="repoTemplate.txt"
@@ -32,28 +32,28 @@ rt="repoTemplate_newer.txt"
 
 # Job suffix
 case "$configSwitch" in
-"pu")
-    jobSuf="_static-analyze-push"
+    "pu")
+        jobSuf="_static-analyze-push"
     ;;
-"prm")
-    jobSuf="_static-analyze-pr"
+    "prm")
+        jobSuf="_static-analyze-pr"
     ;;
-"prt")
-    jobSuf="_test_static-analyze-pr"
+    "prt")
+        jobSuf="_test_static-analyze-pr"
     ;;
-* )
-    echo "Please specify valid action."
-    exit ${NOMATCH}
+    *)
+        echo "Please specify valid action."
+        exit ${NOMATCH}
     ;;
 esac
 
 while read git_repo_name;
 do
     (
-        echo "deleting $git_repo_name to sonar."
-        ${bashExec} ${curDir}/job_handler.sh -d ${git_repo_name}${jobSuf} || exit ${E_CERROR}
-        echo "op $git_repo_name done.."
-        echo
+    echo "deleting $git_repo_name to sonar."
+    ${bashExec} ${curDir}/job_handler.sh -d ${git_repo_name}${jobSuf} || exit ${E_CERROR}
+    echo "op $git_repo_name done.."
+    echo
     ) &
 done < ${curDir}/source/${rt}
 

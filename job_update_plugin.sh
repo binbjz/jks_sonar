@@ -13,7 +13,7 @@ S_TIME=0.2
 
 # Please uncomment the code block and update these parms
 # if you need to use this script alone.
-: <<COMMENTBLOCK
+: << COMMENTBLOCK
 # Git auth
 export misId="<misid>"
 export apiToken="<api token>"
@@ -23,7 +23,7 @@ export jobsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/jso
 COMMENTBLOCK
 
 # Stash post build comment plugin
-stash_pr_plugin_var=`cat <<-SETVAR
+stash_pr_plugin_var=`cat <<- SETVAR
     <stashpullrequestbuilder.stashpullrequestbuilder.StashPostBuildComment plugin=\"stash-pullrequest-builder@1.6.0\">\n\
       <buildSuccessfulComment/>\n\
       <buildFailedComment/>\n\
@@ -32,10 +32,10 @@ SETVAR`
 
 # Parser and cur dir
 bashExec=`which bash`
-curDir=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+curDir=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 # Job list with specified view
-function job_list(){
+function job_list() {
     curl -s -u ${misId}:${apiToken} -X POST ${jobsUrl} -o ${curDir}/${viewName}.json
     view_list=`jq -r .jobs ${viewName}.json | jq -r .[].name`
 }
