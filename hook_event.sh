@@ -22,8 +22,6 @@ hook_key_ap="settings/hooks/com.nerdwin15.stash-stash-webhook-jenkins%3AjenkinsP
 old_rule="http%3A%2F%2Fci.sankuai.com%2Fgitlab%2Fbuild_now"
 new_rule="http%3A%2F%2Fqcs.ci.ee.test.sankuai.com%2Fgitlab%2Fbuild_now"
 
-http://git.sankuai.com/v1/bj/projects/QCS/repos/qcs.fe.c/settings/hooks-code
-
 function user_access() {
     # Required -> -H "Accept: application/json, text/javascript, */*; q=0.01"
     echo_ "adding ${1} into $repo_name with permission:${2}"
