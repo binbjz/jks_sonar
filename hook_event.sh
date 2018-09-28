@@ -1,14 +1,13 @@
 #!/bin/bash
 #filename: hook_event.sh
 #
-#desc: This script will configure user with repo permission, configure Stash Webhook and
-#Events to Jenkins. It can only be used with valid cookie.
+#desc: This script will configure user with repo permission,
+# configure Stash Webhook and Events to Jenkins.
 #
 
-# Define cookie, Just for convenience
-cookie_var=`cat <<- SETVAR
-<input your cookie here>
-SETVAR`
+# Define Auth
+username="<misid>"
+passwd="<password>"
 
 # User with repo permission, Stash webhook switch.
 user_account="sonar"
@@ -16,14 +15,19 @@ user_permission=( REPO_READ REPO_WRITE REPO_ADMIN )
 swh_switch=( PUT DELETE )
 
 # Hook rest url
-qcs_repo="http://git.sankuai.com/beijing/rest/api/2.0/projects/qcs/repos"
+qcs_repo="http://git.sankuai.com/beijing/rest/api/2.0/projects/QCS/repos"
 hook_key_ap="settings/hooks/com.nerdwin15.stash-stash-webhook-jenkins%3AjenkinsPostReceiveHook"
 
+# Hook event rule
+old_rule="http%3A%2F%2Fci.sankuai.com%2Fgitlab%2Fbuild_now"
+new_rule="http%3A%2F%2Fqcs.ci.ee.test.sankuai.com%2Fgitlab%2Fbuild_now"
+
+http://git.sankuai.com/v1/bj/projects/QCS/repos/qcs.fe.c/settings/hooks-code
 
 function user_access() {
     # Required -> -H "Accept: application/json, text/javascript, */*; q=0.01"
     echo_ "adding ${1} into $repo_name with permission:${2}"
-    curl -s -X PUT "${qcs_repo}/${repo_name}/permissions/users?permission=${2}&name=${1}" -H "${cookie_var}" -H "Accept: application/json, text/javascript, */*; q=0.01"
+    curl -s -u ${username}:${passwd} -X PUT "${qcs_repo}/${repo_name}/permissions/users?permission=${2}&name=${1}" -H "Accept: application/json, text/javascript, */*; q=0.01"
     echo -e "op $repo_name done..\n"
 }
 
@@ -31,20 +35,20 @@ function cu_hooks_StashWebhookToJenkins() {
     # Disabled -X DELETE, Enabled -X PUT
     act=`((${#1} < 6)) && echo "enabling" || echo "disabling"`
     echo_ "$act $repo_name Stash Webhook to Jenkins"
-    curl -s -X ${1} "${qcs_repo}/${repo_name}/${hook_key_ap}/enabled" -H "${cookie_var}"
+    curl -s -u ${username}:${passwd} -X ${1} "${qcs_repo}/${repo_name}/${hook_key_ap}/enabled" -H "Content-Type: application/json"
     echo -e "\nop $repo_name done..\n"
 }
 
 function config_hooks_StashWebhookToJenkins() {
     # Required -> -H 'Content-Type: application/json'
     echo_ "configuring $repo_name Stash Webhook to Jenkins"
-    curl -s -X PUT "${qcs_repo}/${repo_name}/${hook_key_ap}/settings" -H "${cookie_var}" -H "Content-Type: application/json" --data-binary "${payload_json}"
+    curl -s -u ${username}:${passwd} -X PUT "${qcs_repo}/${repo_name}/${hook_key_ap}/settings" -H "Content-Type: application/json" --data-binary "${payload_json}"
     echo -e "\nop $repo_name done..\n"
 }
 
 function config_hooks_code_events() {
     echo_ "configuring $repo_name Webhook with event to Jenkins"
-    curl -s -X POST "${qcs_repo}/${repo_name}/webhook/create/1?url=http%3A%2F%2Fci.sankuai.com%2Fgitlab%2Fbuild_now" -H "Content-Type: application/json" -H "${cookie_var}"
+    curl -s -u ${username}:${passwd} -X POST "${qcs_repo}/${repo_name}/webhook/create/1?url=${new_rule}" -H "Content-Type: application/json"
     echo -e "\nop $repo_name done..\n"
 }
 
@@ -85,7 +89,7 @@ function hook_config_proc() {
 }
 
 # Executing Process
-rt="repoTemplate.txt"
+rt="repoTemplate_newer.txt"
 while read repo_name;
 do
     hook_config_proc
