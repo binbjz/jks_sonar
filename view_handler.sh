@@ -1,7 +1,7 @@
 #!/bin/bash
 #filename: view_handler.sh
 #
-#desc: This is a very dangerous script, it will enable or disable or remove all jobs with qcs view concurrently.
+#desc: This is a very dangerous script, it will enable or disable or remove all jobs with qcs view.
 #prm - pull request to master, prt - pull request to test
 #
 
