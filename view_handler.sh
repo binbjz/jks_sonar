@@ -38,7 +38,7 @@ case "$triggerType" in
         trigger_type="_static-analyze-pr"
     ;;
     *)
-        echo "Please specify valid trigger type (pu|prm|prt)."
+        echo "Please specify valid trigger type (pu|pr)."
         exit ${NOMATCH}
     ;;
 esac
