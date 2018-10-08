@@ -2,7 +2,7 @@
 #filename: view_handler.sh
 #
 #desc: This is a very dangerous script, it will enable or disable or remove all jobs with qcs view.
-#prm - pull request to master, prt - pull request to test
+#prm - pull request to master, pr - pull request
 #
 
 NOARGS=65
@@ -34,11 +34,8 @@ case "$triggerType" in
     "pu")
         trigger_type="_static-analyze-push"
     ;;
-    "prm")
+    "pr")
         trigger_type="_static-analyze-pr"
-    ;;
-    "prt")
-        trigger_type="_test_static-analyze-pr"
     ;;
     *)
         echo "Please specify valid trigger type (pu|prm|prt)."
