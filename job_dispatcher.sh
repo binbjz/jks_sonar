@@ -84,15 +84,15 @@ do
     # define job parm and job list to access sonar
     declare -A array_var
 
-    array_var [ repo_name ] = "$git_repo_name"
-    array_var [ git_repo ] = "${qcs_repo}${array_var[repo_name]}.git"
-    array_var [ project_key ] = "${cs}:${projectNamePrefix}${array_var[repo_name]}"
-    array_var [ project_name ] = "${projectNamePrefix}${array_var[repo_name]}"
+    array_var[repo_name]="$git_repo_name"
+    array_var[git_repo]="${qcs_repo}${array_var[repo_name]}.git"
+    array_var[project_key]="${cs}:${projectNamePrefix}${array_var[repo_name]}"
+    array_var[project_name]="${projectNamePrefix}${array_var[repo_name]}"
 
     # sonar with pr test branch
     if [[ "$configSwitch" == "prt" ]]; then
-        array_var [ project_key ] = "${cs}:${projectNamePrefix}${array_var[repo_name]}${pjk_suffix}"
-        array_var [ project_name ] = "${projectNamePrefix}${array_var[repo_name]}${pjk_suffix}"
+        array_var[project_key]="${cs}:${projectNamePrefix}${array_var[repo_name]}${pjk_suffix}"
+        array_var[project_name]="${projectNamePrefix}${array_var[repo_name]}${pjk_suffix}"
     fi
 
     # perform access action
