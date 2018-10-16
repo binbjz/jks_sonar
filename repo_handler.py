@@ -14,6 +14,7 @@ import difflib
 import requests
 import multiprocessing
 from datetime import datetime
+from requests.auth import HTTPBasicAuth
 
 # Default log handler
 logging.basicConfig(
@@ -43,19 +44,31 @@ class RepoTplGenerator(object):
         self.repo_url = "http://git.sankuai.com/rest/api/2.0/projects/qcs/repos?start=0&limit=1000"
 
     def write_json_to_file(self, filename, data):
-        """Write json data into file"""
+        """
+        Write json data into file
+        :param filename:
+        :param data: json data
+        """
         des_file = os.path.expanduser(filename)
         with open(des_file, "w+", encoding="utf-8") as fp:
             json.dump(data, fp, indent=2)
 
     def write_data_to_file(self, filename, data):
-        """Write normal data into file"""
+        """
+        Write normal data into file
+        :param filename:
+        :param data: normal text data
+        """
         des_file = os.path.expanduser(filename)
         with open(des_file, "a+", encoding="utf-8") as fp:
             fp.write(data + "\n")
 
     def handle_requests_status(self, res):
-        """Handle http response status"""
+        """
+        Handle http response status
+        :param res: response data
+        :return:
+        """
         if res.status_code == requests.codes.ok:
             logging.info("response status code: {:d}".format(res.status_code))
             return True
@@ -67,9 +80,14 @@ class RepoTplGenerator(object):
             return False
 
     def get_qcs_repo_data(self, r_url):
-        """Sends a GET request and get json data"""
+        """
+        Sends a GET request and get json data
+        :param r_url: repo url
+        :return:
+        """
         try:
-            res = requests.get(r_url, auth=(username, passwd), timeout=12)
+            _auth = HTTPBasicAuth(username, passwd)
+            res = requests.get(r_url, auth=_auth, timeout=12)
         except requests.exceptions.RequestException as e:
             logging.info(e)
             sys.exit(1)
@@ -81,7 +99,12 @@ class RepoTplGenerator(object):
         return res_data
 
     def get_qcs_repo_list(self, repo_res_data, repo_list=None):
-        """Get repo list which contains qcs all repos"""
+        """
+        Get repo list which contains qcs all repos
+        :param repo_res_data: repo response data
+        :param repo_list:
+        :return:
+        """
         if repo_list is None:
             repo_list = []
 
@@ -93,7 +116,12 @@ class RepoTplGenerator(object):
         return repo_list
 
     def mul_proc_exec(self, filename, repo_list, arg_func):
-        """More than one process be executed concurrently"""
+        """
+        More than one process be executed concurrently
+        :param filename: store repo list into filename
+        :param repo_list: qcs repo list
+        :param arg_func: Concurrent processing func
+        """
         jobs = []
         if repo_list is None:
             return
@@ -130,7 +158,11 @@ class DiffGenerator(object):
         self.diff_html = os.path.join(os.getcwd(), "source", "repoDiff.html")
 
     def diff_u(self, text1_lines, text2_lines):
-        """Show only includes modified lines and a bit of context"""
+        """
+        Show only includes modified lines and a bit of context
+        :param text1_lines:
+        :param text2_lines:
+        """
         diff = difflib.unified_diff(
             text1_lines,
             text2_lines,
@@ -139,7 +171,10 @@ class DiffGenerator(object):
         print('\n'.join(diff))
 
     def diff_h(self, text1_lines, text2_lines):
-        """Produces HTML output with the different information into Diff file"""
+        """Produces HTML output with the different information into Diff file
+        :param text1_lines:
+        :param text2_lines:
+        """
         d = difflib.HtmlDiff()
         result = d.make_file(text1_lines, text2_lines)
         try:
