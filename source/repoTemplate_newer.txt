@@ -1,5 +1,6 @@
 mt.weekly
 order-base
+order-operation
 qa-visual
 qcs-driver
 qcs-driver-admission
@@ -162,6 +163,7 @@ qcs.dispatch.status
 qcs.dispatch.view
 qcs.emulation.dispatcher
 qcs.emulation.schedular
+qcs.experiment
 qcs.fe.allsee
 qcs.fe.bear
 qcs.fe.c
@@ -216,6 +218,7 @@ qcs.ios.bdtts
 qcs.ios.c.common
 qcs.ios.c.ugc.common
 qcs.ios.carrier
+qcs.ios.commonpush
 qcs.ios.debugkit
 qcs.ios.emergency
 qcs.ios.features
@@ -232,6 +235,7 @@ qcs.ios.protectcrash
 qcs.ios.push
 qcs.ios.resmanager
 qcs.ios.robust
+qcs.ios.rtrecording
 qcs.ios.tencent.location
 qcs.ios.uicomponents
 qcs.ios.uranus
@@ -349,8 +353,8 @@ qcs.regulation.chengdu
 qcs.regulation.dispatch
 qcs.regulation.hangzhou
 qcs.regulation.jiaotongbu
-qcs.regulation.light
 qcs.regulation.nanjing
+qcs.regulation.light
 qcs.regulation.province
 qcs.regulation.quanzhou
 qcs.regulation.resty
