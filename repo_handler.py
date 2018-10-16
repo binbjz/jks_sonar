@@ -74,10 +74,10 @@ class RepoTplGenerator(object):
             logging.info("response status code: {:d}".format(res.status_code))
             return True
         elif res.status_code >= 500:
-            logging.info("request {:s}: [{:d}] {:s}".format(res.url, res.status_code, res.text))
+            logging.error("request {:s}: [{:d}] {:s}".format(res.url, res.status_code, res.text))
             return False
         elif res.status_code >= 400:
-            logging.info("request {:s}: [{:d}] {:s}".format(res.url, res.status_code, res.text))
+            logging.error("request {:s}: [{:d}] {:s}".format(res.url, res.status_code, res.text))
             return False
 
     def get_qcs_repo_data(self, r_url):
@@ -90,7 +90,7 @@ class RepoTplGenerator(object):
             _auth = HTTPBasicAuth(username, passwd)
             res = requests.get(r_url, auth=_auth, timeout=self.timeout)
         except requests.exceptions.RequestException as e:
-            logging.info(e)
+            logging.error(e)
             sys.exit(1)
 
         if not self.handle_requests_status(res):
@@ -169,7 +169,7 @@ class DiffGenerator(object):
             text2_lines,
             lineterm="",
         )
-        print('\n'.join(diff))
+        print("\n".join(diff))
 
     def diff_h(self, text1_lines, text2_lines):
         """Produces HTML output with the different information into Diff file
@@ -183,7 +183,7 @@ class DiffGenerator(object):
                 result_file.write(result)
                 logging.info("Write diff into {0} successfully".format(self.diff_html))
         except IOError as error:
-            logging.info("Error writing HTML file: {0}".format(error))
+            logging.error("Error writing HTML file: {0}".format(error))
 
     def read_file(self, filename):
         """Return a list of the lines in the string, breaking at line boundaries"""
@@ -192,7 +192,7 @@ class DiffGenerator(object):
                 text = fileHandle.read().splitlines()
             return text
         except IOError as error:
-            logging.info("Read file Error:" + str(error))
+            logging.error("Read file Error:" + str(error))
             sys.exit(1)
 
     def main_diff_proc(self):
@@ -205,6 +205,6 @@ class DiffGenerator(object):
         # self.diff_u(self.read_file(repo_template_path), self.read_file(repo_template_newer_path))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     RepoTplGenerator().main_gen_proc()
     DiffGenerator().main_diff_proc()
