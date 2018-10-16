@@ -40,6 +40,7 @@ class RepoTplGenerator(object):
     """
 
     def __init__(self):
+        self.timeout = (3.06, 26)
         self.json_file = os.path.join(os.getcwd(), "source", "repoInfo.json")
         self.repo_url = "http://git.sankuai.com/rest/api/2.0/projects/qcs/repos?start=0&limit=1000"
 
@@ -87,7 +88,7 @@ class RepoTplGenerator(object):
         """
         try:
             _auth = HTTPBasicAuth(username, passwd)
-            res = requests.get(r_url, auth=_auth, timeout=12)
+            res = requests.get(r_url, auth=_auth, timeout=self.timeout)
         except requests.exceptions.RequestException as e:
             logging.info(e)
             sys.exit(1)
@@ -168,7 +169,7 @@ class DiffGenerator(object):
             text2_lines,
             lineterm="",
         )
-        print('\n'.join(diff))
+        print("\n".join(diff))
 
     def diff_h(self, text1_lines, text2_lines):
         """Produces HTML output with the different information into Diff file
@@ -204,6 +205,6 @@ class DiffGenerator(object):
         # self.diff_u(self.read_file(repo_template_path), self.read_file(repo_template_newer_path))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     RepoTplGenerator().main_gen_proc()
     DiffGenerator().main_diff_proc()
