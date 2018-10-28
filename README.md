@@ -33,8 +33,8 @@ This project was written in **bash**, **python** and **xml**.
 
 
 ## How It Works
-
-* **repo handler** to generate repo template, **dispatcher** modify **temp config template**
+* **stash and org** to collect and analyze group mapping.
+* **repo handler** to generate temp template, **dispatcher** update **template info**
 * according to the specified parameters and then calls **handler** with **repo template** to access.
 * prInitConfigTemplate.xml is **pull request** config tmpl - access sonar with pull request to **master**.
 
