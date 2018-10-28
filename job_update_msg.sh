@@ -21,9 +21,10 @@ export jobsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/jso
 # Dx recipients list, the separator must be a comma
 rl="zhaobin11,liying60"
 
-# Project and sonar msg prefix
-projectNamePrefix=( qcs_push_ qcs_pull_request_ )
+# Sonar msg prefix and repo template
+#projectNamePrefix=( qcs_push_ qcs_pull_request_ )
 pbPrefix="http:\/\/sonar.ep.sankuai.com\/dashboard\/index\/com.sankuai"
+rt="stash_org_grp_success.csv"
 
 # Sonar lang js for qcs.fe.* srv
 sonar_lang="js"
@@ -61,52 +62,60 @@ ${bashExec} job_update_plugin.sh
 # Update job with specified action
 for job in ${view_list}
 do
-    # acquire job config
-    ${bashExec} ${curDir}/job_handler.sh -r ${job} || exit ${E_RERROR}
-    sleep ${S_TIME}
+    while read git_repo;
+    do
+        # acquire job config
+        ${bashExec} ${curDir}/job_handler.sh -r ${job} || exit ${E_RERROR}
+        sleep ${S_TIME}
 
-    # sonar info with specified branch
-    srv_name=`awk 'BEGIN {FS="_"} {print $1}' <<< ${job}`
+        # sonar info with specified branch
+        srv_name=`awk 'BEGIN {FS="_"} {print $1}' <<< ${job}`
 
-    if [[ ${job/-push/} != ${job} ]]; then
-        pbName="${projectNamePrefix[0]}${srv_name}:\${GIT_BRANCH}"
-    elif [[ ${job/_test_/} != ${job} ]]; then
-        pbName="${projectNamePrefix[1]}${srv_name}:\${GIT_BRANCH}"
-    else
-        pbName="${projectNamePrefix[1]}${srv_name}"
-    fi
+        # repo info from repo template
+        git_repo=$(awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}1' <<< ${git_repo})
+        git_repo_name=$(awk -F',' '{print $1}' <<< ${git_repo})
+        projectNamePrefix=$(awk -F',' '{print $4}' <<< ${git_repo})
+        if [[ ${git_repo_name} != ${srv_name} ]]; then
+            continue
+        else
+            pbName=${projectNamePrefix}_${srv_name}
+        fi
 
-    # update sonar info
-    msgCmd="echo \"${pbPrefix}:${pbName}\" > sonar_info"
-    sed -ri "1,/<\/?command.*/{s/<\/?command.*/<command>${msgCmd}<\/command>/}" \
-    ${curDir}/${job}_config.xml
+        # update sonar info
+        msgCmd="echo \"${pbPrefix}:${pbName}\" > sonar_info"
+        sed -ri "1,/<\/?command.*/{s/<\/?command.*/<command>${msgCmd}<\/command>/}" \
+        ${curDir}/${job}_config.xml
 
-    # update dx recipients
-    sed -ri "1,/<\/?recipients.*/{s/<\/?recipients.*/<recipients>${rl}<\/recipients>/}" \
-    ${curDir}/${job}_config.xml
+        # update dx recipients
+        sed -ri "1,/<\/?recipients.*/{s/<\/?recipients.*/<recipients>${rl}<\/recipients>/}" \
+        ${curDir}/${job}_config.xml
 
-    # update stash post build successful comment - just for pull request
-    sed -ri "s/<\/?buildSuccessfulComment.*/<buildSuccessfulComment>${bscVar}<\/buildSuccessfulComment>/" \
-    ${curDir}/${job}_config.xml
+        # update stash post build successful comment -> just for pull request
+        sed -ri "s/<\/?buildSuccessfulComment.*/<buildSuccessfulComment>${bscVar}<\/buildSuccessfulComment>/" \
+        ${curDir}/${job}_config.xml
 
-    # update stash post build failed comment - just for pull request
-    sed -ri "s/<\/?buildFailedComment.*/<buildFailedComment>${bfcVar}<\/buildFailedComment>/" \
-    ${curDir}/${job}_config.xml
+        # update stash post build failed comment -> just for pull request
+        sed -ri "s/<\/?buildFailedComment.*/<buildFailedComment>${bfcVar}<\/buildFailedComment>/" \
+        ${curDir}/${job}_config.xml
 
-    # update sonar_url in build successful comment - just for pull request
-    sed -ri "1,/<sonar_url>/{s/<sonar_url>/${pbPrefix}:${pbName}/}" \
-    ${curDir}/${job}_config.xml
+        # update sonar_url in build successful comment -> just for pull request
+        sed -ri "1,/<sonar_url>/{s/<sonar_url>/${pbPrefix}:${pbName}/}" ${curDir}/${job}_config.xml
 
-    # Note: update sonar language, it only works for qcs.fe.* srv
-    : sed -ri "/sonar\.inclusions/c\sonar\.language=${sonar_lang}" ${curDir}/${job}_config.xml
+        # Note: update sonar language, it only works for qcs.fe.* srv
+        # You can specify job view that only contains the qcs.fe.* srv and uncomment it
+        : sed -ri "/sonar\.inclusions/c\sonar\.language=${sonar_lang}" ${curDir}/${job}_config.xml
 
-    # update job
-    ${bashExec} ${curDir}/job_handler.sh -u ${job} -f ${curDir}/${job}_config.xml \
-    && echo "op ${job} done.." || exit ${E_UERROR}
-    echo
+        # update job
+        ${bashExec} ${curDir}/job_handler.sh -u ${job} -f ${curDir}/${job}_config.xml \
+        && echo "op ${job} done.." || exit ${E_UERROR}
+        echo
 
-    # cleanup tmpl env
-    rm -rf ${curDir}/${job}_config.xml &> /dev/null
+        # cleanup tmpl env
+        rm -rf ${curDir}/${job}_config.xml &> /dev/null
+
+        # Break template loop
+        break
+    done < ${curDir}/source/${rt}
 done
 
 # Cleanup Lst Env

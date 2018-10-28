@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# filename: repo_handler.py
+# filename: stash_repo_builder.py
 #
 # desc: First run, it will generate repo template as initial template,
 # after this it will generate latest repo template. and then it will compare
@@ -8,13 +8,15 @@
 
 import os
 import sys
-import json
 import logging
 import difflib
+
 import requests
 import multiprocessing
+from functools import partial
 from datetime import datetime
 from requests.auth import HTTPBasicAuth
+from jenkins_sonar.utils_tools import AuthHeaders, UtilityTools
 
 # Default log handler
 logging.basicConfig(
@@ -28,8 +30,8 @@ passwd = "<password>"
 
 # Template file
 cur_dir = os.path.join(os.getcwd(), "source")
-repo_template_path = os.path.join(cur_dir, "repoTemplate.txt")
-repo_template_newer_path = os.path.join(cur_dir, "repoTemplate_newer.txt")
+repo_template_init = os.path.join(cur_dir, "repo_template_init.txt")
+repo_template_newer = os.path.join(cur_dir, "repo_template_newer.txt")
 time_format = "{0}_{1}".format(datetime.now().strftime("%m-%d_%H-%S"), datetime.now().microsecond)
 repos_file = "data_{0}.txt".format(time_format)
 
@@ -40,29 +42,11 @@ class RepoTplGenerator(object):
     """
 
     def __init__(self):
-        self.timeout = (3.06, 26)
-        self.json_file = os.path.join(os.getcwd(), "source", "repoInfo.json")
+        self.auth = AuthHeaders()
+        self.utils = UtilityTools()
+        self.timeout = (12.06, 26)
+        self.json_file = os.path.join(os.getcwd(), "source", "repo_info.json")
         self.repo_url = "http://git.sankuai.com/rest/api/2.0/projects/qcs/repos?start=0&limit=1000"
-
-    def write_json_to_file(self, filename, data):
-        """
-        Write json data into file
-        :param filename:
-        :param data: json data
-        """
-        des_file = os.path.expanduser(filename)
-        with open(des_file, "w+", encoding="utf-8") as fp:
-            json.dump(data, fp, indent=2)
-
-    def write_data_to_file(self, filename, data):
-        """
-        Write normal data into file
-        :param filename:
-        :param data: normal text data
-        """
-        des_file = os.path.expanduser(filename)
-        with open(des_file, "a+", encoding="utf-8") as fp:
-            fp.write(data + "\n")
 
     def handle_requests_status(self, res):
         """
@@ -88,7 +72,7 @@ class RepoTplGenerator(object):
         """
         try:
             _auth = HTTPBasicAuth(username, passwd)
-            res = requests.get(r_url, auth=_auth, timeout=self.timeout)
+            res = self.auth.requests_retry_session().get(r_url, auth=_auth, timeout=self.timeout)
         except requests.exceptions.RequestException as e:
             logging.error(e)
             sys.exit(1)
@@ -118,7 +102,7 @@ class RepoTplGenerator(object):
 
     def mul_proc_exec(self, filename, repo_list, arg_func):
         """
-        More than one process be executed concurrently
+        More than one process be executed concurrently by using multiprocessing basics
         :param filename: store repo list into filename
         :param repo_list: qcs repo list
         :param arg_func: Concurrent processing func
@@ -132,22 +116,41 @@ class RepoTplGenerator(object):
             jobs.append(p)
             p.start()
 
+    def mul_proc_exec_v2(self, filename, repo_list, arg_func):
+        """
+        More than one process be executed concurrently by using processing pool
+        :param filename: store repo list into filename
+        :param repo_list: qcs repo list
+        :param arg_func: Concurrent processing func
+        """
+        pool_size = multiprocessing.cpu_count() * 3
+        pool = multiprocessing.Pool(
+            processes=pool_size,
+        )
+        if repo_list is None:
+            return
+
+        pool.map(partial(arg_func, filename), repo_list)
+        pool.close()
+        pool.join()
+
     def main_gen_proc(self):
         repo_data = self.get_qcs_repo_data(self.repo_url)
 
         # write json data into json file
-        # self.write_json_to_file(self.json_file, repo_data)
+        # self.utils.write_json_to_file(self.json_file, repo_data)
 
         # fetch all repo name in qcs and write them into repo template
         repo_lst = self.get_qcs_repo_list(repo_data)
-        if not os.path.exists(repo_template_path):
-            repo_template_temp = repo_template_path
+        if not os.path.exists(repo_template_init):
+            repo_template_temp = repo_template_init
         else:
-            repo_template_temp = repo_template_newer_path
-            if os.path.exists(repo_template_newer_path):
-                os.remove(repo_template_newer_path)
+            repo_template_temp = repo_template_newer
+            if os.path.exists(repo_template_newer):
+                os.remove(repo_template_newer)
 
-        self.mul_proc_exec(repo_template_temp, repo_lst, self.write_data_to_file)
+        self.mul_proc_exec(repo_template_temp, repo_lst, self.utils.write_data_to_file)
+        # self.mul_proc_exec_v2(repo_template_temp, repo_lst, self.utils.write_data_to_file)
 
 
 class DiffGenerator(object):
@@ -156,7 +159,8 @@ class DiffGenerator(object):
     """
 
     def __init__(self):
-        self.diff_html = os.path.join(os.getcwd(), "source", "repoDiff.html")
+        self.utils = UtilityTools()
+        self.diff_html = os.path.join(os.getcwd(), "source", "repo_diff.html")
 
     def diff_u(self, text1_lines, text2_lines):
         """
@@ -185,24 +189,15 @@ class DiffGenerator(object):
         except IOError as error:
             logging.error("Error writing HTML file: {0}".format(error))
 
-    def read_file(self, filename):
-        """Return a list of the lines in the string, breaking at line boundaries"""
-        try:
-            with open(filename, "r+") as fileHandle:
-                text = fileHandle.read().splitlines()
-            return text
-        except IOError as error:
-            logging.error("Read file Error:" + str(error))
-            sys.exit(1)
-
     def main_diff_proc(self):
         # write diff into html
-        diff_1 = self.read_file(repo_template_path)
-        diff_2 = self.read_file(repo_template_newer_path)
+        diff_1 = self.utils.read_file_to_list(repo_template_init)
+        diff_2 = self.utils.read_file_to_list(repo_template_newer)
         self.diff_h(diff_1, diff_2)
 
         # redirect diff to stdout
-        # self.diff_u(self.read_file(repo_template_path), self.read_file(repo_template_newer_path))
+        # self.diff_u(self.utils.read_file_to_list(repo_template_init),
+        #             self.utils.read_file_to_list(repo_template_newer))
 
 
 if __name__ == "__main__":

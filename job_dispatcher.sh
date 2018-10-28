@@ -1,7 +1,8 @@
 #!/bin/bash
 #filename: job_dispatcher.sh
 #
-#desc: access sonar by jenkins with manual, crontab, push or pull request to trigger.
+#desc: access sonar with grouping by pull request to trigger.
+#For now, just accessing and grouping by pull request with master branch.
 #
 
 NOARGS=65
@@ -11,35 +12,25 @@ E_EMP=127
 STIME=0.2
 
 # Define global var
-export misId="<misid>"
-export apiToken="<api token>"
-export viewName="<view name>"
+#export misId="<misid>"
+#export apiToken="<api token>"
+#export viewName="<view name>"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
 # Check parm
 if [ $# -ne 1 ]; then
-    echo "Usage: ${BASH_SOURCE[0]} pu|prm|prt"
+    echo "Usage: ${BASH_SOURCE[0]} prm"
     exit ${NOARGS}
 fi
 
 # Specify config template
 configSwitch=$1
-puConfigTemplate="puInitConfigTemplate.xml"
 prmConfigTemplate="prmInitConfigTemplate.xml"
-prtConfigTemplate="prtInitConfigTemplate.xml"
 
 case "$configSwitch" in
-    "pu")
-        # using pu config template
-        configTemplate=${puConfigTemplate}
-    ;;
     "prm")
         # using pr master config template
         configTemplate=${prmConfigTemplate}
-    ;;
-    "prt")
-        # using pr test config template
-        configTemplate=${prtConfigTemplate}
     ;;
     *)
         echo "Please specify valid config template type."
@@ -50,6 +41,7 @@ esac
 # Job suffix and cur dir
 bashExec=`which bash`
 curDir=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+jobSuf="_static-analyze-pr"
 
 # Replace kw with specified parm
 function replace_kw() {
@@ -63,49 +55,28 @@ function replace_kw() {
 }
 
 # Define repo template, project prefix and trigger job with specified action
-rt="repoTemplate.txt"
+rt="stash_org_grp_success.csv"
 cs="com.sankuai"
 qcs_repo="ssh://git@git.sankuai.com/qcs/"
-pjk_suffix=":test"
 
-while read git_repo_name;
+while read git_repo;
 do
     # specify sonar project prefix
-    if [[ "$configSwitch" == "pu" ]]; then
-        projectNamePrefix="qcs_push_"
-    else
-        projectNamePrefix="qcs_pull_request_"
-    fi
-
-    #if [[ ${git_repo_name/qcs_repo_name/} != $git_repo_name ]]; then
-    #    continue
-    #fi
+    # ﻿qcs.r.settle.common,gaoyang09,技术研发部-结算组,qcs_trd_settle
+    git_repo=$(awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}1' <<< ${git_repo})
+    git_repo_name=$(awk -F',' '{print $1}' <<< ${git_repo})
+    projectNamePrefix=$(awk -F',' '{print $4}' <<< ${git_repo})
 
     # define job parm and job list to access sonar
     declare -A array_var
 
     array_var[repo_name]="$git_repo_name"
     array_var[git_repo]="${qcs_repo}${array_var[repo_name]}.git"
-    array_var[project_key]="${cs}:${projectNamePrefix}${array_var[repo_name]}"
-    array_var[project_name]="${projectNamePrefix}${array_var[repo_name]}"
-
-    # sonar with pr test branch
-    if [[ "$configSwitch" == "prt" ]]; then
-        array_var[project_key]="${cs}:${projectNamePrefix}${array_var[repo_name]}${pjk_suffix}"
-        array_var[project_name]="${projectNamePrefix}${array_var[repo_name]}${pjk_suffix}"
-    fi
+    array_var[project_key]="${cs}:${projectNamePrefix}_${array_var[repo_name]}"
+    array_var[project_name]="${projectNamePrefix}_${array_var[repo_name]}"
 
     # perform access action
     replace_kw ${array_var[repo_name]} ${array_var[git_repo]} ${array_var[project_key]} ${array_var[project_name]}
-
-    # specify job suffix
-    if [[ "$configSwitch" == "pu" ]]; then
-        jobSuf="_static-analyze-push"
-    elif [[ "$configSwitch" == "prm" ]]; then
-        jobSuf="_static-analyze-pr"
-    else
-        jobSuf="_test_static-analyze-pr"
-    fi
 
     # create job to access sonar
     jobName=${array_var[repo_name]}${jobSuf}
@@ -120,13 +91,13 @@ do
     if [[ "$configSwitch" == "pu" ]]; then
         # we will not trigger it by manual or crontab for the moment
         :
-    # sleep ${STIME}
+        # sleep ${STIME}
 
-    # build
-    # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
+        # build
+        # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
 
-    # build with parameters
-    # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p test
+        # build with parameters
+        # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p test
     fi
 
     # cleanup env

@@ -1,5 +1,5 @@
 #!/bin/bash
-#filename: hook_event.sh
+#filename: stash_hook_event.sh
 #
 #desc: This script will configure user with repo permission,
 # configure Stash Webhook and Events to Jenkins.
@@ -87,7 +87,7 @@ function hook_config_proc() {
 }
 
 # Executing Process
-rt="repoTemplate_newer.txt"
+rt="repo_template_newer.txt"
 while read repo_name;
 do
     hook_config_proc

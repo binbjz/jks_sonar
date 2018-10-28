@@ -1,7 +1,7 @@
-# Jenkins controller and Sonar access
+# Jenkins controller and Sonar access with grouping
 
 
-It will control jenkins job and sonar access.
+It will control jenkins job and sonar access with grouping.
 
 This project was written in **bash**, **python** and **xml**.
 
@@ -10,7 +10,6 @@ This project was written in **bash**, **python** and **xml**.
 ### It _does..._
 
 * Allow you to control **jenkins job** action.
-* Allow you to access **sonar by jenkins with manual, crontab or push to trigger**.
 * Allow you to access **sonar by jenkins with pull request to trigger**.
 * Get **repos which contains all qcs** and show different time periods repos with **HTML diff style**.
 * Configure **user access and hook** for git repository.
@@ -37,9 +36,7 @@ This project was written in **bash**, **python** and **xml**.
 
 * **repo handler** to generate repo template, **dispatcher** modify **temp config template**
 * according to the specified parameters and then calls **handler** with **repo template** to access.
-* puInitConfigTemplate.xml is **push** config tmpl - access sonar with manual, crontab or push.
 * prInitConfigTemplate.xml is **pull request** config tmpl - access sonar with pull request to **master**.
-* prtInitConfigTemplate.xml is **pull request** config tmpl - access sonar with pull request to **test**.
 
 
 ----
@@ -114,7 +111,6 @@ This project was written in **bash**, **python** and **xml**.
 
 ## How To Run It For Job Dispatcher
 
-* Allow you to access sonar by jenkins with manual, crontab or push to trigger for any branch.
 * Allow you to access sonar by jenkins with pull request to trigger for master or test branch .
 * Note: Please update git repository template and update user name and api token in handler.
 
@@ -123,19 +119,9 @@ This project was written in **bash**, **python** and **xml**.
     $ bash job_dispatcher.sh
     ```
 
-2. **access sonar by jenkins with manual, crontab or push to trigger**
-    ```sh
-    $ bash job_dispatcher.sh pu
-    ```
-
-3. **access sonar by jenkins with pull request to master to trigger**
+2. **access sonar by jenkins with pull request to master to trigger**
     ```sh
     $ bash job_dispatcher.sh prm
-    ```
-
-4. **access sonar by jenkins with pull request to test to trigger**
-    ```sh
-    $ bash job_dispatcher.sh prt
     ```
 
 

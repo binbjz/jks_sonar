@@ -353,8 +353,8 @@ qcs.regulation.chengdu
 qcs.regulation.dispatch
 qcs.regulation.hangzhou
 qcs.regulation.jiaotongbu
-qcs.regulation.nanjing
 qcs.regulation.light
+qcs.regulation.nanjing
 qcs.regulation.province
 qcs.regulation.quanzhou
 qcs.regulation.resty
