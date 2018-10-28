@@ -2,7 +2,7 @@
 #filename: view_handler.sh
 #
 #desc: This is a very dangerous script, it will enable or disable or remove all jobs with qcs view.
-#prm - pull request to master, pr - pull request
+#pr - pull request, pu - push
 #
 
 NOARGS=65
@@ -17,9 +17,12 @@ if [ $# -ne 2 ]; then
 fi
 
 # Global var
-export misId="<misid>"
-export apiToken="<api token>"
-export viewName="<view name>"
+#export misId="<misid>"
+#export apiToken="<api token>"
+export misId="zhaobin11"
+export apiToken="f477aaf68c61e916d903665eb9743cac"
+#export viewName="<view name>"
+export viewName="PullRequest"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 export jobsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/json?tree=jobs[name]"
 
@@ -75,10 +78,17 @@ job_list
 # Trigger job with specified action
 for job in ${view_list}
 do
-    if [[ ${job/${trigger_type}/} != ${job} ]]; then
-        echo "$action_type $job to sonar."
-        ${bashExec} ${curDir}/job_handler.sh ${action_opt} ${job} || exit ${E_CERROR}
-        echo "op $job done.."
-        echo
-    fi
+    (
+        if [[ ${job/${trigger_type}/} != ${job} ]]; then
+            echo "$action_type $job to sonar."
+            ${bashExec} ${curDir}/job_handler.sh ${action_opt} ${job} || exit ${E_CERROR}
+            echo "op $job done.."
+            echo
+        fi
+    ) &
 done
+
+wait
+
+# Cleanup Lst Env
+rm -rf ${curDir}/${viewName}.json &> /dev/null
