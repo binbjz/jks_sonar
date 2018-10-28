@@ -102,7 +102,7 @@ class UtilityTools(object):
         """
         ssh://git@git.sankuai.com/qcs/qcs.fe.c.git
         :param git_address:
-        :return:
+        :return: git.sankuai.com/qcs/qcs.fe.c.git
         """
         pos = git_address.find("@")
         if -1 != pos:
