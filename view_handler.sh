@@ -19,10 +19,7 @@ fi
 # Global var
 #export misId="<misid>"
 #export apiToken="<api token>"
-export misId="zhaobin11"
-export apiToken="f477aaf68c61e916d903665eb9743cac"
 #export viewName="<view name>"
-export viewName="PullRequest"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 export jobsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/json?tree=jobs[name]"
 
