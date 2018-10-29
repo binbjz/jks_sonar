@@ -12,9 +12,9 @@ E_EMP=127
 STIME=0.2
 
 # Define global var
-#export misId="<misid>"
-#export apiToken="<api token>"
-#export viewName="<view name>"
+export misId="<misid>"
+export apiToken="<api token>"
+export viewName="<view name>"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
 # Check parm
