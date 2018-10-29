@@ -17,9 +17,9 @@ if [ $# -ne 2 ]; then
 fi
 
 # Global var
-#export misId="<misid>"
-#export apiToken="<api token>"
-#export viewName="<view name>"
+export misId="<misid>"
+export apiToken="<api token>"
+export viewName="<view name>"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 export jobsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/json?tree=jobs[name]"
 
