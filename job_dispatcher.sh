@@ -18,7 +18,7 @@ export viewName="<view name>"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
 # Check parm
-if [ $# -ne 1 ]; then
+if [[ $# -ne 1 ]]; then
     echo "Usage: ${BASH_SOURCE[0]} prm"
     exit ${NOARGS}
 fi

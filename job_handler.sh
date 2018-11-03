@@ -28,7 +28,7 @@ COMMENTBLOCK
 #======
 
 function echo_() {
-    if [ $# -ne "$ARGS" ]; then
+    if [[ $# -ne "$ARGS" ]]; then
         echo "Usage: $FUNCNAME (g|r) OutputString"
         exit ${E_ARGERROR}
     fi

@@ -11,7 +11,7 @@ NOMATCH2=123
 E_CERROR=129
 
 # Check parm
-if [ $# -ne 2 ]; then
+if [[ $# -ne 2 ]]; then
     echo "Usage: ${BASH_SOURCE[0]} (pu|pr) (enable|disable|delete)"
     exit ${NOARGS}
 fi
