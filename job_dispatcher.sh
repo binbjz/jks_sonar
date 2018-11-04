@@ -87,8 +87,8 @@ do
 
     sleep ${STIME}
 
-    # just build with pu job
-    if [[ "$configSwitch" == "pu" ]]; then
+    # just build with prm job
+    if [[ "$configSwitch" == "prm" ]]; then
         # we will not trigger it by manual or crontab for the moment
         :
         # sleep ${STIME}
