@@ -12,7 +12,7 @@ from jenkins_sonar.jks_logger import logger
 from jenkins_sonar.org_handler import OrgInfo
 from jenkins_sonar.stash_handler import Stash
 from jenkins_sonar.org_sonar_mapping import mapping_tmpl
-from jenkins_sonar.utils_tools import UtilityTools, SonarTools
+from jenkins_sonar.jks_utils import UtilityTools, SonarTools
 from jenkins_sonar.stash_repo_builder import repo_template_newer
 from jenkins_sonar.stash_repo_builder import cur_dir, RepoTplGenerator, DiffGenerator
 

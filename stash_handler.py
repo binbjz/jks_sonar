@@ -9,7 +9,7 @@ import functools
 import traceback as tb
 from requests.auth import HTTPBasicAuth
 from jenkins_sonar.jks_logger import logger
-from jenkins_sonar.utils_tools import AuthHeaders, UtilityTools
+from jenkins_sonar.jks_utils import AuthHeaders, UtilityTools
 
 # Set up a specific logger
 logger = logger()
