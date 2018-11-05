@@ -17,8 +17,8 @@ export viewName="<view name>"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
 # Check parm
-if [ $# -ne 1 ]; then
-    echo "Usage: ${BASH_SOURCE[0]} pu|prm|prt"
+if [[ $# -ne 1 ]]; then
+    echo "Usage: ${BASH_SOURCE[0]} prm"
     exit ${NOARGS}
 fi
 
@@ -85,7 +85,7 @@ do
     declare -A array_var
 
     array_var[repo_name]="$git_repo_name"
-    array_var[git_repo]="${qcs_repo}${array_var[repo_name]}.git"
+    array_var[repo_ssh]="${qcs_repo}${array_var[repo_name]}.git"
     array_var[project_key]="${cs}:${projectNamePrefix}${array_var[repo_name]}"
     array_var[project_name]="${projectNamePrefix}${array_var[repo_name]}"
 
@@ -96,7 +96,7 @@ do
     fi
 
     # perform access action
-    replace_kw ${array_var[repo_name]} ${array_var[git_repo]} ${array_var[project_key]} ${array_var[project_name]}
+    replace_kw ${array_var[repo_name]} ${array_var[repo_ssh]} ${array_var[project_key]} ${array_var[project_name]}
 
     # specify job suffix
     if [[ "$configSwitch" == "pu" ]]; then
