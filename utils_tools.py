@@ -10,7 +10,6 @@ import hmac
 import base64
 import codecs
 import hashlib
-import logging
 import datetime
 import fileinput
 
@@ -18,11 +17,10 @@ import requests
 from urllib3 import Retry
 from requests.auth import HTTPBasicAuth
 from requests.adapters import HTTPAdapter
+from jenkins_sonar.jks_logger import logger
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s",
-)
+# Set up a specific logger
+logger = logger()
 
 
 class AuthHeaders(object):
@@ -244,7 +242,7 @@ class UtilityTools(object):
                 csv_reader = csv.reader(csv_file, delimiter=",")
                 line_count = 0
                 for row in csv_reader:
-                    logging.info("row info: {}".format(row))
+                    logger.info(row)
                     line_count += 1
         except IOError:
             raise ValueError("Could not open {}".format(filename))

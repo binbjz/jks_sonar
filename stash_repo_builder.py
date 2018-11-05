@@ -8,7 +8,6 @@
 
 import os
 import sys
-import logging
 import difflib
 
 import requests
@@ -16,13 +15,11 @@ import multiprocessing
 from functools import partial
 from datetime import datetime
 from requests.auth import HTTPBasicAuth
+from jenkins_sonar.jks_logger import logger
 from jenkins_sonar.utils_tools import AuthHeaders, UtilityTools
 
-# Default log handler
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s",
-)
+# Set up a specific logger
+logger = logger()
 
 # Git auth
 username = "<misid>"
@@ -55,13 +52,13 @@ class RepoTplGenerator(object):
         :return:
         """
         if res.status_code == requests.codes.ok:
-            logging.info("response status code: {:d}".format(res.status_code))
+            logger.info("response status code: {:d}".format(res.status_code))
             return True
         elif res.status_code >= 500:
-            logging.error("request {:s}: [{:d}] {:s}".format(res.url, res.status_code, res.text))
+            logger.error("request {:s}: [{:d}] {:s}".format(res.url, res.status_code, res.text))
             return False
         elif res.status_code >= 400:
-            logging.error("request {:s}: [{:d}] {:s}".format(res.url, res.status_code, res.text))
+            logger.error("request {:s}: [{:d}] {:s}".format(res.url, res.status_code, res.text))
             return False
 
     def get_qcs_repo_data(self, r_url):
@@ -74,7 +71,7 @@ class RepoTplGenerator(object):
             _auth = HTTPBasicAuth(username, passwd)
             res = self.auth.requests_retry_session().get(r_url, auth=_auth, timeout=self.timeout)
         except requests.exceptions.RequestException as e:
-            logging.error(e)
+            logger.error(e)
             sys.exit(1)
 
         if not self.handle_requests_status(res):
@@ -185,9 +182,9 @@ class DiffGenerator(object):
         try:
             with open(self.diff_html, "w+") as result_file:
                 result_file.write(result)
-                logging.info("Write diff into {0} successfully".format(self.diff_html))
+                logger.info("Write diff into {0} successfully".format(self.diff_html))
         except IOError as error:
-            logging.error("Error writing HTML file: {0}".format(error))
+            logger.error("Error writing HTML file: {0}".format(error))
 
     def main_diff_proc(self):
         # write diff into html

@@ -4,13 +4,11 @@
 # desc: MT org architecture
 #
 
-import logging
+from jenkins_sonar.jks_logger import logger
 from jenkins_sonar.utils_tools import AuthHeaders, UtilityTools
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s",
-)
+# Set up a specific logger
+logger = logger()
 
 API_MAP = {
     "emp_info": "/api/v3/currentempinfo/get",
@@ -62,7 +60,7 @@ class OrgInfo(object):
         try:
             ret = response.json()
         except:
-            logging.error("json decode error {}".format(response.text))
+            logger.error("json decode error {}".format(response.text))
             ret = {}
         return ret
 
@@ -80,7 +78,7 @@ class OrgInfo(object):
         try:
             ret = response.json()
         except:
-            logging.error("json decode error {}".format(response.text))
+            logger.error("json decode error {}".format(response.text))
             ret = {}
         return ret
 
@@ -163,9 +161,9 @@ class OrgInfo(object):
                     header_name = self.get_direct_header_name(mis)
                     headers_map[header_name] = headers_map.get(header_name, 0) + 1
                 except IndexError:
-                    logging.error("OrgInfo error: can not find mis: {} in org".format(mis))
+                    logger.error("OrgInfo error: can not find mis: {} in org".format(mis))
                 except KeyError:
-                    logging.error("OrgInfo error: can not find mis: {} in org".format(mis))
+                    logger.error("OrgInfo error: can not find mis: {} in org".format(mis))
         return sorted(headers_map.items(), key=lambda d: d[1], reverse=True)
 
     def has_lower_by_mis(self, mis):
@@ -211,7 +209,7 @@ class OrgInfo(object):
             secs = data.get("data", [])[0].get("joinDate")
             return self.utils.convert_milliseconds_to_time(secs)
         except (KeyError, IndexError)as e:
-            logging.error("Failed to obtain info for \"{}\": {}".format(mis, e))
+            logger.error("Failed to obtain info for \"{}\": {}".format(mis, e))
             return None
 
     def get_left_date_by_mis(self, mis):
@@ -222,7 +220,7 @@ class OrgInfo(object):
                 return self.utils.convert_milliseconds_to_time(secs)
             return "Still on the job."
         except (KeyError, IndexError)as e:
-            logging.error("Failed to obtain info for \"{}\": {}".format(mis, e))
+            logger.error("Failed to obtain info for \"{}\": {}".format(mis, e))
             return None
 
     def get_birthday_by_mis(self, mis):
@@ -232,7 +230,7 @@ class OrgInfo(object):
             if secs is not None:
                 return self.utils.convert_milliseconds_to_time(secs)
         except (KeyError, IndexError)as e:
-            logging.error("Failed to obtain info for \"{}\": {}".format(mis, e))
+            logger.error("Failed to obtain info for \"{}\": {}".format(mis, e))
             return None
 
     def get_org_full_name(self, mis):
@@ -247,7 +245,7 @@ class OrgInfo(object):
             full_info = data.get("data", [])[0].get("orgFullName")
             return full_info
         except (KeyError, IndexError)as e:
-            logging.error("Failed to obtain org info for \"{}\": {}".format(mis, e))
+            logger.error("Failed to obtain org info for \"{}\": {}".format(mis, e))
             return None
 
     def get_org_dep_name(self, mis, depth):
@@ -264,5 +262,5 @@ class OrgInfo(object):
             dep_info = full_info.split("-", 4)[depth]
             return dep_info
         except (KeyError, IndexError, AttributeError)as e:
-            logging.error("Failed to obtain department info for \"{}\": {}".format(mis, e))
+            logger.error("Failed to obtain department info for \"{}\": {}".format(mis, e))
             return None

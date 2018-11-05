@@ -5,16 +5,14 @@
 #
 
 import sys
-import logging
 import functools
 import traceback as tb
 from requests.auth import HTTPBasicAuth
+from jenkins_sonar.jks_logger import logger
 from jenkins_sonar.utils_tools import AuthHeaders, UtilityTools
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s",
-)
+# Set up a specific logger
+logger = logger()
 
 
 class StashException(Exception):
@@ -244,7 +242,7 @@ class Stash(object):
         except KeyError:
             error_desc = sys._getframe().f_code.co_name + ": " + \
                          "project: {} repos {} error: {} ".format(project, repos, str(branches["errors"]))
-            logging.error(error_desc)
+            logger.error(error_desc)
             raise StashException(error_desc)
 
         return max_branch
@@ -287,7 +285,7 @@ class Stash(object):
         except KeyError:
             error_desc = sys._getframe().f_code.co_name + ": " + \
                          "project: {} repos {} error: {} ".format(project, repos, str(pull_info["errors"]))
-            logging.error(error_desc)
+            logger.error(error_desc)
             raise StashException(error_desc)
 
     def get_max_pull_request(self, project, repos):
@@ -315,7 +313,7 @@ class Stash(object):
         except KeyError:
             error_desc = sys._getframe().f_code.co_name + ": " + \
                          "project: {} repos {} error: {} ".format(project, repos, str(pull_info))
-            logging.error(error_desc)
+            logger.error(error_desc)
             raise StashException(error_desc)
 
     def get_pull_request(self, project, repos, params=None):
@@ -351,7 +349,7 @@ class Stash(object):
         except KeyError:
             error_desc = sys._getframe().f_code.co_name + ": " + \
                          "project: {} repos {} error: {} ".format(project, repos, str(pull_info))
-            logging.error(error_desc)
+            logger.error(error_desc)
             raise StashException(error_desc)
         finally:
             branch_id_sorted = sorted(merge_branch_info, reverse=True)
@@ -463,10 +461,10 @@ class Stash(object):
             return r["values"][0]["metadata"]["com.atlassian.stash.stash-branch-utils:"
                                               "latest-changeset-metadata"]["authorTimestamp"]
         except IndexError:
-            logging.error("project: {}, repos: {} get lateset commit time error".format(project, repos))
+            logger.error("project: {}, repos: {} get lateset commit time error".format(project, repos))
             return 0
         except KeyError:
-            logging.error("project: {}, repos: {} get lateset commit time error".format(project, repos))
+            logger.error("project: {}, repos: {} get lateset commit time error".format(project, repos))
             return 0
 
     def get_create_time(self, project, repos):
@@ -490,15 +488,15 @@ class Stash(object):
             return r["values"][-1]["authorTimestamp"]
         except IndexError as e:
             if "errors" in r:
-                logging.error("get create time error: {} - {}".format(e, r["errors"]))
+                logger.error("get create time error: {} - {}".format(e, r["errors"]))
             else:
-                logging.error("get create time error: {}".format(e))
+                logger.error("get create time error: {}".format(e))
             return 0
         except KeyError as e:
             if "errors" in r:
-                logging.error("get create time error: {} - {}".format(e, r["errors"]))
+                logger.error("get create time error: {} - {}".format(e, r["errors"]))
             else:
-                logging.error("get create time error: {}".format(e))
+                logger.error("get create time error: {}".format(e))
             return 0
 
     def get_total_pull_request(self, project, repos):
@@ -523,7 +521,7 @@ class Stash(object):
         except KeyError:
             error_desc = sys._getframe().f_code.co_name + ": " + \
                          "project: {} repos {} error: {} ".format(project, repos, str(pull_info))
-            logging.error(error_desc)
+            logger.error(error_desc)
             raise StashException(error_desc)
         finally:
             return size

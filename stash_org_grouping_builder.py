@@ -5,10 +5,10 @@
 #
 
 import os
-import logging
 import multiprocessing
 from functools import partial
 
+from jenkins_sonar.jks_logger import logger
 from jenkins_sonar.org_handler import OrgInfo
 from jenkins_sonar.stash_handler import Stash
 from jenkins_sonar.org_sonar_mapping import mapping_tmpl
@@ -16,10 +16,8 @@ from jenkins_sonar.utils_tools import UtilityTools, SonarTools
 from jenkins_sonar.stash_repo_builder import repo_template_newer
 from jenkins_sonar.stash_repo_builder import cur_dir, RepoTplGenerator, DiffGenerator
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s",
-)
+# Set up a specific logger
+logger = logger()
 
 # Project name and Template file
 qcs_prj = "qcs"
@@ -65,18 +63,18 @@ class StashOrgGroup(object):
                     mis_id = committer_list[0]
                     org_dep_name = self.org_info.get_org_dep_name(mis_id, 4)
                     if org_dep_name and org_dep_name in mapping_tmpl:
-                        logging.info("{}: {},{}\n".format(qcs_slug,
-                                                          mis_id, self.org_info.get_org_dep_name(mis_id, 4)))
+                        logger().info("{}: {},{}\n".format(qcs_slug,
+                                                           mis_id, self.org_info.get_org_dep_name(mis_id, 4)))
                         self.utils.write_data_to_csv(stash_org_grp_success,
                                                      "{},{},{},{}".format(qcs_slug, mis_id, org_dep_name,
                                                                           mapping_tmpl[org_dep_name]).split(","))
                     else:
-                        logging.info("{}: {} is problem repository.\n".format(qcs_slug, mis_id))
+                        logger.info("{}: {} is problem repository.\n".format(qcs_slug, mis_id))
                         self.utils.write_data_to_csv(stash_org_grp_fail,
                                                      "{},{}".format(qcs_slug, mis_id).split(","))
                     # continue
                 else:
-                    logging.info("{} is empty repository.\n".format(qcs_slug))
+                    logger.info("{} is empty repository.\n".format(qcs_slug))
                     self.utils.write_data_to_file(stash_org_grp_empty, qcs_slug)
 
     def config_tmpl_to_grp_v2(self, line_in_repo_tmpl_newer, stash_org_grp_success=None,
@@ -101,20 +99,20 @@ class StashOrgGroup(object):
                 mis_id = committer_list[0]
                 org_dep_name = self.org_info.get_org_dep_name(mis_id, 4)
                 if org_dep_name and org_dep_name in mapping_tmpl:
-                    logging.info("{}: {},{}\n".format(qcs_slug,
-                                                      mis_id, self.org_info.get_org_dep_name(mis_id, 4)))
+                    logger.info("{}: {},{}\n".format(qcs_slug,
+                                                     mis_id, self.org_info.get_org_dep_name(mis_id, 4)))
                     self.utils.write_data_to_csv(stash_org_grp_success,
                                                  "{},{},{},{}".format(qcs_slug, mis_id, org_dep_name,
                                                                       mapping_tmpl[org_dep_name]).split(","))
                 else:
-                    logging.info("{}: {} is problem repository.\n".format(qcs_slug, mis_id))
+                    logger.info("{}: {} is problem repository.\n".format(qcs_slug, mis_id))
                     self.utils.write_data_to_csv(stash_org_grp_fail,
                                                  "{},{}".format(qcs_slug, mis_id).split(","))
             else:
-                logging.info("{} is empty repository.\n".format(qcs_slug))
+                logger.info("{} is empty repository.\n".format(qcs_slug))
                 self.utils.write_data_to_file(stash_org_grp_empty, qcs_slug)
         else:
-            logging.error("Pls check data validity")
+            logger.error("Pls check data validity")
 
     def main_proc(self, repo_diff=False, collect_sonar_key=False, single_task=False,
                   init_repo_list=False, multiple_task_basis=False, multiple_task_pool=False):
@@ -134,7 +132,7 @@ class StashOrgGroup(object):
 
         if collect_sonar_key:
             # Collect all measure filters from sonar and output them to stdout
-            self.sonar.get_group_info(sonar_grp_info)
+            # self.sonar.get_group_info(sonar_grp_info)
             self.utils.output_data_from_csv(sonar_grp_info)
         if single_task:
             # Single tasking
@@ -170,7 +168,7 @@ class StashOrgGroup(object):
 if __name__ == "__main__":
     try:
         sog = StashOrgGroup()
-        # sog.main_proc(collect_sonar_key=True)
-        sog.main_proc(collect_sonar_key=True, init_repo_list=True, multiple_task_pool=True)
+        sog.main_proc(collect_sonar_key=True)
+        # sog.main_proc(collect_sonar_key=True, init_repo_list=True, multiple_task_pool=True)
     except KeyboardInterrupt:
         pass
