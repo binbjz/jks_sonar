@@ -114,7 +114,7 @@ do
         # cleanup tmpl env
         rm -rf ${curDir}/${job}_config.xml &> /dev/null
 
-        # Break template loop
+        # Break inner template loop
         break
     done < ${curDir}/source/${rt}
 done
