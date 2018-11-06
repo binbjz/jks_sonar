@@ -62,23 +62,28 @@ ${bashExec} job_update_plugin.sh
 # Update job with specified action
 for job in ${view_list}
 do
-    while read git_repo;
+    # service name by jks job
+    srv_name=`awk 'BEGIN {FS="_"} {print $1}' <<< ${job}`
+
+    while read git_repo
     do
-        # acquire job config
-        ${bashExec} ${curDir}/job_handler.sh -r ${job} || exit ${E_RERROR}
-        sleep ${S_TIME}
-
-        # sonar info with specified branch
-        srv_name=`awk 'BEGIN {FS="_"} {print $1}' <<< ${job}`
-
         # repo info from repo template
         git_repo=$(awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}1' <<< ${git_repo})
         git_repo_name=$(awk -F',' '{print $1}' <<< ${git_repo})
         projectNamePrefix=$(awk -F',' '{print $4}' <<< ${git_repo})
+
         if [[ ${git_repo_name} != ${srv_name} ]]; then
             continue
+        fi
+
+        # acquire job config
+        ${bashExec} ${curDir}/job_handler.sh -r ${job} || exit ${E_RERROR}
+        sleep ${S_TIME}
+
+        if [[ ${job/_release_/} != ${job} ]]; then
+            pbName="${projectNamePrefix}_${srv_name}:\${GIT_BRANCH}"
         else
-            pbName=${projectNamePrefix}_${srv_name}
+            pbName="${projectNamePrefix}_${srv_name}"
         fi
 
         # update sonar info

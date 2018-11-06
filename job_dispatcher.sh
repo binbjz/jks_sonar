@@ -2,7 +2,7 @@
 #filename: job_dispatcher.sh
 #
 #desc: access sonar with grouping by pull request to trigger.
-#For now, just accessing and grouping by pull request with master branch.
+#For now, just accessing and grouping by pull request with master and release branch.
 #
 
 NOARGS=65
@@ -19,18 +19,24 @@ export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
 # Check parm
 if [[ $# -ne 1 ]]; then
-    echo "Usage: ${BASH_SOURCE[0]} prm"
+    echo "Usage: ${BASH_SOURCE[0]} prm|prr"
     exit ${NOARGS}
 fi
 
-# Specify config template
+# Specify config template and target br
 configSwitch=$1
-prmConfigTemplate="prmInitConfigTemplate.xml"
+prConfigTemplate="prInitConfigTemplate.xml"
 
 case "$configSwitch" in
     "prm")
         # using pr master config template
-        configTemplate=${prmConfigTemplate}
+        configTemplate=${prConfigTemplate}
+        target_br="master"
+    ;;
+    "prr")
+        # using pr release config template
+        configTemplate=${prConfigTemplate}
+        target_br="release"
     ;;
     *)
         echo "Please specify valid config template type."
@@ -41,7 +47,6 @@ esac
 # Job suffix and cur dir
 bashExec=`which bash`
 curDir=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-jobSuf="_static-analyze-pr"
 
 # Replace kw with specified parm
 function replace_kw() {
@@ -49,8 +54,9 @@ function replace_kw() {
              s#<misid>#${misId}#g; \
              s#(<repositoryName>).*(</repositoryName>)#\1${1}\2#g; \
              s#(<url>).*(</url>)#\1${2}\2#g; \
-             s#(sonar.projectKey=).*#\1${3}#g; \
-             s#(sonar.projectName=).*#\1${4}#g" \
+             s#(<targetBranchesToBuild>).*(</targetBranchesToBuild>)#\1${3}\2#g; \
+             s#(sonar.projectKey=).*#\1${4}#g; \
+             s#(sonar.projectName=).*#\1${5}#g" \
     ${curDir}/conf/${configTemplate} > ${curDir}/${configTemplate}.$$
 }
 
@@ -58,12 +64,13 @@ function replace_kw() {
 rt="stash_org_grp_success.csv"
 cs="com.sankuai"
 qcs_repo="ssh://git@git.sankuai.com/qcs/"
+pjk_suffix=":release"
 
-while read git_repo;
+while read git_repo_info
 do
     # specify sonar project prefix
-    # ﻿qcs.r.settle.common,gaoyang09,技术研发部-结算组,qcs_trd_settle
-    git_repo=$(awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}1' <<< ${git_repo})
+    # qcs.r.settle.common,gaoyang09,技术研发部-结算组,qcs_trd_settle
+    git_repo=$(awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}1' <<< ${git_repo_info})
     git_repo_name=$(awk -F',' '{print $1}' <<< ${git_repo})
     projectNamePrefix=$(awk -F',' '{print $4}' <<< ${git_repo})
 
@@ -71,12 +78,27 @@ do
     declare -A array_var
 
     array_var[repo_name]="$git_repo_name"
-    array_var[git_repo]="${qcs_repo}${array_var[repo_name]}.git"
+    array_var[repo_ssh]="${qcs_repo}${array_var[repo_name]}.git"
     array_var[project_key]="${cs}:${projectNamePrefix}_${array_var[repo_name]}"
     array_var[project_name]="${projectNamePrefix}_${array_var[repo_name]}"
+    array_var[target_branch]="${target_br}"
+
+    # sonar with pr release branch
+    if [[ "$configSwitch" == "prr" ]]; then
+        array_var[project_key]="${cs}:${projectNamePrefix}_${array_var[repo_name]}${pjk_suffix}"
+        array_var[project_name]="${projectNamePrefix}_${array_var[repo_name]}${pjk_suffix}"
+    fi
 
     # perform access action
-    replace_kw ${array_var[repo_name]} ${array_var[git_repo]} ${array_var[project_key]} ${array_var[project_name]}
+    replace_kw ${array_var[repo_name]} ${array_var[repo_ssh]} ${array_var[target_branch]} \
+    ${array_var[project_key]} ${array_var[project_name]}
+
+    # specify job suffix
+    if [[ "$configSwitch" == "prm" ]]; then
+        jobSuf="_static-analyze-pr"
+    else
+        jobSuf="_release_static-analyze-pr"
+    fi
 
     # create job to access sonar
     jobName=${array_var[repo_name]}${jobSuf}
@@ -97,7 +119,7 @@ do
         # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
 
         # build with parameters
-        # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p test
+        # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p release
     fi
 
     # cleanup env
