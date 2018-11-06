@@ -22,7 +22,6 @@ export jobsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/jso
 rl="zhaobin11,liying60"
 
 # Sonar msg prefix and repo template
-#projectNamePrefix=( qcs_push_ qcs_pull_request_ )
 pbPrefix="http:\/\/sonar.ep.sankuai.com\/dashboard\/index\/com.sankuai"
 rt="stash_org_grp_success.csv"
 
@@ -68,7 +67,7 @@ do
     while read git_repo
     do
         # repo info from repo template
-        git_repo=$(awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}1' <<< ${git_repo})
+        #git_repo=$(awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}1' <<< ${git_repo})
         git_repo_name=$(awk -F',' '{print $1}' <<< ${git_repo})
         projectNamePrefix=$(awk -F',' '{print $4}' <<< ${git_repo})
 

@@ -132,7 +132,7 @@ class StashOrgGroup(object):
 
         if collect_sonar_key:
             # Collect all measure filters from sonar and output them to stdout
-            # self.sonar.get_group_info(sonar_grp_info)
+            self.sonar.get_group_info(sonar_grp_info)
             self.utils.output_data_from_csv(sonar_grp_info)
         if single_task:
             # Single tasking

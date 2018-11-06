@@ -15,7 +15,7 @@ from jenkins_sonar.jks_utils import AuthHeaders, UtilityTools
 logger = logger()
 
 
-class StashException(Exception):
+class StashHandleException(Exception):
     pass
 
 
@@ -27,11 +27,6 @@ class Stash(object):
         self.rest_api_prefix = "http://git.sankuai.com/rest/api/2.0"
         self.s = self.auth.requests_retry_session()
         self.req_auth = HTTPBasicAuth(username="<misid>", password="<password>")
-        """
-        git_auth = Auth(self.s, "http://git.sankuai.com/login")
-        git_data = git_auth.get_sign_data()
-        r = self.post("http://git.sankuai.com/login", data=git_data)
-        """
         self.get = functools.partial(self.s.get, auth=self.req_auth, timeout=self.timeout)
         self.post = functools.partial(self.s.post, auth=self.req_auth, timeout=self.timeout)
         self.put = functools.partial(self.s.put, auth=self.req_auth, timeout=self.timeout)
@@ -243,7 +238,7 @@ class Stash(object):
             error_desc = sys._getframe().f_code.co_name + ": " + \
                          "project: {} repos {} error: {} ".format(project, repos, str(branches["errors"]))
             logger.error(error_desc)
-            raise StashException(error_desc)
+            raise StashHandleException(error_desc)
 
         return max_branch
 
@@ -286,7 +281,7 @@ class Stash(object):
             error_desc = sys._getframe().f_code.co_name + ": " + \
                          "project: {} repos {} error: {} ".format(project, repos, str(pull_info["errors"]))
             logger.error(error_desc)
-            raise StashException(error_desc)
+            raise StashHandleException(error_desc)
 
     def get_max_pull_request(self, project, repos):
         """
@@ -314,7 +309,7 @@ class Stash(object):
             error_desc = sys._getframe().f_code.co_name + ": " + \
                          "project: {} repos {} error: {} ".format(project, repos, str(pull_info))
             logger.error(error_desc)
-            raise StashException(error_desc)
+            raise StashHandleException(error_desc)
 
     def get_pull_request(self, project, repos, params=None):
         """
@@ -350,7 +345,7 @@ class Stash(object):
             error_desc = sys._getframe().f_code.co_name + ": " + \
                          "project: {} repos {} error: {} ".format(project, repos, str(pull_info))
             logger.error(error_desc)
-            raise StashException(error_desc)
+            raise StashHandleException(error_desc)
         finally:
             branch_id_sorted = sorted(merge_branch_info, reverse=True)
             if 0 == len(branch_id_sorted):
@@ -409,7 +404,7 @@ class Stash(object):
             self.post(hook_code_push_event_url)
 
         except Exception as err:
-            raise StashException(err)
+            raise StashHandleException(err)
         return True
 
     def set_sonar_hook(self, project, repos, git_address):
@@ -432,7 +427,7 @@ class Stash(object):
                         return True
                     break
         except KeyError:
-            raise StashException(hook_status["errors"])
+            raise StashHandleException(hook_status["errors"])
         sonar_hook_url = "{}/projects/{}/repos/{}/settings/hooks/{}/enabled".format(
             self.rest_api_prefix, project, repos, hook_name)
         json_content = {
@@ -444,7 +439,7 @@ class Stash(object):
         }
         r = self.put(sonar_hook_url, json=json_content).json()
         if "errors" in r:
-            raise StashException(str(r))
+            raise StashHandleException(str(r))
         return True
 
     def get_latest_commit_time(self, project, repos):
@@ -522,6 +517,6 @@ class Stash(object):
             error_desc = sys._getframe().f_code.co_name + ": " + \
                          "project: {} repos {} error: {} ".format(project, repos, str(pull_info))
             logger.error(error_desc)
-            raise StashException(error_desc)
+            raise StashHandleException(error_desc)
         finally:
             return size

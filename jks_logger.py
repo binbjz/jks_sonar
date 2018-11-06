@@ -23,7 +23,8 @@ def logger(log_level=None,
     :param log_fmt: Use the specified format string for the handler.
     :return: a logger with specified name and format
     """
-    _level = LEVELS.get(log_level, logging.NOTSET)
+    # _level = LEVELS.get(log_level, logging.NOTSET)
+    _level = LEVELS.get(log_level, logging.INFO)
 
     logging.basicConfig(level=_level,
                         format=log_fmt

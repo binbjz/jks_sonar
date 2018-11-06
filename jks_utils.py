@@ -72,7 +72,6 @@ class AuthHeaders(object):
 
 
 class SonarTools(object):
-
     def __init__(self):
         self.td = "http://sonar.sankuai.com/api/tableData"
         self._auth = HTTPBasicAuth("<privileged user>", "<password>")
@@ -267,8 +266,8 @@ class UtilityTools(object):
         :param data: data list
         """
         try:
-            with open(filename, "a+", encoding="utf-8") as csv_file:
-                csv_file.write(codecs.BOM_UTF8.decode("utf-8"))
+            with open(filename, "a+", encoding="utf-8-sig") as csv_file:
+                # csv_file.write(codecs.BOM_UTF8.decode("utf-8"))
                 csv_writer = csv.writer(csv_file, dialect='excel', lineterminator="\n")
                 csv_writer.writerow(data)
         except IOError:

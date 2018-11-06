@@ -1,7 +1,6 @@
 qcs.adanos.visualization
 qcs.android.emulator
 qcs.api.cfile
-qcs.data.securityportrait
 qcs.data.support
 qcs.data.survey
 qcs.dispatch.realtime
@@ -15,13 +14,13 @@ qcs.r.android.worksetting
 qcs.r.android.searchpoi
 qcs.r.android.setting
 qcs.ios.push
-qcs.regulation.shwa
-qcs.mobile.maid
 qcs.r.android.chat
+qcs.regulation.shwa
 qcs.service.ds
-qcs.service.xchanneladmin
+qcs.mobile.maid
 qcs.service.cbiz.flow
 qcs.r.api.enter
+qcs.service.xchanneladmin
 qcs.r.api.lbs
 qcs.thor.query.client
 qcs.service.qos
