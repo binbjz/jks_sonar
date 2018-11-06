@@ -50,7 +50,7 @@ curDir=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 # Replace kw with specified parm
 function replace_kw() {
-    sed -re "s#repo_name#${1}#g; \
+    sed -re "s#repos_name#${1}#g; \
              s#mis_id#${misId}#g; \
              s#(<repositoryName>).*(</repositoryName>)#\1${1}\2#g; \
              s#(<url>).*(</url>)#\1${2}\2#g; \
