@@ -55,9 +55,6 @@ function job_list() {
 # Acquire job list
 job_list
 
-# Update stash post build comment plugin
-${bashExec} job_update_plugin.sh
-
 # Update job with specified action
 for job in ${view_list}
 do
