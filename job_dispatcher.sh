@@ -17,8 +17,8 @@ export viewName="<view name>"
 export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
 
 # Check parm
-if [ $# -ne 1 ]; then
-    echo "Usage: ${BASH_SOURCE[0]} pu|prm|prt"
+if [[ $# -ne 1 ]]; then
+    echo "Usage: ${BASH_SOURCE[0]} prm"
     exit ${NOARGS}
 fi
 
@@ -53,8 +53,8 @@ curDir=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 # Replace kw with specified parm
 function replace_kw() {
-    sed -re "s#<repo_name>#${1}#g; \
-             s#<misid>#${misId}#g; \
+    sed -re "s#repos_name#${1}#g; \
+             s#mis_id#${misId}#g; \
              s#(<repositoryName>).*(</repositoryName>)#\1${1}\2#g; \
              s#(<url>).*(</url>)#\1${2}\2#g; \
              s#(sonar.projectKey=).*#\1${3}#g; \
@@ -85,7 +85,7 @@ do
     declare -A array_var
 
     array_var[repo_name]="$git_repo_name"
-    array_var[git_repo]="${qcs_repo}${array_var[repo_name]}.git"
+    array_var[repo_ssh]="${qcs_repo}${array_var[repo_name]}.git"
     array_var[project_key]="${cs}:${projectNamePrefix}${array_var[repo_name]}"
     array_var[project_name]="${projectNamePrefix}${array_var[repo_name]}"
 
@@ -96,7 +96,7 @@ do
     fi
 
     # perform access action
-    replace_kw ${array_var[repo_name]} ${array_var[git_repo]} ${array_var[project_key]} ${array_var[project_name]}
+    replace_kw ${array_var[repo_name]} ${array_var[repo_ssh]} ${array_var[project_key]} ${array_var[project_name]}
 
     # specify job suffix
     if [[ "$configSwitch" == "pu" ]]; then

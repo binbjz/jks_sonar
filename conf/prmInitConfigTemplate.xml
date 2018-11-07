@@ -8,9 +8,9 @@
   &lt;td&gt;&lt;b&gt;Owner&lt;/b&gt;&lt;/td&gt;&#13;
 &lt;/tr&gt;&#13;
   &lt;tr&gt;&#13;
-  &lt;td&gt;&lt;font style="font-size:15px;font-weight:bold;color:green;"&gt;<repo_name>&lt;/font&gt;&lt;/td&gt;&#13;
+  &lt;td&gt;&lt;font style="font-size:15px;font-weight:bold;color:green;"&gt;repos_name&lt;/font&gt;&lt;/td&gt;&#13;
   &lt;td&gt;&lt;font style="font-size:15px;font-weight:bold;color:green;"&gt;sonar static code scanning&lt;/font&gt;&lt;/td&gt;&#13;
-  &lt;td&gt;&lt;font style="font-size:15px;font-weight:bold;color:green;"&gt;<misid>&lt;/font&gt;&lt;/td&gt;&#13;
+  &lt;td&gt;&lt;font style="font-size:15px;font-weight:bold;color:green;"&gt;mis_id&lt;/font&gt;&lt;/td&gt;&#13;
 &lt;/tr&gt;&#13;
 &lt;/table&gt;</description>
   <logRotator class="hudson.tasks.LogRotator">
