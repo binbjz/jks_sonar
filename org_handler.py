@@ -236,7 +236,7 @@ class OrgInfo(object):
     def get_org_full_name(self, mis):
         """
         Full org tree with specified mis
-        IPH-集团-出行事业部-X项目组-技术研发部-结算组
+        IPH-集团-LBS平台-X项目组-技术研发部-结算组
         :param mis:
         :return:
         """
