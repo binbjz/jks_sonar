@@ -48,6 +48,10 @@ esac
 bashExec=`which bash`
 curDir=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
+function func_trim() {
+    echo "$1" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+}
+
 # Replace kw with specified parm
 function replace_kw() {
     sed -re "s#repos_name#${1}#g; \
@@ -71,6 +75,7 @@ do
     # specify sonar project prefix
     # qcs.r.settle.common,gaoyang09,技术研发部-结算组,qcs_trd_settle
     #git_repo=$(awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}1' <<< ${git_repo_info})
+    git_repo=$(func_trim ${git_repo_info})
     git_repo_name=$(awk -F',' '{print $1}' <<< ${git_repo})
     projectNamePrefix=$(awk -F',' '{print $4}' <<< ${git_repo})
 
