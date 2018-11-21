@@ -25,7 +25,7 @@ logger = logger()
 
 class AuthHeaders(object):
     """
-    Http Authorized Headers With MT Org
+    Http Authorized Headers With MT Org, Http Requests Retry Session
     """
 
     def get_auth_headers(self, api):

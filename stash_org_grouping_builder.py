@@ -63,8 +63,8 @@ class StashOrgGroup(object):
                     mis_id = committer_list[0]
                     org_dep_name = self.org_info.get_org_dep_name(mis_id, 4)
                     if org_dep_name and org_dep_name in mapping_tmpl:
-                        logger().info("{}: {},{}\n".format(qcs_slug,
-                                                           mis_id, self.org_info.get_org_dep_name(mis_id, 4)))
+                        logger.info("{}: {},{}\n".format(qcs_slug, mis_id,
+                                                         self.org_info.get_org_dep_name(mis_id, 4)))
                         self.utils.write_data_to_csv(stash_org_grp_success,
                                                      "{},{},{},{}".format(qcs_slug, mis_id, org_dep_name,
                                                                           mapping_tmpl[org_dep_name]).split(","))
