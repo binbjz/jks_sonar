@@ -49,7 +49,7 @@ This project was written in **bash**, **python** and **xml**.
 
 1. **generate repo list and compare different time periods repos**
     ```sh
-    $ python repo_handler.py
+    $ python stash_repo_builder.py
     ```
 
 
@@ -134,7 +134,7 @@ This project was written in **bash**, **python** and **xml**.
 
 1. **config user and hook**
     ```sh
-    $ bash hook_event.sh
+    $ bash stash_hook_event.sh
     ```
 
 
