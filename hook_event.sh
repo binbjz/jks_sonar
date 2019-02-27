@@ -25,7 +25,7 @@ new_rule="http%3A%2F%2Fqcs.ci.ee.test.sankuai.com%2Fgitlab%2Fbuild_now"
 function user_access() {
     # Required -> -H "Accept: application/json, text/javascript, */*; q=0.01"
     echo_ "adding ${1} into $repo_name with permission:${2}"
-    curl -s -u ${username}:${passwd} -X PUT "${qcs_repo}/${repo_name}/permissions/users?permission=${2}&name=${1}" -H "Accept: application/json, text/javascript, */*; q=0.01"
+    curl -sSL -u ${username}:${passwd} -X PUT "${qcs_repo}/${repo_name}/permissions/users?permission=${2}&name=${1}" -H "Accept: application/json, text/javascript, */*; q=0.01"
     echo -e "op $repo_name done..\n"
 }
 
@@ -33,20 +33,20 @@ function cu_hooks_StashWebhookToJenkins() {
     # Disabled -X DELETE, Enabled -X PUT
     act=`((${#1} < 6)) && echo "enabling" || echo "disabling"`
     echo_ "$act $repo_name Stash Webhook to Jenkins"
-    curl -s -u ${username}:${passwd} -X ${1} "${qcs_repo}/${repo_name}/${hook_key_ap}/enabled" -H "Content-Type: application/json"
+    curl -sSL -u ${username}:${passwd} -X ${1} "${qcs_repo}/${repo_name}/${hook_key_ap}/enabled" -H "Content-Type: application/json"
     echo -e "\nop $repo_name done..\n"
 }
 
 function config_hooks_StashWebhookToJenkins() {
     # Required -> -H 'Content-Type: application/json'
     echo_ "configuring $repo_name Stash Webhook to Jenkins"
-    curl -s -u ${username}:${passwd} -X PUT "${qcs_repo}/${repo_name}/${hook_key_ap}/settings" -H "Content-Type: application/json" --data-binary "${payload_json}"
+    curl -sSL -u ${username}:${passwd} -X PUT "${qcs_repo}/${repo_name}/${hook_key_ap}/settings" -H "Content-Type: application/json" --data-binary "${payload_json}"
     echo -e "\nop $repo_name done..\n"
 }
 
 function config_hooks_code_events() {
     echo_ "configuring $repo_name Webhook with event to Jenkins"
-    curl -s -u ${username}:${passwd} -X POST "${qcs_repo}/${repo_name}/webhook/create/1?url=${new_rule}" -H "Content-Type: application/json"
+    curl -sSL -u ${username}:${passwd} -X POST "${qcs_repo}/${repo_name}/webhook/create/1?url=${new_rule}" -H "Content-Type: application/json"
     echo -e "\nop $repo_name done..\n"
 }
 
