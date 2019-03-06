@@ -65,7 +65,7 @@ esac
 
 # Job list with specified view
 function job_list() {
-    curl -sSL -u ${misId}:${apiToken} -X POST ${jobsUrl} -o ${curDir}/${viewName}.json
+    curl -sS -u ${misId}:${apiToken} -X POST ${jobsUrl} -o ${curDir}/${viewName}.json
     view_list=`jq -r .jobs ${viewName}.json | jq -r .[].name`
 }
 

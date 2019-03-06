@@ -62,56 +62,56 @@ function help_info() {
 # Create jks job
 function create_job() {
     echo_ g "creating job -- ${1} with ${2##/*/}"
-    curl -sSL -u ${misId}:${apiToken} -X POST "${jenkinsUrl}/${viewName}/createItem?name=${1}" --data-binary "@${2}" -H "Content-Type: text/xml"
+    curl -sS -u ${misId}:${apiToken} -X POST "${jenkinsUrl}/${viewName}/createItem?name=${1}" --data-binary "@${2}" -H "Content-Type: text/xml"
 }
 
 # Update jks job
 function update_job() {
     echo_ g "updating job -- $1 with ${2##/*/}"
-    curl -sSL -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/config.xml --data-binary "@${2}" -H "Content-Type: text/xml"
+    curl -sS -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/config.xml --data-binary "@${2}" -H "Content-Type: text/xml"
 }
 
 # Delete jks job
 function delete_job() {
     echo_ g "deleting job -- $1"
-    curl -sSL -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/doDelete
+    curl -sS -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/doDelete
 }
 
 # Launch jks job
 function start_job() {
     echo_ g "starting job -- $1"
-    curl -sSL -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/build
+    curl -sS -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/build
 }
 
 # Launch jks job with specified parameter
 function start_job_with_parm() {
     # Note: if your job with string parm "branch", so you can use it.
     echo_ g "starting job -- $1"
-    curl -sSL -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/buildWithParameters --data branch=$2
+    curl -sS -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/buildWithParameters --data branch=$2
 }
 
 # Receive jks job
 function receive_job() {
     echo_ g "receiving job -- ${1}"
-    curl -sSL -u ${misId}:${apiToken} -X GET ${jenkinsUrl}/${viewName}/job/${1}/config.xml -o ${1}_config.xml
+    curl -sS -u ${misId}:${apiToken} -X GET ${jenkinsUrl}/${viewName}/job/${1}/config.xml -o ${1}_config.xml
 }
 
 # Enable jks job
 function enable_job() {
     echo_ g "enabling job -- ${1}"
-    curl -sSL -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/enable
+    curl -sS -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/enable
 }
 
 # Disable jks job
 function disable_job() {
     echo_ g "disabling job -- ${1}"
-    curl -sSL -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/disable
+    curl -sS -u ${misId}:${apiToken} -X POST ${jenkinsUrl}/${viewName}/job/${1}/disable
 }
 
 # Check the job run results
 function check_job_build_result() {
     echo_ g "checking job last build result -- ${1}"
-    curl -sSL -u ${misId}:${apiToken} ${jenkinsUrl}/${viewName}/job/${1}/lastBuild/api/json | jq -r .result
+    curl -sS -u ${misId}:${apiToken} ${jenkinsUrl}/${viewName}/job/${1}/lastBuild/api/json | jq -r .result
 }
 
 # Get valid the ops/parm
