@@ -15,7 +15,7 @@ STIME=0.2
 export misId="<misid>"
 export apiToken="<api token>"
 export viewName="<view name>"
-export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
+export jenkinsUrl="http://ci.ee.test.sankuai.com/job/qcs/job/Sonar/view"
 
 # Check parm
 if [[ $# -ne 1 ]]; then

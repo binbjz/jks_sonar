@@ -395,8 +395,8 @@ class Stash(object):
         :param project:
         :param repos:
         """
-        old_rule = "http%3A%2F%2Fci.sankuai.com%2Fgitlab%2Fbuild_now"
-        new_rule = "http%3A%2F%2Fqcs.ci.ee.test.sankuai.com%2Fgitlab%2Fbuild_now"
+        old_rule = "http%3A%2F%2Fci.ee.test.sankuai.com%2Fgitlab%2Fbuild_now"
+        new_rule = "http%3A%2F%2Fci.ee.test.sankuai.com%2Fgitlab%2Fbuild_now"
         event_rule_url = "webhook/create/1?url={}".format(new_rule)
         hook_code_push_event_url = "{}/projects/{}/repos/{}/{}".format(self.rest_api_prefix, project,
                                                                        repos, event_rule_url)
@@ -431,7 +431,7 @@ class Stash(object):
         sonar_hook_url = "{}/projects/{}/repos/{}/settings/hooks/{}/enabled".format(
             self.rest_api_prefix, project, repos, hook_name)
         json_content = {
-            "jenkinsBase": "http://ci.sankuai.com",
+            "jenkinsBase": "http://ci.ee.test.sankuai.com",
             "gitRepoUrl": git_address,
             "ignoreCommitters": "",
             "branchOptions": "",

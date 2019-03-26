@@ -20,8 +20,8 @@ fi
 export misId="<misid>"
 export apiToken="<api token>"
 export viewName="<view name>"
-export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
-export jobsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/json?tree=jobs[name]"
+export jenkinsUrl="http://ci.ee.test.sankuai.com/job/qcs/job/Sonar/view"
+export jobsUrl="http://ci.ee.test.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/json?tree=jobs[name]"
 
 # Job exec and ops path
 triggerType=$1
