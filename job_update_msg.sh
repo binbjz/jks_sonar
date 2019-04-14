@@ -77,7 +77,7 @@ do
         sleep ${S_TIME}
 
         if [[ ${job/_release_/} != ${job} ]]; then
-            pbName="${projectNamePrefix}_${srv_name}:\${GIT_BRANCH}"
+            pbName="${projectNamePrefix}_${srv_name}:release"
         else
             pbName="${projectNamePrefix}_${srv_name}"
         fi
