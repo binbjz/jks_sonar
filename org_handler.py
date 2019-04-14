@@ -264,4 +264,3 @@ class OrgInfo(object):
         except (KeyError, IndexError, AttributeError)as e:
             logger.error("Failed to obtain department info for \"{}\": {}".format(mis, e))
             return None
-
