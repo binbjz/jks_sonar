@@ -72,6 +72,9 @@ function job_list() {
 # Acquire job list
 job_list
 
+# Proc Ns
+PNs=26
+
 # Trigger job with specified action
 for job in ${view_list}
 do
@@ -83,9 +86,15 @@ do
             echo
         fi
     ) &
+
+    if [[ $(jobs -r -p | wc -l) -gt ${PNs} ]]; then
+        wait -n
+    fi
 done
 
 wait
 
 # Cleanup Lst Env
 rm -rf ${curDir}/${viewName}.json &> /dev/null
+
+echo "All view ops done.."

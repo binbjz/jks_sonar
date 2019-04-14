@@ -9,7 +9,6 @@ NOARGS=65
 NOMATCH=122
 E_CERROR=129
 E_EMP=127
-STIME=0.2
 
 # Define global var
 export misId="<misid>"
@@ -61,7 +60,7 @@ function replace_kw() {
              s#(<targetBranchesToBuild>).*(</targetBranchesToBuild>)#\1${3}\2#g; \
              s#(sonar.projectKey=).*#\1${4}#g; \
              s#(sonar.projectName=).*#\1${5}#g" \
-    ${curDir}/conf/${configTemplate} > ${curDir}/${configTemplate}.$$
+    ${curDir}/conf/${configTemplate} > ${curDir}/${configTemplate}.${6}
 }
 
 # Define repo template, project prefix and trigger job with specified action
@@ -70,65 +69,75 @@ cs="com.sankuai"
 qcs_repo="ssh://git@git.sankuai.com/qcs/"
 pjk_suffix=":release"
 
-while read git_repo_info
-do
-    # specify sonar project prefix
-    # qcs.r.settle.common,gaoyang09,技术研发部-结算组,qcs_trd_settle
-    #git_repo=$(awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}1' <<< ${git_repo_info})
-    git_repo=$(func_trim "${git_repo_info}")
-    git_repo_name=$(awk -F',' '{print $1}' <<< ${git_repo})
-    projectNamePrefix=$(awk -F',' '{print $4}' <<< ${git_repo})
+# Proc Ns
+PNs=16
 
-    # define job parm and job list to access sonar
-    declare -A array_var
+while read git_repo_info; do
+    (
+        # specify sonar project prefix
+        # qcs.r.settle.common,gaoyang09,技术研发部-结算组,qcs_trd_settle
+        git_repo=$(awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}1' <<< ${git_repo_info})
+        git_repo=$(func_trim "${git_repo_info}")
+        git_repo_name=$(awk -F',' '{print $1}' <<< ${git_repo})
+        projectNamePrefix=$(awk -F',' '{print $4}' <<< ${git_repo})
 
-    array_var[repo_name]="$git_repo_name"
-    array_var[repo_ssh]="${qcs_repo}${array_var[repo_name]}.git"
-    array_var[project_key]="${cs}:${projectNamePrefix}_${array_var[repo_name]}"
-    array_var[project_name]="${projectNamePrefix}_${array_var[repo_name]}"
-    array_var[target_branch]="${target_br}"
+        # define job parm and job list to access sonar
+        declare -A array_var
 
-    # sonar with pr release branch
-    if [[ "$configSwitch" == "prr" ]]; then
-        array_var[project_key]="${cs}:${projectNamePrefix}_${array_var[repo_name]}${pjk_suffix}"
-        array_var[project_name]="${projectNamePrefix}_${array_var[repo_name]}${pjk_suffix}"
+        array_var[repo_name]="$git_repo_name"
+        array_var[repo_ssh]="${qcs_repo}${array_var[repo_name]}.git"
+        array_var[project_key]="${cs}:${projectNamePrefix}_${array_var[repo_name]}"
+        array_var[project_name]="${projectNamePrefix}_${array_var[repo_name]}"
+        array_var[target_branch]="${target_br}"
+
+        # sonar with pr release branch
+        if [[ "$configSwitch" == "prr" ]]; then
+            array_var[project_key]="${cs}:${projectNamePrefix}_${array_var[repo_name]}${pjk_suffix}"
+            array_var[project_name]="${projectNamePrefix}_${array_var[repo_name]}${pjk_suffix}"
+        fi
+
+        # get sub-shell and perform access action
+        SPID=${BASHPID}
+        replace_kw ${array_var[repo_name]} ${array_var[repo_ssh]} ${array_var[target_branch]} \
+        ${array_var[project_key]} ${array_var[project_name]} ${SPID}
+
+        # specify job suffix
+        if [[ "$configSwitch" == "prm" ]]; then
+            jobSuf="_static-analyze-pr"
+        else
+            jobSuf="_release_static-analyze-pr"
+        fi
+
+        # create job to access sonar
+        jobName=${array_var[repo_name]}${jobSuf}
+
+        echo "accessing $git_repo_name to sonar."
+        ${bashExec} ${curDir}/job_handler.sh -c ${jobName} -f ${curDir}/${configTemplate}.${SPID} \
+        || exit ${E_CERROR}
+
+        # just build with prm job
+        if [[ "$configSwitch" == "prm" ]]; then
+            # we will not trigger it by manual or crontab for the moment
+            :
+
+            # build
+            # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
+
+            # build with parameters
+            # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p release
+        fi
+
+        # cleanup env
+        rm -rf ${curDir}/${configTemplate}.${SPID} &> /dev/null
+        echo "op $jobName done.."
+        echo
+    ) &
+
+    if [[ $(jobs -r -p | wc -l) -gt ${PNs} ]]; then
+        wait -n
     fi
-
-    # perform access action
-    replace_kw ${array_var[repo_name]} ${array_var[repo_ssh]} ${array_var[target_branch]} \
-    ${array_var[project_key]} ${array_var[project_name]}
-
-    # specify job suffix
-    if [[ "$configSwitch" == "prm" ]]; then
-        jobSuf="_static-analyze-pr"
-    else
-        jobSuf="_release_static-analyze-pr"
-    fi
-
-    # create job to access sonar
-    jobName=${array_var[repo_name]}${jobSuf}
-
-    echo "accessing $git_repo_name to sonar."
-    ${bashExec} ${curDir}/job_handler.sh -c ${jobName} -f ${curDir}/${configTemplate}.$$ \
-    || exit ${E_CERROR}
-
-    sleep ${STIME}
-
-    # just build with prm job
-    if [[ "$configSwitch" == "prm" ]]; then
-        # we will not trigger it by manual or crontab for the moment
-        :
-        # sleep ${STIME}
-
-        # build
-        # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
-
-        # build with parameters
-        # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p release
-    fi
-
-    # cleanup env
-    rm -rf ${curDir}/${configTemplate}.$$ &> /dev/null
-    echo "op $jobName done.."
-    echo
 done < ${curDir}/source/${rt}
+
+wait
+
+echo "All dispatcher ops done.."

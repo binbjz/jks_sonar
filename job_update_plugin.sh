@@ -43,27 +43,40 @@ function job_list() {
 # Acquire job list
 job_list
 
+# Proc Ns
+PNs=16
+
 for job in ${view_list}
 do
-    # acquire job config
-    ${bashExec} ${curDir}/job_handler.sh -r ${job} || exit ${E_RERROR}
-    sleep ${S_TIME}
+    (
+        # acquire job config
+        ${bashExec} ${curDir}/job_handler.sh -r ${job} || exit ${E_RERROR}
+        sleep ${S_TIME}
 
-    # remove stash pr plugin with comments
-    sed -ri sed "/<.*\.StashPostBuildComment/,/<\/.*\.StashPostBuildComment>/d" ${curDir}/${job}_config.xml
-    sleep ${S_TIME}
+        # remove stash pr plugin with comments
+        sed -ri "/<.*\.StashPostBuildComment/,/<\/.*\.StashPostBuildComment>/d" ${curDir}/${job}_config.xml
+        sleep ${S_TIME}
 
-    # add stash pr plugin
-    sed -ri "/<publishers>/a\\${stash_pr_plugin_var}" ${curDir}/${job}_config.xml
+        # add stash pr plugin
+        sed -ri "/<publishers>/a\\${stash_pr_plugin_var}" ${curDir}/${job}_config.xml
 
-    # update job
-    ${bashExec} ${curDir}/job_handler.sh -u ${job} -f ${curDir}/${job}_config.xml \
-    && echo "op ${job} done.." || exit ${E_UERROR}
-    echo
+        # update job
+        ${bashExec} ${curDir}/job_handler.sh -u ${job} -f ${curDir}/${job}_config.xml \
+        && echo "op ${job} done.." || exit ${E_UERROR}
+        echo
 
-    # cleanup tmpl env
-    rm -rf ${curDir}/${job}_config.xml &> /dev/null
+        # cleanup tmpl env
+        rm -rf ${curDir}/${job}_config.xml &> /dev/null
+    ) &
+
+    if [[ $(jobs -r -p | wc -l) -gt ${PNs} ]]; then
+        wait -n
+    fi
 done
+
+wait
 
 # Cleanup Lst Env
 rm -rf ${curDir}/${viewName}.json &> /dev/null
+
+echo "All update plugin ops done.."
