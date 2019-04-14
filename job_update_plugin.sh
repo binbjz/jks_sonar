@@ -50,7 +50,7 @@ do
     sleep ${S_TIME}
 
     # remove stash pr plugin with comments
-    sed -ri sed "/<.*\.StashPostBuildComment/,/<\/.*\.StashPostBuildComment>/d" ${curDir}/${job}_config.xml
+    sed -ri "/<.*\.StashPostBuildComment/,/<\/.*\.StashPostBuildComment>/d" ${curDir}/${job}_config.xml
     sleep ${S_TIME}
 
     # add stash pr plugin
