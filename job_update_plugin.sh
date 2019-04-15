@@ -9,7 +9,7 @@ set -e
 
 E_RERROR=61
 E_UERROR=62
-S_TIME=0.2
+S_TIME=0.06
 
 # Please uncomment the code block and update these parms
 # if you need to use this script alone.

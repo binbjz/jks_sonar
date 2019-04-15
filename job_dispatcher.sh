@@ -9,6 +9,7 @@ NOARGS=65
 NOMATCH=122
 E_CERROR=129
 E_EMP=127
+STIME=0.06
 
 # Define global var
 export misId="<misid>"
@@ -115,17 +116,20 @@ while read git_repo_info; do
         ${bashExec} ${curDir}/job_handler.sh -c ${jobName} -f ${curDir}/${configTemplate}.${SPID} \
         || exit ${E_CERROR}
 
+        sleep ${STIME}
+
         # just build with prm job
         if [[ "$configSwitch" == "prm" ]]; then
             # we will not trigger it by manual or crontab for the moment
             :
+            # sleep ${STIME}
 
-            # build
-            # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
+                # build
+                # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
 
-            # build with parameters
-            # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p release
-        fi
+                # build with parameters
+                # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p release
+            fi
 
         # cleanup env
         rm -rf ${curDir}/${configTemplate}.${SPID} &> /dev/null
