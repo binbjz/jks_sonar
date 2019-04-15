@@ -17,6 +17,10 @@ export apiToken="<api token>"
 export viewName="<view name>"
 export jenkinsUrl="http://ci.ee.test.sankuai.com/job/qcs/job/Sonar/view"
 
+# Job suffix and cur dir
+bashExec=`which bash`
+curDir=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
 # Check parm
 if [[ $# -ne 1 ]]; then
     echo "Usage: ${BASH_SOURCE[0]} prm|prr"
@@ -43,10 +47,6 @@ case "$configSwitch" in
         exit ${NOMATCH}
     ;;
 esac
-
-# Job suffix and cur dir
-bashExec=`which bash`
-curDir=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 function func_trim() {
     echo "$1" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
