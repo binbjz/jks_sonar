@@ -32,7 +32,7 @@ class OrgInfo(object):
         self.auth = AuthHeaders()
         self.utils = UtilityTools()
         self.timeout = (16.06, 26)
-        self.host = "http://api.org-in.sankuai.com"
+        self.host = "http://api.org-in.sk.com"
 
     def parms_tmpl(self, mis):
         """

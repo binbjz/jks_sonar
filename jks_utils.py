@@ -73,7 +73,7 @@ class AuthHeaders(object):
 
 class SonarTools(object):
     def __init__(self):
-        self.td = "http://sonar.sankuai.com/api/tableData"
+        self.td = "http://sonar.sk.com/api/tableData"
         self._auth = HTTPBasicAuth("<privileged user>", "<password>")
         self.auth = AuthHeaders()
 
@@ -97,9 +97,9 @@ class SonarTools(object):
 class UtilityTools(object):
     def get_git_address_without_user(self, git_address):
         """
-        ssh://git@git.sankuai.com/qcs/qcs.fe.c.git
+        ssh://git@git.sk.com/qcs/qcs.fe.c.git
         :param git_address:
-        :return: git.sankuai.com/qcs/qcs.fe.c.git
+        :return: git.sk.com/qcs/qcs.fe.c.git
         """
         pos = git_address.find("@")
         if -1 != pos:

@@ -24,7 +24,7 @@ class Stash(object):
         self.auth = AuthHeaders()
         self.utils = UtilityTools()
         self.timeout = (12.06, 26)
-        self.rest_api_prefix = "http://git.sankuai.com/rest/api/2.0"
+        self.rest_api_prefix = "http://git.sk.com/rest/api/2.0"
         self.s = self.auth.requests_retry_session()
         self.req_auth = HTTPBasicAuth(username="<misid>", password="<password>")
         self.get = functools.partial(self.s.get, auth=self.req_auth, timeout=self.timeout)
@@ -44,12 +44,12 @@ class Stash(object):
 
     def is_git_exists(self, git):
         """
-        :param git: http://git.sankuai.com/rest/api/2.0/projects/qcs/repos/qcs.fe.c
+        :param git: http://git.sk.com/rest/api/2.0/projects/qcs/repos/qcs.fe.c
         :return:
         """
 
         """
-        if "git.sankuai.com" not in git:
+        if "git.sk.com" not in git:
             prefix = "http://git.dianpingoa.com/rest/api/1.0"
         else:
             prefix = self.rest_api_prefix
@@ -366,7 +366,7 @@ class Stash(object):
     def get_hook_stash_status(self, git_address):
         """
         Check hook stash status
-        :param git_address: ssh://git@git.sankuai.com/qcs/qcs.fe.c.git
+        :param git_address: ssh://git@git.sk.com/qcs/qcs.fe.c.git
         :return: enable:1 | disable:0
         """
         git_info = git_address.split("/")
@@ -395,8 +395,8 @@ class Stash(object):
         :param project:
         :param repos:
         """
-        old_rule = "http%3A%2F%2Fci.sankuai.com%2Fgitlab%2Fbuild_now"
-        new_rule = "http%3A%2F%2Fqcs.ci.ee.test.sankuai.com%2Fgitlab%2Fbuild_now"
+        old_rule = "http%3A%2F%2Fci.sk.com%2Fgitlab%2Fbuild_now"
+        new_rule = "http%3A%2F%2Fqcs.ci.ee.test.sk.com%2Fgitlab%2Fbuild_now"
         event_rule_url = "webhook/create/1?url={}".format(new_rule)
         hook_code_push_event_url = "{}/projects/{}/repos/{}/{}".format(self.rest_api_prefix, project,
                                                                        repos, event_rule_url)
@@ -412,7 +412,7 @@ class Stash(object):
         Config sonar hook to trigger static code scans when you commit code
         :param project:
         :param repos:
-        :param git_address: ssh://git@git.sankuai.com/qcs/qcs.fe.c.git
+        :param git_address: ssh://git@git.sk.com/qcs/qcs.fe.c.git
         :return:
         """
         hook_name = "com.nerdwin15.stash-stash-webhook-jenkins:jenkinsPostReceiveHook"
@@ -431,7 +431,7 @@ class Stash(object):
         sonar_hook_url = "{}/projects/{}/repos/{}/settings/hooks/{}/enabled".format(
             self.rest_api_prefix, project, repos, hook_name)
         json_content = {
-            "jenkinsBase": "http://ci.sankuai.com",
+            "jenkinsBase": "http://ci.sk.com",
             "gitRepoUrl": git_address,
             "ignoreCommitters": "",
             "branchOptions": "",
