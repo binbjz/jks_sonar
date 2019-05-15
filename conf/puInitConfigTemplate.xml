@@ -38,7 +38,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>ssh://git@git.sankuai.com/qcs/qcs.r.settle.invoice.git</url>
+        <url>ssh://git@git.sk.com/qcs/qcs.r.settle.invoice.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -71,7 +71,7 @@
     <hudson.plugins.sonar.SonarRunnerBuilder plugin="sonar@2.3">
       <installationName>ep-sonar</installationName>
       <project/>
-      <properties>sonar.projectKey=com.sankuai:qcs_settle_r-settle-invoice
+      <properties>sonar.projectKey=com.sk:qcs_settle_r-settle-invoice
 sonar.projectName=qcs_settle_r-settle-invoice
 sonar.projectVersion=1.0.${BUILD_NUMBER}
 
@@ -87,35 +87,35 @@ sonar.branch=${GIT_BRANCH}</properties>
     </hudson.plugins.sonar.SonarRunnerBuilder>
   </builders>
   <publishers>
-    <com.sankuai.meituan.ep.jenkins.notify.DxNotifier plugin="dx-notify-plugin@1.0.3">
+    <com.sk.meituan.ep.jenkins.notify.DxNotifier plugin="dx-notify-plugin@1.0.3">
       <recipients/>
       <contentFile>sonar_info</contentFile>
       <removeDefaultTitleIfContentIsNotEmpty>false</removeDefaultTitleIfContentIsNotEmpty>
       <notifyUsersStarted>true</notifyUsersStarted>
       <notifyLastCommitUser>false</notifyLastCommitUser>
-      <notifyMap class="enum-map" enum-type="com.sankuai.meituan.ep.jenkins.notify.BuildResult">
+      <notifyMap class="enum-map" enum-type="com.sk.meituan.ep.jenkins.notify.BuildResult">
         <entry>
-          <com.sankuai.meituan.ep.jenkins.notify.BuildResult>SUCCESS</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
+          <com.sk.meituan.ep.jenkins.notify.BuildResult>SUCCESS</com.sk.meituan.ep.jenkins.notify.BuildResult>
           <boolean>true</boolean>
         </entry>
         <entry>
-          <com.sankuai.meituan.ep.jenkins.notify.BuildResult>FAILURE</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
+          <com.sk.meituan.ep.jenkins.notify.BuildResult>FAILURE</com.sk.meituan.ep.jenkins.notify.BuildResult>
           <boolean>true</boolean>
         </entry>
         <entry>
-          <com.sankuai.meituan.ep.jenkins.notify.BuildResult>UNSTABLE</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
+          <com.sk.meituan.ep.jenkins.notify.BuildResult>UNSTABLE</com.sk.meituan.ep.jenkins.notify.BuildResult>
           <boolean>true</boolean>
         </entry>
         <entry>
-          <com.sankuai.meituan.ep.jenkins.notify.BuildResult>ABORTED</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
+          <com.sk.meituan.ep.jenkins.notify.BuildResult>ABORTED</com.sk.meituan.ep.jenkins.notify.BuildResult>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <com.sankuai.meituan.ep.jenkins.notify.BuildResult>NOT_BUILT</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
+          <com.sk.meituan.ep.jenkins.notify.BuildResult>NOT_BUILT</com.sk.meituan.ep.jenkins.notify.BuildResult>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <com.sankuai.meituan.ep.jenkins.notify.BuildResult>FIXED</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
+          <com.sk.meituan.ep.jenkins.notify.BuildResult>FIXED</com.sk.meituan.ep.jenkins.notify.BuildResult>
           <boolean>true</boolean>
         </entry>
       </notifyMap>
@@ -125,7 +125,7 @@ sonar.branch=${GIT_BRANCH}</properties>
       <notifyUnstable>true</notifyUnstable>
       <notifyAborted>false</notifyAborted>
       <notifyNotBuilt>false</notifyNotBuilt>
-    </com.sankuai.meituan.ep.jenkins.notify.DxNotifier>
+    </com.sk.meituan.ep.jenkins.notify.DxNotifier>
   </publishers>
   <buildWrappers/>
 </project>

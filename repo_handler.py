@@ -42,7 +42,7 @@ class RepoTplGenerator(object):
     def __init__(self):
         self.timeout = (3.06, 26)
         self.json_file = os.path.join(os.getcwd(), "source", "repoInfo.json")
-        self.repo_url = "http://git.sankuai.com/rest/api/2.0/projects/qcs/repos?start=0&limit=1000"
+        self.repo_url = "http://git.sk.com/rest/api/2.0/projects/qcs/repos?start=0&limit=1000"
 
     def write_json_to_file(self, filename, data):
         """

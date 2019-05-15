@@ -14,7 +14,7 @@ STIME=0.2
 export misId="<misid>"
 export apiToken="<api token>"
 export viewName="<view name>"
-export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
+export jenkinsUrl="http://ci.sk.com/job/qcs/job/Sonar/view"
 
 # Check parm
 if [[ $# -ne 1 ]]; then
@@ -64,8 +64,8 @@ function replace_kw() {
 
 # Define repo template, project prefix and trigger job with specified action
 rt="repoTemplate.txt"
-cs="com.sankuai"
-qcs_repo="ssh://git@git.sankuai.com/qcs/"
+cs="com.sk"
+qcs_repo="ssh://git@git.sk.com/qcs/"
 pjk_suffix=":test"
 
 while read git_repo_name;

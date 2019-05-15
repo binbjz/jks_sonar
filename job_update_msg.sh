@@ -15,15 +15,15 @@ S_TIME=0.2
 export misId="<misid>"
 export apiToken="<api token>"
 export viewName="<view name>"
-export jenkinsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view"
-export jobsUrl="http://ci.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/json?tree=jobs[name]"
+export jenkinsUrl="http://ci.sk.com/job/qcs/job/Sonar/view"
+export jobsUrl="http://ci.sk.com/job/qcs/job/Sonar/view/${viewName}/api/json?tree=jobs[name]"
 
 # Dx recipients list, the separator must be a comma
-rl="zhaobin11,liying60"
+rl="zhaobin,liying60"
 
 # Project and sonar msg prefix
 projectNamePrefix=( qcs_push_ qcs_pull_request_ )
-pbPrefix="http:\/\/sonar.ep.sankuai.com\/dashboard\/index\/com.sankuai"
+pbPrefix="http:\/\/sonar.ep.sk.com\/dashboard\/index\/com.sk"
 
 # Sonar lang js for qcs.fe.* srv
 sonar_lang="js"
