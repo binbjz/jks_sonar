@@ -18,7 +18,7 @@ E_NOCONF=128
 misId="<misid>"
 apiToken="<api token>"
 viewName="<view name>"
-jenkinsUrl="http://ci.ee.test.sankuai.com/job/qcs/job/Sonar/view"
+jenkinsUrl="http://ci.ee.test.sk.com/job/qcs/job/Sonar/view"
 COMMENTBLOCK
 
 #======

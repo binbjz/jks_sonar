@@ -18,8 +18,8 @@ S_TIME=0.06
 export misId="<misid>"
 export apiToken="<api token>"
 export viewName="<view name>"
-export jenkinsUrl="http://ci.ee.test.sankuai.com/job/qcs/job/Sonar/view"
-export jobsUrl="http://ci.ee.test.sankuai.com/job/qcs/job/Sonar/view/${viewName}/api/json?tree=jobs[name]"
+export jenkinsUrl="http://ci.ee.test.sk.com/job/qcs/job/Sonar/view"
+export jobsUrl="http://ci.ee.test.sk.com/job/qcs/job/Sonar/view/${viewName}/api/json?tree=jobs[name]"
 COMMENTBLOCK
 
 # Stash post build comment plugin

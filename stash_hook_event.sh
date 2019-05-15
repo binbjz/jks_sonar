@@ -15,12 +15,12 @@ user_permission=( REPO_READ REPO_WRITE REPO_ADMIN )
 swh_switch=( PUT DELETE )
 
 # Hook rest url
-qcs_repo="http://git.sankuai.com/beijing/rest/api/2.0/projects/QCS/repos"
+qcs_repo="http://git.sk.com/beijing/rest/api/2.0/projects/QCS/repos"
 hook_key_ap="settings/hooks/com.nerdwin15.stash-stash-webhook-jenkins%3AjenkinsPostReceiveHook"
 
 # Hook event rule
-old_rule="http%3A%2F%2Fci.sankuai.com%2Fgitlab%2Fbuild_now"
-new_rule="http%3A%2F%2Fci.ee.test.sankuai.com%2Fgitlab%2Fbuild_now"
+old_rule="http%3A%2F%2Fci.sk.com%2Fgitlab%2Fbuild_now"
+new_rule="http%3A%2F%2Fci.ee.test.sk.com%2Fgitlab%2Fbuild_now"
 
 function user_access() {
     # Required -> -H "Accept: application/json, text/javascript, */*; q=0.01"
@@ -56,8 +56,8 @@ function echo_() {
 
 function hook_config_proc() {
     # Http payload
-    jenkinsBase="http://ci.ee.test.sankuai.com/"
-    gitRepoUrl="ssh://git@git.sankuai.com/qcs/${repo_name}.git"
+    jenkinsBase="http://ci.ee.test.sk.com/"
+    gitRepoUrl="ssh://git@git.sk.com/qcs/${repo_name}.git"
     ignoreCommitters=""
 
     # Stash Webhook for Build from

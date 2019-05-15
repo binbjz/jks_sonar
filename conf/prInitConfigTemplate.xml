@@ -39,7 +39,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>+refs/pull-requests/*:refs/remotes/origin/pr/*</refspec>
-        <url>ssh://git@git.sankuai.com/qcs/qcs.r.settle.invoice.git</url>
+        <url>ssh://git@git.sk.com/qcs/qcs.r.settle.invoice.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -67,7 +67,7 @@
     <stashpullrequestbuilder.stashpullrequestbuilder.StashBuildTrigger plugin="stash-pullrequest-builder@1.6.0">
       <spec>H/12 * * * *</spec>
       <cron>H/12 * * * *</cron>
-      <stashHost>http://git.sankuai.com/</stashHost>
+      <stashHost>http://git.sk.com/</stashHost>
       <credentialsId>b5bccd92-693d-40b5-883a-138e59c4e494</credentialsId>
       <projectCode>qcs</projectCode>
       <repositoryName>qcs.r.settle.invoice</repositoryName>
@@ -90,7 +90,7 @@
     <hudson.plugins.sonar.SonarRunnerBuilder plugin="sonar@2.3">
       <installationName>ep-sonar</installationName>
       <project/>
-      <properties>sonar.projectKey=com.sankuai:qcs_pull_request_qcs.r.settle.invoice
+      <properties>sonar.projectKey=com.sk:qcs_pull_request_qcs.r.settle.invoice
 sonar.projectName=qcs_pull_request_qcs.r.settle.invoice
 sonar.projectVersion=1.0.${BUILD_NUMBER}
 
@@ -109,35 +109,35 @@ sonar.sourceEncoding=UTF-8</properties>
       <buildSuccessfulComment/>
       <buildFailedComment/>
     </stashpullrequestbuilder.stashpullrequestbuilder.StashPostBuildComment>
-    <com.sankuai.meituan.ep.jenkins.notify.DxNotifier plugin="dx-notify-plugin@1.0.3">
+    <com.sk.meituan.ep.jenkins.notify.DxNotifier plugin="dx-notify-plugin@1.0.3">
       <recipients/>
       <contentFile>sonar_info</contentFile>
       <removeDefaultTitleIfContentIsNotEmpty>false</removeDefaultTitleIfContentIsNotEmpty>
       <notifyUsersStarted>true</notifyUsersStarted>
       <notifyLastCommitUser>false</notifyLastCommitUser>
-      <notifyMap class="enum-map" enum-type="com.sankuai.meituan.ep.jenkins.notify.BuildResult">
+      <notifyMap class="enum-map" enum-type="com.sk.meituan.ep.jenkins.notify.BuildResult">
         <entry>
-          <com.sankuai.meituan.ep.jenkins.notify.BuildResult>SUCCESS</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
+          <com.sk.meituan.ep.jenkins.notify.BuildResult>SUCCESS</com.sk.meituan.ep.jenkins.notify.BuildResult>
           <boolean>true</boolean>
         </entry>
         <entry>
-          <com.sankuai.meituan.ep.jenkins.notify.BuildResult>FAILURE</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
+          <com.sk.meituan.ep.jenkins.notify.BuildResult>FAILURE</com.sk.meituan.ep.jenkins.notify.BuildResult>
           <boolean>true</boolean>
         </entry>
         <entry>
-          <com.sankuai.meituan.ep.jenkins.notify.BuildResult>UNSTABLE</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
+          <com.sk.meituan.ep.jenkins.notify.BuildResult>UNSTABLE</com.sk.meituan.ep.jenkins.notify.BuildResult>
           <boolean>true</boolean>
         </entry>
         <entry>
-          <com.sankuai.meituan.ep.jenkins.notify.BuildResult>ABORTED</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
+          <com.sk.meituan.ep.jenkins.notify.BuildResult>ABORTED</com.sk.meituan.ep.jenkins.notify.BuildResult>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <com.sankuai.meituan.ep.jenkins.notify.BuildResult>NOT_BUILT</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
+          <com.sk.meituan.ep.jenkins.notify.BuildResult>NOT_BUILT</com.sk.meituan.ep.jenkins.notify.BuildResult>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <com.sankuai.meituan.ep.jenkins.notify.BuildResult>FIXED</com.sankuai.meituan.ep.jenkins.notify.BuildResult>
+          <com.sk.meituan.ep.jenkins.notify.BuildResult>FIXED</com.sk.meituan.ep.jenkins.notify.BuildResult>
           <boolean>true</boolean>
         </entry>
       </notifyMap>
@@ -147,7 +147,7 @@ sonar.sourceEncoding=UTF-8</properties>
       <notifyUnstable>true</notifyUnstable>
       <notifyAborted>false</notifyAborted>
       <notifyNotBuilt>false</notifyNotBuilt>
-    </com.sankuai.meituan.ep.jenkins.notify.DxNotifier>
+    </com.sk.meituan.ep.jenkins.notify.DxNotifier>
   </publishers>
   <buildWrappers/>
 </project>

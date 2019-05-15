@@ -15,7 +15,7 @@ STIME=0.06
 export misId="<misid>"
 export apiToken="<api token>"
 export viewName="<view name>"
-export jenkinsUrl="http://ci.ee.test.sankuai.com/job/qcs/job/Sonar/view"
+export jenkinsUrl="http://ci.ee.test.sk.com/job/qcs/job/Sonar/view"
 
 # Job suffix and cur dir
 bashExec=`which bash`
@@ -66,8 +66,8 @@ function replace_kw() {
 
 # Define repo template, project prefix and trigger job with specified action
 rt="stash_org_grp_success.csv"
-cs="com.sankuai"
-qcs_repo="ssh://git@git.sankuai.com/qcs/"
+cs="com.sk"
+qcs_repo="ssh://git@git.sk.com/qcs/"
 pjk_suffix=":release"
 
 # Proc Ns
