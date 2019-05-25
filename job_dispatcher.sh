@@ -120,13 +120,13 @@ do
     if [[ "$configSwitch" == "pu" ]]; then
         # we will not trigger it by manual or crontab for the moment
         :
-    # sleep ${STIME}
+        # sleep ${STIME}
 
-    # build
-    # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
+        # build
+        # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
 
-    # build with parameters
-    # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p test
+        # build with parameters
+        # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p test
     fi
 
     # cleanup env
