@@ -124,12 +124,12 @@ while read git_repo_info; do
             :
             # sleep ${STIME}
 
-                # build
-                # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
+            # build
+            # ${bashExec} ${curDir}/job_handler.sh -s ${jobName}
 
-                # build with parameters
-                # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p release
-            fi
+            # build with parameters
+            # ${bashExec} ${curDir}/job_handler.sh -s ${jobName} -p release
+        fi
 
         # cleanup env
         rm -rf ${curDir}/${configTemplate}.${SPID} &> /dev/null
