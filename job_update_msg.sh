@@ -23,7 +23,7 @@ export jobsUrl="http://ci.ee.test.sk.com/job/qcs/job/Sonar/view/${viewName}/api/
 COMMENTBLOCK
 
 # Dx recipients list, the separator must be a comma
-rl="zhaobin,liying60"
+rl="bin60"
 
 # Sonar msg prefix and repo template
 pbPrefix="http:\/\/sonar.ep.sk.com\/dashboard\/index\/com.sk"
