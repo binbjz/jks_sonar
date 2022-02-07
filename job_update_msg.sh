@@ -33,20 +33,20 @@ rt="stash_org_grp_success.csv"
 sonar_lang="js"
 
 # Build success and failure info
-bscVar=`cat <<- SETVAR
+bscVar=$(cat <<- SETVAR
 Static code check success!\n\
 Access the url: [qcs_sonar_plat](<sonar_url>)\n\
 Check the latest inspection report!
-SETVAR`
+SETVAR)
 
-bfcVar=`cat <<- SETVAR
+bfcVar=$(cat <<- SETVAR
 Static code check failure!\n\
 Access the url: [\\${BUILD_TAG}](\\${BUILD_URL})\n\
 Check the error reason!
-SETVAR`
+SETVAR)
 
 # Parser and cur dir
-bashExec=`which bash`
+bashExec=$(which bash)
 curDir=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 
